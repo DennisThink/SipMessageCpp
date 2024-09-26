@@ -30,7 +30,14 @@ Content-Length: 0)";
             std::string strVia = R"(Via: SIP/2.0/UDP 192.168.31.142:55747;branch=z9hG4bK-524287-1---86aa6dd38424cee1;rport)";
             CHECK_EQ(baseMsg.m_strVia, strVia);
         }
-
+        {
+            std::string strMaxForwards = R"(Max-Forwards: 70)";
+            CHECK_EQ(baseMsg.m_strMaxForwards, strMaxForwards);
+        }
+        {
+            std::string strMaxForwards = R"(Max-Forwards: 70)";
+            CHECK_EQ(baseMsg.m_strMaxForwards, strMaxForwards);
+        }
         {
             std::string strTo = R"(To: "1002"<sip:1002@192.168.31.109:5060;transport=UDP>)";
             CHECK_EQ(baseMsg.m_strTo, strTo);
@@ -77,6 +84,5 @@ Content-Length: 0)";
             CHECK_EQ(baseMsg.m_strContentLength, strContentLength);
         }
     }
-    //std::string strResult="Hello";
-    //CHECK(strResult==baseMsg.dump());
+    CHECK(strSipRegister ==baseMsg.dump());
 }

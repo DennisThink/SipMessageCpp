@@ -79,6 +79,80 @@ namespace DtSipMessageCpp
     }
 
     std::string CSipRegisterMsg::dump() const{
-        return "";
+        std::string strResult;
+        std::string strLineEnd = "\n";
+        {
+            strResult += m_strMsgType;
+            strResult += strLineEnd;
+        }
+        {
+            strResult += m_strVia;
+            strResult += strLineEnd;
+        }
+        {
+            strResult += m_strMaxForwards;
+            strResult += strLineEnd;
+        }
+        {
+            strResult += m_strContact;
+            strResult += strLineEnd;
+        }
+        
+        {
+            strResult += m_strTo;
+            strResult += strLineEnd;
+        }
+
+        {
+            strResult += m_strFrom;
+            strResult += strLineEnd;
+        }
+
+        {
+            strResult += m_strCallId;
+            strResult += strLineEnd;
+        }
+        {
+            strResult += m_strCSeq;
+            strResult += strLineEnd;
+        }
+        {
+            strResult += m_strExpires;
+            strResult += strLineEnd;
+        }
+
+        {
+            strResult += m_strAllow;
+            strResult += strLineEnd;
+        }
+
+        {
+            strResult += m_strSupported;
+            strResult += strLineEnd;
+        }
+
+
+        {
+            strResult += m_strUserAgent;
+            strResult += strLineEnd;
+        }
+
+
+        {
+            strResult += m_strAuthorization;
+            strResult += strLineEnd;
+        }
+
+
+        {
+            strResult += m_strAllowEvents;
+            strResult += strLineEnd;
+        }
+
+        {
+            strResult += m_strContentLength;
+        }
+
+        return strResult;
     }
 }
