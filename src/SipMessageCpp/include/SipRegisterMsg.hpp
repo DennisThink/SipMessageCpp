@@ -15,6 +15,7 @@ namespace DtSipMessageCpp
         std::string m_strMsgType;
         std::string m_strVia;
         std::string m_strMaxForwards;
+        std::string m_strContact;
         std::string m_strFrom;
         std::string m_strTo;
         std::string m_strCallId;

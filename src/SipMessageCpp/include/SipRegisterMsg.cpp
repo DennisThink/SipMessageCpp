@@ -26,6 +26,10 @@ namespace DtSipMessageCpp
             {
                 m_strMaxForwards = item;
             }
+            else if(item.find(CONTACT_HEADER) == 0)
+            {
+                m_strContact = item;
+            }
             else if(item.find(TO_HEADER) == 0)
             {
                 m_strTo = item;
