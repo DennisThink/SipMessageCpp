@@ -64,6 +64,18 @@ Content-Length: 0)";
             std::string strUserAgent = R"(User-Agent: Zoiper v2.10.20.4_1)";
             CHECK_EQ(baseMsg.m_strUserAgent, strUserAgent);
         }
+        {
+            std::string strAuthorization = R"(Authorization: Digest username="1002",realm="192.168.31.109",nonce="fffe2121-d01f-4c89-ab62-12a030a1c10d",uri="sip:192.168.31.109:5060;transport=UDP",response="b4418b2b96e05ec2a0beb3c522edbcc9",cnonce="b3468b9ac6827d7c51e85ef96618190f",nc=00000002,qop=auth,algorithm=MD5)";
+            CHECK_EQ(baseMsg.m_strAuthorization, strAuthorization);
+        }
+        {
+            std::string strAllowEvents = R"(Allow-Events: presence, kpml, talk, as-feature-event)";
+            CHECK_EQ(baseMsg.m_strAllowEvents, strAllowEvents);
+        }
+        {
+            std::string strContentLength = R"(Content-Length: 0)";
+            CHECK_EQ(baseMsg.m_strContentLength, strContentLength);
+        }
     }
     //std::string strResult="Hello";
     //CHECK(strResult==baseMsg.dump());

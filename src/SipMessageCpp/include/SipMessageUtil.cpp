@@ -72,7 +72,7 @@ namespace DtSipMessageCpp
       pos1 = pos2 + strSplit.length();
       pos2 = strValue.find(strSplit, pos1);
     }
-    // strvec.push_back(strValue.substr(pos1));
+    strvec.push_back(strValue.substr(pos1));
     return strvec;
   }
 
