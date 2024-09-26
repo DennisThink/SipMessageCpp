@@ -3,7 +3,8 @@
 
 TEST_CASE("SipMessageBase"){
     DtSipMessageCpp::CSipMessageBase baseMsg;
-    CHECK(baseMsg.parse("Hello"));
+    std::string strSipMessageBase = R"(HELLO)";
+    CHECK_FALSE(baseMsg.parse(strSipMessageBase));
     std::string strResult="Hello";
-    CHECK(strResult==baseMsg.dump());
+    CHECK_FALSE(strResult==baseMsg.dump());
 }

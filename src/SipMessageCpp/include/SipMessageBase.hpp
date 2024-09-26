@@ -5,12 +5,13 @@ namespace DtSipMessageCpp
 {
     class CSipMessageBase
     {
-public:
+    public:
         CSipMessageBase();
         virtual ~CSipMessageBase();
 
         virtual bool parse(const std::string& strMsg);
         virtual std::string dump() const;
+
     };
 }
 #endif
