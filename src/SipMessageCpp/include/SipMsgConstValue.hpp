@@ -34,5 +34,36 @@ namespace DtSipMessageCpp
     const std::string AUTHORIZATION_HEADER = "Authorization:";
     const std::string ALLOW_EVENTS_HEADER = "Allow-Events:";
     const std::string CONTENT_LENGTH_HEADER = "Content-Length:";
+    const std::string CONTENT_TYPE_HEADER = "Content-Type:";
+    const std::string PROXY_AUTHORIZATION_HEADER = "Proxy-Authorization:";
+
+    //SDP header
+    /* 
+    *   v = (protocol version)
+        o = (owner/creator and session identifier)
+        s = (session name)
+        i =* (session information)
+        u =* (URI of description)
+        e =* (email address)
+        p =* (phone number)
+        c =* (connection information - not required if included in all media)
+        b =* (bandwidth information)
+        z =* (time zone adjustments)
+        k =* (encryption key)
+        a =* (zero or more session attribute lines)
+    */
+    const std::string SDP_PROTOCAL_VERSION_HEADER = "v=";
+    const std::string SDP_OWNER_SESSION_IDENTIFIER_HEADER = "o=";
+    const std::string SDP_SESSION_NAME_HEADER = "s=";
+    const std::string SDP_SESSION_INFORMATION_HEADER = "i=";
+    const std::string SDP_URI_OF_DESCRIPTION_HEADER = "u=";
+    const std::string SDP_EMAIL_ADDRESS_HEADER = "e=";
+    const std::string SDP_PHONE_NUMBER_HEADER = "p=";
+    const std::string SDP_CONNECTION_INFORMATION_HEADER = "c=";
+    const std::string SDP_BANDWIDTH_INFORMATION_HEADER = "b=";
+    const std::string SDP_TIME_ZONE_ADJUSTMENTS_HEADER = "z=";
+    const std::string SDP_ENCRYPTION_KEY_HEADER = "k=";
+    const std::string SDP_ZERO_OR_MORE_SESSION_ATTRIBUTE_LINES_HEADER = "a=";
+
 }
 #endif
