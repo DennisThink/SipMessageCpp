@@ -56,6 +56,24 @@ namespace DtSipMessageCpp
     }
   }
 
+  std::string CProtoUtil::GetCommonPartOfTwoString(const std::string& strFirst, const std::string& strSecond)
+  {
+      std::string strResult;
+      std::size_t firstLen = strFirst.length();
+      std::size_t secondLen = strSecond.length();
+      for (std::size_t i = 0; i < firstLen && i < secondLen; i++)
+      {
+          if (strFirst[i] == strSecond[i])
+          {
+              strResult += strFirst[i];
+          }
+          else
+          {
+              break;
+          }
+      }
+      return strResult;
+  }
   // Copy from QT
   std::vector<std::string> CProtoUtil::SplitStringByLine(const std::string &strValue,const std::string& strSplit= "\r\n")
   {

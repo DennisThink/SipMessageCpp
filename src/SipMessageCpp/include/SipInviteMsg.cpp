@@ -14,7 +14,7 @@ namespace DtSipMessageCpp
         for (const auto& item : allLines)
         {
             std::cout << "ITEM: " << item << std::endl;
-            if (item.find(REGISTER_TYPE_HEADER) == 0)
+            if (item.find(INVITE_TYPE_HEADER) == 0)
             {
                 m_strMsgType = item;
             }
@@ -121,10 +121,17 @@ namespace DtSipMessageCpp
                 {
                     m_strsdpBandwidthInformation = item;
                 }
-                else
-                if (item.find(SDP_TIME_ZONE_ADJUSTMENTS_HEADER) == 0)
+                else if (item.find(SDP_TIME_ZONE_ADJUSTMENTS_HEADER) == 0)
                 {
                     m_strsdpTimeZoneAdjustments = item;
+                }
+                else if (item.find(SDP_MEDIA_NAME_AND_TRANSPORT_ADDRESS_HEADER) == 0)
+                {
+                    m_strsdpMediaAndTransport=item;
+                }
+                else if (item.find(SDP_TIME_THE_SESSION_IS_ACTIVE_HEADER) == 0)
+                {
+                    m_strsdpTimeTheSessionIsActive = item;
                 }
                 else if (item.find(SDP_ENCRYPTION_KEY_HEADER) == 0)
                 {
@@ -178,21 +185,18 @@ namespace DtSipMessageCpp
             strResult += m_strCSeq;
             strResult += strLineEnd;
         }
+
+        {
+            strResult += m_strAllow;
+            strResult += strLineEnd;
+        }
+
         {
             strResult += m_strContentType;
             strResult += strLineEnd;
         }
         {
             strResult += m_strProxyAuthorization;
-            strResult += strLineEnd;
-        }
-        {
-            strResult += m_strExpires;
-            strResult += strLineEnd;
-        }
-
-        {
-            strResult += m_strAllow;
             strResult += strLineEnd;
         }
 
@@ -207,13 +211,6 @@ namespace DtSipMessageCpp
             strResult += strLineEnd;
         }
 
-
-        {
-            strResult += m_strAuthorization;
-            strResult += strLineEnd;
-        }
-
-
         {
             strResult += m_strAllowEvents;
             strResult += strLineEnd;
@@ -221,10 +218,11 @@ namespace DtSipMessageCpp
 
         {
             strResult += m_strContentLength;
+            strResult += strLineEnd;
+            strResult += strLineEnd;
         }
 
         {
-            strResult += strLineEnd;
             
             strResult += m_strsdpProtocalVersion;
             strResult += strLineEnd;
@@ -235,36 +233,68 @@ namespace DtSipMessageCpp
             strResult += m_strsdpSessionName;
             strResult += strLineEnd;
 
-            strResult += m_strsdpSessionInformation;
-            strResult += strLineEnd;
+            if (!m_strsdpSessionInformation.empty())
+            {
+                strResult += m_strsdpSessionInformation;
+                strResult += strLineEnd;
+            }
 
-            strResult += m_strsdpUriOfDescription;
-            strResult += strLineEnd;
+            if (!m_strsdpUriOfDescription.empty())
+            {
+                strResult += m_strsdpUriOfDescription;
+                strResult += strLineEnd;
+            }
 
-            strResult += m_strsdpEmailAddress;
-            strResult += strLineEnd; 
+            if (!m_strsdpEmailAddress.empty())
+            {
+                strResult += m_strsdpEmailAddress;
+                strResult += strLineEnd;
+            }
             
-            strResult += m_strsdpPhoneNumber;
-            strResult += strLineEnd; 
+            if (!m_strsdpPhoneNumber.empty())
+            {
+                strResult += m_strsdpPhoneNumber;
+                strResult += strLineEnd;
+            }
             
             strResult += m_strsdpConnectionInformation;
             strResult += strLineEnd; 
             
-            strResult += m_strsdpBandwidthInformation;
-            strResult += strLineEnd;
+            if (!m_strsdpBandwidthInformation.empty())
+            {
+                strResult += m_strsdpBandwidthInformation;
+                strResult += strLineEnd;
+            }
 
             //std::vector<std::string> 
-            strResult += m_strsdpTimeZoneAdjustments;
-            strResult += strLineEnd;
+            if (!m_strsdpTimeZoneAdjustments.empty())
+            {
+                strResult += m_strsdpTimeZoneAdjustments;
+                strResult += strLineEnd;
+            }
 
-            strResult += m_strsdpEncryptionKey;
-            strResult += strLineEnd;
+            if (!m_strsdpEncryptionKey.empty())
+            {
+                strResult += m_strsdpEncryptionKey;
+                strResult += strLineEnd;
+            }
 
+            if (!m_strsdpTimeTheSessionIsActive.empty())
+            {
+                strResult += m_strsdpTimeTheSessionIsActive;
+                strResult += strLineEnd;
+            }
+
+            if (!m_strsdpMediaAndTransport.empty())
+            {
+                strResult += m_strsdpMediaAndTransport;
+            }
             for (const auto& item : m_strsdpZeroOrMoreSessionAttributeLines)
             {
+                strResult += strLineEnd;
                 strResult += item;
             }
-            strResult += strLineEnd;
+            //strResult += strLineEnd;
         }
 
         return strResult;

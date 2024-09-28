@@ -43,7 +43,9 @@ namespace DtSipMessageCpp
         std::string m_strsdpConnectionInformation;
         std::string m_strsdpBandwidthInformation;
 
+        std::string m_strsdpTimeTheSessionIsActive;
         //std::vector<std::string> 
+        std::string m_strsdpMediaAndTransport;
         std::string m_strsdpTimeZoneAdjustments;
         std::string m_strsdpEncryptionKey;
         std::vector<std::string> m_strsdpZeroOrMoreSessionAttributeLines;

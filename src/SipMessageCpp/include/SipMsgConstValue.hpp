@@ -20,6 +20,7 @@ namespace DtSipMessageCpp
         std::string m_strContentLength;
 	*/
     const std::string REGISTER_TYPE_HEADER = "REGISTER";
+    const std::string INVITE_TYPE_HEADER = "INVITE";
     const std::string VIA_HEADER = "Via:";
     const std::string MAX_FORWARDS_HEADER = "Max-Forwards:";
     const std::string CONTACT_HEADER = "Contact:";
@@ -38,7 +39,9 @@ namespace DtSipMessageCpp
     const std::string PROXY_AUTHORIZATION_HEADER = "Proxy-Authorization:";
 
     //SDP header
-    /* 
+
+    /*
+    https://en.wikipedia.org/wiki/Session_Description_Protocol
     *   v = (protocol version)
         o = (owner/creator and session identifier)
         s = (session name)
@@ -51,6 +54,9 @@ namespace DtSipMessageCpp
         z =* (time zone adjustments)
         k =* (encryption key)
         a =* (zero or more session attribute lines)
+        t=  (time the session is active)
+        r=* (zero or more repeat times)
+        m=  (media name and transport address)
     */
     const std::string SDP_PROTOCAL_VERSION_HEADER = "v=";
     const std::string SDP_OWNER_SESSION_IDENTIFIER_HEADER = "o=";
@@ -64,6 +70,9 @@ namespace DtSipMessageCpp
     const std::string SDP_TIME_ZONE_ADJUSTMENTS_HEADER = "z=";
     const std::string SDP_ENCRYPTION_KEY_HEADER = "k=";
     const std::string SDP_ZERO_OR_MORE_SESSION_ATTRIBUTE_LINES_HEADER = "a=";
+    const std::string SDP_TIME_THE_SESSION_IS_ACTIVE_HEADER = "t=";
+    const std::string SDP_MEDIA_NAME_AND_TRANSPORT_ADDRESS_HEADER = "m=";
+
 
 }
 #endif

@@ -1,6 +1,7 @@
 #include <doctest/doctest.h>
 #include "SipInviteMsg.hpp"
-
+#include "SipMessageUtil.h"
+#include <iostream>
 TEST_CASE("SipInviteMsg"){
     DtSipMessageCpp::CSipInviteMsg baseMsg;
     std::string strInviteSipMsg = R"(INVITE sip:1009@192.168.31.109:5060;transport=UDP SIP/2.0
@@ -33,5 +34,8 @@ a=fmtp:97 mode=20
 a=sendrecv
 a=rtcp-mux)";
     CHECK(baseMsg.parse(strInviteSipMsg));
-    CHECK(strInviteSipMsg ==baseMsg.dump());
+    std::string strDump = baseMsg.dump();
+    CHECK(strInviteSipMsg == strDump);
+    std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strInviteSipMsg, strDump);
+    std::cout << "COMMON: " << strCommon << std::_Get_asan_aligned_first_end;
 }

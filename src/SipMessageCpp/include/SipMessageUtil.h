@@ -11,6 +11,7 @@ namespace DtSipMessageCpp
         static std::string GetSmtpDomainFromMainDomain(const std::string strMainDomain);
         static std::string GetPop3DomainFromMainDomain(const std::string strMainDomain);
         static std::string GetImapDomainFromMainDomain(const std::string strMainDomain);
+        static std::string GetCommonPartOfTwoString(const std::string& strFirst, const std::string& strSecond);
         static std::vector<std::string> SplitStringByLine(const std::string& strValue,const std::string& strSplit);
         static bool SplitLine(const std::string& strInput,int& code,std::string& value,bool& bFinish);
         static std::string Base64Encode(const std::string strInput);
