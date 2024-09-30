@@ -1,20 +1,19 @@
-#include "SipAckMsg.hpp"
+#include "SipTryingMsg.hpp"
 #include "SipMessageUtil.h"
 #include "SipMsgConstValue.hpp"
-#include <iostream>
 namespace DtSipMessageCpp
 {
-    CSipAckMsg::CSipAckMsg(){
+    CSipTryingMsg::CSipTryingMsg(){
     }
 
-    CSipAckMsg::~CSipAckMsg(){}
+    CSipTryingMsg::~CSipTryingMsg(){}
 
-    bool CSipAckMsg::parse(const std::string& strMsg){
+    bool CSipTryingMsg::parse(const std::string& strMsg){
         auto allLines = CProtoUtil::SplitStringByLine(strMsg, "\n");
         for (const auto& item : allLines)
         {
             //std::cout << "ITEM: " << item << std::endl;
-            if (item.find(ACK_TYPE_HEADER) == 0)
+            if (item.find(TRYING_TYPE_HEADER) != std::string::npos)
             {
                 m_strMsgType = item;
             }
@@ -25,6 +24,10 @@ namespace DtSipMessageCpp
             else if (item.find(MAX_FORWARDS_HEADER) == 0)
             {
                 m_strMaxForwards = item;
+            }
+            else if (item.find(CONTACT_HEADER) == 0)
+            {
+                m_strContact = item;
             }
             else if (item.find(TO_HEADER) == 0)
             {
@@ -41,6 +44,14 @@ namespace DtSipMessageCpp
             else if (item.find(CSEQ_HEADER) == 0)
             {
                 m_strCSeq = item;
+            }
+            else if (item.find(CONTENT_TYPE_HEADER) == 0)
+            {
+                m_strContentType = item;
+            }
+            else if (item.find(PROXY_AUTHORIZATION_HEADER) == 0)
+            {
+                m_strProxyAuthorization = item;
             }
             else if (item.find(EXPIRES_HEADER) == 0)
             {
@@ -70,11 +81,19 @@ namespace DtSipMessageCpp
             {
                 m_strSupported = item;
             }
+            else if (item.find(ACCEPT_HEADER) != std::string::npos)
+            {
+                m_strAccept = item;
+            }
+            else if (item.find(PROXY_AUTHENTICATE_HEADER) != std::string::npos)
+            {
+                m_strProxyAuthenticate = item;
+            }
         }
         return true;
     }
 
-    std::string CSipAckMsg::dump() const{
+    std::string CSipTryingMsg::dump() const{
         std::string strResult;
         std::string strLineEnd = "\n";
         {
@@ -85,15 +104,6 @@ namespace DtSipMessageCpp
             strResult += m_strVia;
             strResult += strLineEnd;
         }
-        {
-            strResult += m_strMaxForwards;
-            strResult += strLineEnd;
-        }
-        
-        {
-            strResult += m_strTo;
-            strResult += strLineEnd;
-        }
 
         {
             strResult += m_strFrom;
@@ -101,11 +111,23 @@ namespace DtSipMessageCpp
         }
 
         {
+            strResult += m_strTo;
+            strResult += strLineEnd;
+        }
+
+
+
+        {
             strResult += m_strCallId;
             strResult += strLineEnd;
         }
         {
             strResult += m_strCSeq;
+            strResult += strLineEnd;
+        }
+
+        {
+            strResult += m_strUserAgent;
             strResult += strLineEnd;
         }
 

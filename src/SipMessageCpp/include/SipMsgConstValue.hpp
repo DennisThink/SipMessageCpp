@@ -30,7 +30,7 @@ namespace DtSipMessageCpp
 
     //TYPE two Begin
     const std::string PROXY_AUTH_REQUIRE_HEADER = "Proxy Authentication Required";
-
+    const std::string TRYING_TYPE_HEADER = "Trying";
     //TYPE two End
 
 
