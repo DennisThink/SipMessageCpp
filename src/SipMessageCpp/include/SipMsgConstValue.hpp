@@ -21,6 +21,7 @@ namespace DtSipMessageCpp
 	*/
     const std::string REGISTER_TYPE_HEADER = "REGISTER";
     const std::string INVITE_TYPE_HEADER = "INVITE";
+    const std::string BYE_TYPE_HEADER = "BYE";
     const std::string VIA_HEADER = "Via:";
     const std::string MAX_FORWARDS_HEADER = "Max-Forwards:";
     const std::string CONTACT_HEADER = "Contact:";

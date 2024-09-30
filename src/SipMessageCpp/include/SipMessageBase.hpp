@@ -11,7 +11,8 @@ namespace DtSipMessageCpp
 
         virtual bool parse(const std::string& strMsg);
         virtual std::string dump() const;
-
+    protected:
+        //std::string AppendNotEmptyString(const std::string& strOrg, const std::string& item);
     };
 }
 #endif

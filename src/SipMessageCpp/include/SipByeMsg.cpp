@@ -14,7 +14,7 @@ namespace DtSipMessageCpp
         for (const auto& item : allLines)
         {
             std::cout << "ITEM: " << item << std::endl;
-            if (item.find(REGISTER_TYPE_HEADER) == 0)
+            if (item.find(BYE_TYPE_HEADER) == 0)
             {
                 m_strMsgType = item;
             }
@@ -25,10 +25,6 @@ namespace DtSipMessageCpp
             else if (item.find(MAX_FORWARDS_HEADER) == 0)
             {
                 m_strMaxForwards = item;
-            }
-            else if (item.find(CONTACT_HEADER) == 0)
-            {
-                m_strContact = item;
             }
             else if (item.find(TO_HEADER) == 0)
             {
@@ -93,18 +89,14 @@ namespace DtSipMessageCpp
             strResult += m_strMaxForwards;
             strResult += strLineEnd;
         }
+
         {
-            strResult += m_strContact;
+            strResult += m_strFrom;
             strResult += strLineEnd;
         }
 
         {
             strResult += m_strTo;
-            strResult += strLineEnd;
-        }
-
-        {
-            strResult += m_strFrom;
             strResult += strLineEnd;
         }
 
@@ -116,21 +108,6 @@ namespace DtSipMessageCpp
             strResult += m_strCSeq;
             strResult += strLineEnd;
         }
-        {
-            strResult += m_strExpires;
-            strResult += strLineEnd;
-        }
-
-        {
-            strResult += m_strAllow;
-            strResult += strLineEnd;
-        }
-
-        {
-            strResult += m_strSupported;
-            strResult += strLineEnd;
-        }
-
 
         {
             strResult += m_strUserAgent;
@@ -138,17 +115,7 @@ namespace DtSipMessageCpp
         }
 
 
-        {
-            strResult += m_strAuthorization;
-            strResult += strLineEnd;
-        }
-
-
-        {
-            strResult += m_strAllowEvents;
-            strResult += strLineEnd;
-        }
-
+      
         {
             strResult += m_strContentLength;
         }
