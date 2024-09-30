@@ -15,8 +15,8 @@ User-Agent: MicroSIP/3.21.4
 Content-Length:  0)";
     CHECK(baseMsg.parse(strSipByeMsg));
     std::string strDump = baseMsg.dump();
-    std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strSipByeMsg, strDump);
-    std::cout << "COMMON BEGIN: " << std::endl << strCommon << std::endl << "COMMEN END" << std::endl;
+    //std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strSipByeMsg, strDump);
+    //std::cout << "COMMON BEGIN: " << std::endl << strCommon << std::endl << "COMMEN END" << std::endl;
     CHECK(strSipByeMsg == strDump);
 
 

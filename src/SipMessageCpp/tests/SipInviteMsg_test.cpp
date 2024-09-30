@@ -36,6 +36,6 @@ a=rtcp-mux)";
     CHECK(baseMsg.parse(strInviteSipMsg));
     std::string strDump = baseMsg.dump();
     CHECK(strInviteSipMsg == strDump);
-    std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strInviteSipMsg, strDump);
-    std::cout << "COMMON: " << strCommon << std::_Get_asan_aligned_first_end;
+    //std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strInviteSipMsg, strDump);
+    //std::cout << "COMMON: " << strCommon << std::_Get_asan_aligned_first_end;
 }

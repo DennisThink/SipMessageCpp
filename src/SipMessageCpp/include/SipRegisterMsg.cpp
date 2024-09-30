@@ -13,7 +13,7 @@ namespace DtSipMessageCpp
         auto allLines = CProtoUtil::SplitStringByLine(strMsg,"\n");
         for (const auto& item : allLines)
         {
-            std::cout << "ITEM: " << item << std::endl;
+            //std::cout << "ITEM: " << item << std::endl;
             if (item.find(REGISTER_TYPE_HEADER) == 0)
             {
                 m_strMsgType = item;
