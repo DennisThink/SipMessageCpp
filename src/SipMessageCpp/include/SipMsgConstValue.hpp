@@ -19,10 +19,20 @@ namespace DtSipMessageCpp
         std::string m_strAllowEvents;
         std::string m_strContentLength;
 	*/
+
+    //TYPE one Begin
     const std::string REGISTER_TYPE_HEADER = "REGISTER";
     const std::string INVITE_TYPE_HEADER = "INVITE";
     const std::string BYE_TYPE_HEADER = "BYE";
     const std::string ACK_TYPE_HEADER = "ACK";
+    //TYPE one End
+
+
+    //TYPE two Begin
+    const std::string PROXY_AUTH_REQUIRE_HEADER = "Proxy Authentication Required";
+
+    //TYPE two End
+
 
 
     const std::string VIA_HEADER = "Via:";
@@ -41,6 +51,8 @@ namespace DtSipMessageCpp
     const std::string CONTENT_LENGTH_HEADER = "Content-Length:";
     const std::string CONTENT_TYPE_HEADER = "Content-Type:";
     const std::string PROXY_AUTHORIZATION_HEADER = "Proxy-Authorization:";
+    const std::string PROXY_AUTHENTICATE_HEADER = "Proxy-Authenticate:";
+    const std::string ACCEPT_HEADER = "Accept:";
 
     //SDP header
 
