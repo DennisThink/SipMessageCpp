@@ -10,7 +10,8 @@ SET(SIP_BASE_MSG_FILE ./include/SipMessageBase.cpp
 ./include/SipProxyAuthorziathinRequireMsg.cpp
 ./include/SipTryingMsg.cpp
 ./include/SipRingMsg.cpp
-./include/SipMessageUtil.cpp)
+./include/SipMessageUtil.cpp
+./include/SipSessionProgressMsg.cpp)
 SET(SIP_MSG_TEST_FILE 
 ./tests/SipMessageBase_test.cpp 
 ./tests/SipRegisterMsg_test.cpp
@@ -19,5 +20,7 @@ SET(SIP_MSG_TEST_FILE
 ./tests/SipByeMsg_test.cpp
 ./tests/SipTryingMsg_test.cpp
 ./tests/SipRingMsg_test.cpp
-./tests/SipProxyAuthorziathinRequireMsg_test.cpp)
+./tests/SipProxyAuthorziathinRequireMsg_test.cpp
+./tests/SipSessionProgressMsg_test.cpp
+)
 add_executable(sip_message_cpp_test ./tests/main.cpp  ${SIP_MSG_TEST_FILE} ${SIP_BASE_MSG_FILE})

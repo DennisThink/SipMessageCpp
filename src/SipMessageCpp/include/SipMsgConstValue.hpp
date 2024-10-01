@@ -32,6 +32,7 @@ namespace DtSipMessageCpp
     const std::string PROXY_AUTH_REQUIRE_HEADER = "Proxy Authentication Required";
     const std::string TRYING_TYPE_HEADER = "Trying";
     const std::string RING_TYPE_HEADER = "Ring";
+    const std::string SESSION_PROGRESS_HEADER = "Session Progress";
     //TYPE two End
 
 
@@ -51,6 +52,8 @@ namespace DtSipMessageCpp
     const std::string ALLOW_EVENTS_HEADER = "Allow-Events:";
     const std::string CONTENT_LENGTH_HEADER = "Content-Length:";
     const std::string CONTENT_TYPE_HEADER = "Content-Type:";
+    const std::string CONTENT_DISPOSITION_HEADER = "Content-Disposition:";
+    const std::string REMOTE_PARTY_ID_HEADER = "Remote-Party-ID:";
     const std::string PROXY_AUTHORIZATION_HEADER = "Proxy-Authorization:";
     const std::string PROXY_AUTHENTICATE_HEADER = "Proxy-Authenticate:";
     const std::string ACCEPT_HEADER = "Accept:";
