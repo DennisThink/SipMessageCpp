@@ -33,6 +33,7 @@ namespace DtSipMessageCpp
     const std::string TRYING_TYPE_HEADER = "Trying";
     const std::string RING_TYPE_HEADER = "Ring";
     const std::string SESSION_PROGRESS_HEADER = "Session Progress";
+    const std::string OK_200_HEADER = "200 OK";
     //TYPE two End
 
 
