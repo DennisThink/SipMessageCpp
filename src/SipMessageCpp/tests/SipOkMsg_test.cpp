@@ -36,6 +36,7 @@ a=rtcp:17734 IN IP4 192.168.31.109)";
     CHECK(baseMsg.parse(strSipMessageBase));
     std::string strResult = baseMsg.dump();
     CHECK(strResult== strSipMessageBase);
+    if (strResult != strSipMessageBase)
     {
         std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strResult, strSipMessageBase);
         std::cout << "COMMON BEGIN: " << std::endl << strCommon << std::endl << "COMMEN END" << std::endl;

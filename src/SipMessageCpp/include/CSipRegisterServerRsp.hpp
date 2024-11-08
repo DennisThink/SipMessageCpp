@@ -1,19 +1,19 @@
-#ifndef _DT_SIP_REGISTER_MSG_H_
-#define _DT_SIP_REGISTER_MSG_H_
+#ifndef _C_SIP_REGISTER_SERVER_RSP_H_
+#define _C_SIP_REGISTER_SERVER_RSP_H_
 #include "SipMessageBase.hpp"
-
 namespace DtSipMessageCpp
 {
-    class CSipRegisterMsg:public CSipMessageBase
+    class CSipRegisterServerRsp:public CSipMessageBase
     {
     public:
-        CSipRegisterMsg();
-        virtual ~CSipRegisterMsg();
+        CSipRegisterServerRsp();
+        virtual ~CSipRegisterServerRsp();
 
-        virtual bool parse(const std::string& strMsg) override;
-        virtual std::string dump() const override; 
-    public:
+        virtual bool parse(const std::string& strMsg);
+        virtual std::string dump() const;
+    protected:
         std::string m_strMsgType;
+        std::string m_strSipRspHeader;
         std::string m_strVia;
         std::string m_strMaxForwards;
         std::string m_strContact;
@@ -28,6 +28,8 @@ namespace DtSipMessageCpp
         std::string m_strAuthorization;
         std::string m_strAllowEvents;
         std::string m_strContentLength;
+        std::string m_strWwwAuthentite;
+        //std::string AppendNotEmptyString(const std::string& strOrg, const std::string& item);
     };
 }
 #endif

@@ -36,7 +36,7 @@ namespace DtSipMessageCpp
     const std::string OK_200_HEADER = "200 OK";
     //TYPE two End
 
-
+    const std::string SIP_RSP_HEADER = "SIP/2.0";
 
     const std::string VIA_HEADER = "Via:";
     const std::string MAX_FORWARDS_HEADER = "Max-Forwards:";
@@ -58,6 +58,7 @@ namespace DtSipMessageCpp
     const std::string PROXY_AUTHORIZATION_HEADER = "Proxy-Authorization:";
     const std::string PROXY_AUTHENTICATE_HEADER = "Proxy-Authenticate:";
     const std::string ACCEPT_HEADER = "Accept:";
+    const std::string WWW_AUTHENTICATE_HEADER = "WWW-Authenticate:";
 
     //SDP header
 
