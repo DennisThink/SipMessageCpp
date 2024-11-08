@@ -60,6 +60,11 @@ public:
     UDPClient(u_short port = 8000, const std::string& ip_address = "127.0.0.1");
     ssize_t send_message(const std::string& message);
     ssize_t recv_message(std::string& strMsg);
+    std::string get_local_ip();
+    int get_local_port();
+private:
+    std::string m_strLocalIP;
+    int m_nLocalPort;
 };
 
 class UDPServer : public Socket
@@ -142,13 +147,31 @@ UDPClient::UDPClient(u_short port, const std::string& ip_address) : Socket(Socke
     set_address(ip_address);
     set_port(port);
     std::cout << "UDP Client created." << std::endl;
-};
+    {
+        //Á¬½Ó²Ù×÷¡£
+        if (connect(m_socket, (struct sockaddr*)(&m_addr), sizeof(m_addr)) < 0)
+        {
+            perror("connect: ");
+        }
+        else
+        {
+            struct sockaddr_in name;
+            socklen_t namelen = sizeof(name);
+            int err = getsockname(m_socket, (struct sockaddr*)&name, &namelen);
+
+            char buffer[100];
+            const char* p = inet_ntop(AF_INET, &name.sin_addr, buffer, 100);
+            m_strLocalIP = buffer;
+            m_nLocalPort = ntohs(name.sin_port);
+        }
+    }
+}
 
 ssize_t UDPClient::send_message(const std::string& message)
 {
     size_t message_length = message.length();
     return sendto(m_socket, message.c_str(), message_length, 0, reinterpret_cast<sockaddr*>(&m_addr), sizeof(m_addr));
-};
+}
 
 ssize_t UDPClient::recv_message(std::string& strMsg)
 {
@@ -163,6 +186,15 @@ ssize_t UDPClient::recv_message(std::string& strMsg)
         strMsg = std::string(buff, nRecvLen);
     }
     return nRecvLen;
+}
+
+std::string UDPClient::get_local_ip()
+{
+    return m_strLocalIP;
+}
+int UDPClient::get_local_port()
+{
+    return m_nLocalPort;
 }
 
 UDPServer::UDPServer(u_short port, const std::string& ip_address) : Socket(SocketType::TYPE_DGRAM)

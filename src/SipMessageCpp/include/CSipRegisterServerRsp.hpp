@@ -11,6 +11,9 @@ namespace DtSipMessageCpp
 
         virtual bool parse(const std::string& strMsg);
         virtual std::string dump() const;
+
+    public:
+        std::string get_www_auth() const;
     protected:
         std::string m_strMsgType;
         std::string m_strSipRspHeader;

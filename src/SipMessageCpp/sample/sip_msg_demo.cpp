@@ -31,10 +31,16 @@ Authorization: Digest username="1002",realm="192.168.31.109",nonce="fffe2121-d01
 Allow-Events: presence, kpml, talk, as-feature-event
 Content-Length: 0)";
         regMsg.parse(strDump);
+
+        regMsg.set_sip_server_ip_port("192.168.31.109", 5060);
+        regMsg.set_net_type("UDP");
         strRegMsg = regMsg.dump();
     }
     int nSendResult = client.send_message(strRegMsg);
     std::cout << "Send Result: " << nSendResult << std::endl;
+    {
+        std::cout << "LocalAddr: " << client.get_local_ip() << ":" << client.get_local_port() << std::endl;;
+    }
     std::string strRspMsg;
 
     if (client.recv_message(strRspMsg) > 0)
@@ -42,6 +48,11 @@ Content-Length: 0)";
         std::cout << "RSP: " << strRspMsg << std::endl;
     }
     {
+        DtSipMessageCpp::CSipRegisterServerRsp rspMsg;
+        if (rspMsg.parse(strRspMsg))
+        {
+            std::cout << "WWW-AUTH:  " << rspMsg.get_www_auth() << std::endl;
+        }
     }
 
 
