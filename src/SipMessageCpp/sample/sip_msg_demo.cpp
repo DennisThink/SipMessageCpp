@@ -2,6 +2,7 @@
 #include "simple_cpp_sockets.h"
 
 #include "CSipMsgCpp.hpp"
+#include "SipMsgBaseStruct.hpp"
 int main(int argc,char * argv[])
 {
     UDPClient client(5060, "192.168.31.109");
@@ -52,6 +53,11 @@ Content-Length: 0)";
         if (rspMsg.parse(strRspMsg))
         {
             std::cout << "WWW-AUTH:  " << rspMsg.get_www_auth() << std::endl;
+        }
+
+        //Parse WWW-AUTH
+        {
+
         }
     }
 
