@@ -149,8 +149,7 @@ namespace DtSipMessageCpp
         }
 
         {
-            strResult += m_strContentLength;
-            
+            strResult += m_strContentLength; 
         }
 
 

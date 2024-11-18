@@ -3,6 +3,7 @@
 
 #include "CSipMsgCpp.hpp"
 #include "SipMsgBaseStruct.hpp"
+#include "md5/md5.h"
 int main(int argc,char * argv[])
 {
     UDPClient client(5060, "192.168.31.109");
@@ -57,7 +58,58 @@ Content-Length: 0)";
 
         //Parse WWW-AUTH
         {
+            WWW_AUTH wwwAuth;
+            if (wwwAuth.from_string(rspMsg.get_www_auth()))
+            {
+                std::cout << "REALM: "<<wwwAuth.get_realm()<< std::endl;
+                std::cout << "NONCE: "<<wwwAuth.get_nonce() << std::endl;
+                std::cout << "ALGORITHM: "<<wwwAuth.get_algorithm()<< std::endl;
+                std::cout << "" << std::endl;
+            }
+            //https://www.cnblogs.com/yjmyzz/p/sip-register-authorization-algorithm.html
+            //HA1
+            std::string strHA1;
+            {
+                std::string strUser = "1002";
+                std::string strPass = "1234";
+                if ("MD5" == wwwAuth.get_algorithm())
+                {
+                    std::string strHA1Source = strUser + ":" + wwwAuth.get_realm() + ":" + strPass;
+                    strHA1 = MD5(strHA1Source).toStr();
+                }
+            }
 
+            //HA2
+            std::string strHA2;
+            {
+                std::string strMethod = "REGISTER";
+                std::string strDigest = "sip:192.168.31.109:5060;transport=udp";
+                if ("auth" == wwwAuth.get_qop())
+                {
+                    std::string strHA2Source = strMethod + ":" + strDigest;
+                    strHA2 = MD5(strHA2Source).toStr();
+                }
+            }
+
+            //Response
+            std::string strResponse;
+            {
+                if ("auth" == wwwAuth.get_qop())
+                {
+                    std::string strCnonce = "c3606b3f70544096a7e17fcdb4670795";
+                    //HA1:nonce:nonceCount:cnonce:qop:HA2
+                    std::string strNonceCount = "00000001";
+                    std::string strResponseSource = strHA1 + ":" 
+                        + wwwAuth.get_nonce()+":"
+                        + strNonceCount + ":" 
+                        + strCnonce+":"
+                        + wwwAuth.get_qop()+":"
+                        + strHA2;
+                    strResponse = MD5(strResponseSource).toStr();
+                }
+            }
+
+            std::cout << "Response: " << strResponse << std::endl;
         }
     }
 

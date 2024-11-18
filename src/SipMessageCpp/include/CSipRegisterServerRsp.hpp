@@ -9,8 +9,8 @@ namespace DtSipMessageCpp
         CSipRegisterServerRsp();
         virtual ~CSipRegisterServerRsp();
 
-        virtual bool parse(const std::string& strMsg);
-        virtual std::string dump() const;
+        virtual bool parse(const std::string& strMsg) override;
+        virtual std::string dump() const override;
 
     public:
         std::string get_www_auth() const;

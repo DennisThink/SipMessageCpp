@@ -1,5 +1,6 @@
 project(SipMessageSample)
 include_directories(../include/)
+include_directories(../thirdparty/)
 SET(SIP_BASE_MSG_FILE ../include/SipMessageBase.cpp 
 ../include/SipRegisterMsg.cpp   
 ../include/SipInviteMsg.cpp
@@ -11,5 +12,7 @@ SET(SIP_BASE_MSG_FILE ../include/SipMessageBase.cpp
 ../include/SipOkMsg.cpp
 ../include/SipMessageUtil.cpp
 ../include/SipSessionProgressMsg.cpp
-../include/CSipRegisterServerRsp.cpp)
-add_executable(SipMsgSample ./sip_msg_demo.cpp ${SIP_BASE_MSG_FILE})
+../include/CSipRegisterServerRsp.cpp
+../include/SipMsgBaseStruct.cpp)
+SET(MD5_SOURCE_FILE ../thirdparty/md5/md5.cpp)
+add_executable(SipMsgSample ./sip_msg_demo.cpp ${SIP_BASE_MSG_FILE} ${MD5_SOURCE_FILE})

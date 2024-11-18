@@ -14,7 +14,9 @@ std::string WWW_AUTH::to_string()
 	std::string strResult= " WWW-Authenticate: Digest ";
 	{
 		strResult += str_realm_Tag;
+		strResult += "\"";
 		strResult += m_str_realm;
+		strResult += "\"";
 		strResult += ", ";
 	}
 	
@@ -37,7 +39,9 @@ std::string WWW_AUTH::to_string()
 	}
 	{
 		strResult += str_qop_Tag;
+		strResult += "\"";
 		strResult += m_str_qop;
+		strResult += "\"";
 	}
 	return strResult;
 }
@@ -59,7 +63,8 @@ bool WWW_AUTH::from_string(const std::string strContent)
 				if (start_index != std::string::npos)
 				{
 					std::size_t subIndex = start_index + str_realm_Tag.length();
-					m_str_realm = item.substr(subIndex, item.length() - subIndex);
+					//Remove ["] at the begin and end,so start+1 and length-2
+					m_str_realm = item.substr(subIndex+1, item.length() - subIndex-2);
 				}
 			}
 			else if (item.find(str_nonce_Tag) != std::string::npos)
@@ -95,7 +100,12 @@ bool WWW_AUTH::from_string(const std::string strContent)
 				if (start_index != std::string::npos)
 				{
 					std::size_t subIndex = start_index + str_qop_Tag.length();
-					m_str_qop = item.substr(subIndex, item.length() - subIndex);
+					std::size_t endIndex = item.find("\"", subIndex + 1);
+					if (endIndex != std::string::npos)
+					{
+						m_str_qop = item.substr(subIndex + 1, endIndex-subIndex-1);
+					}
+					
 				}
 			}
 		}

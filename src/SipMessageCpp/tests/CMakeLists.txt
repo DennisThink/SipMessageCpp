@@ -27,5 +27,8 @@ SET(SIP_MSG_TEST_FILE
 ./CSipRegisterServerRsp_test.cpp
 ./SipOkMsg_test.cpp
 ./SipMsgBaseStruct_test.cpp
+./md5_test.cpp
 )
-add_executable(sip_message_cpp_test ./main.cpp  ${SIP_MSG_TEST_FILE} ${SIP_BASE_MSG_FILE})
+
+SET(THIRD_PARTY_SOURCE_FILE ../thirdparty/md5/md5.cpp)
+add_executable(sip_message_cpp_test ./main.cpp  ${SIP_MSG_TEST_FILE} ${SIP_BASE_MSG_FILE} ${THIRD_PARTY_SOURCE_FILE})

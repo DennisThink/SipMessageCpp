@@ -86,7 +86,7 @@ namespace DtSipMessageCpp
     while (std::string::npos != pos2)
     {
         //TODO: to check -1 is needed or not
-      strvec.push_back(strValue.substr(pos1, pos2 - pos1 + strSplit.length()-1));
+      strvec.push_back(strValue.substr(pos1, pos2 - pos1 + strSplit.length()-strSplit.length()));
       pos1 = pos2 + strSplit.length();
       pos2 = strValue.find(strSplit, pos1);
     }
