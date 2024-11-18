@@ -108,7 +108,6 @@ Content-Length: 0)";
                     strResponse = MD5(strResponseSource).toStr();
                 }
             }
-
             std::cout << "Response: " << strResponse << std::endl;
         }
     }

@@ -132,3 +132,233 @@ std::string WWW_AUTH::get_qop()
 {
 	return m_str_qop;
 }
+
+
+Authorization::Authorization()
+{
+
+}
+Authorization::~Authorization()
+{
+
+}
+
+std::string Authorization::to_string()
+{
+	std::string strResult = "Authorization: Digest ";
+
+	{
+		strResult += str_user_name_Tag;
+		strResult += "\"";
+		strResult += m_str_user_name;
+		strResult += "\"";
+		strResult += ",";
+	}
+	{
+		strResult += str_realm_Tag;
+		strResult += "\"";
+		strResult += m_str_realm;
+		strResult += "\"";
+		strResult += ",";
+	}
+
+	{
+		strResult += str_nonce_Tag;
+		strResult += m_str_nonce;
+		strResult += ",";
+	}
+	{
+		strResult += str_uri_Tag;
+		strResult += m_str_uri;
+		strResult += ",";
+	}
+	{
+		strResult += str_response_Tag;
+		strResult += m_str_response;
+		strResult += ",";
+	}
+	{
+		strResult += str_cnonce_Tag;
+		strResult += m_str_cnonce;
+		strResult += ",";
+	}
+	{
+		strResult += str_nc_Tag;
+		strResult += m_str_nc;
+		strResult += ",";
+	}
+	{
+		strResult += str_qop_Tag;
+		strResult += m_str_qop;
+		strResult += ",";
+	}
+	{
+		strResult += str_algorithm_Tag;
+		strResult += m_str_algorithm;
+	}
+	return strResult;
+}
+
+bool Authorization::from_string(const std::string strContent)
+{
+	std::vector<std::string> allLine = DtSipMessageCpp::CProtoUtil::SplitStringByLine(strContent, ",");
+	//realm
+	{
+		/*std::string str_realm_Tag = "realm=";
+		std::string str_nonce_Tag = "nonce=";
+		std::string str_stale_Tag = "stale=";
+		std::string str_algorithm_Tag = "algorithm=";
+		std::string str_qop_Tag = "qop=";*/
+		for (auto item : allLine)
+		{
+			if (item.find(str_realm_Tag) != std::string::npos)
+			{
+				std::size_t start_index = item.find(str_realm_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_realm_Tag.length();
+					//Remove ["] at the begin and end,so start+1 and length-2
+					m_str_realm = item.substr(subIndex + 1, item.length() - subIndex - 2);
+				}
+			}
+			else if (item.find(str_user_name_Tag) != std::string::npos)
+			{
+				std::size_t start_index = item.find(str_user_name_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_user_name_Tag.length();
+					//Remove ["] at the begin and end,so start+1 and length-2
+					m_str_user_name = item.substr(subIndex + 1, item.length() - subIndex - 2);
+				}
+			}
+			else if (item.find(str_nonce_Tag) ==0)
+			{
+				std::size_t start_index = item.find(str_nonce_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_nonce_Tag.length();
+					m_str_nonce = item.substr(subIndex, item.length() - subIndex);
+				}
+			}
+			else if (item.find(str_uri_Tag) == 0)
+			{
+				std::size_t start_index = item.find(str_uri_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_uri_Tag.length();
+					m_str_uri = item.substr(subIndex, item.length() - subIndex);
+				}
+			}
+			else if (item.find(str_response_Tag) == 0)
+			{
+				std::size_t start_index = item.find(str_response_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_response_Tag.length();
+					m_str_response = item.substr(subIndex, item.length() - subIndex);
+				}
+			}
+			else if (item.find(str_cnonce_Tag) == 0)
+			{
+				std::size_t start_index = item.find(str_cnonce_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_cnonce_Tag.length();
+					m_str_cnonce = item.substr(subIndex, item.length() - subIndex);
+				}
+			}
+			else if (item.find(str_nc_Tag) == 0)
+			{
+				std::size_t start_index = item.find(str_nc_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_nc_Tag.length();
+					m_str_nc = item.substr(subIndex, item.length() - subIndex);
+				}
+			}
+			else if (item.find(str_qop_Tag) == 0)
+			{
+				std::size_t start_index = item.find(str_qop_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_qop_Tag.length();
+					m_str_qop = item.substr(subIndex, item.length() - subIndex);
+				}
+			}
+			else if (item.find(str_algorithm_Tag) != std::string::npos)
+			{
+				std::size_t start_index = item.find(str_algorithm_Tag);
+				if (start_index != std::string::npos)
+				{
+					std::size_t subIndex = start_index + str_algorithm_Tag.length();
+					m_str_algorithm = item.substr(subIndex, item.length() - subIndex);
+				}
+			}
+		}
+	}
+	return true;
+}
+
+
+std::string Authorization::get_realm()
+{
+	return m_str_realm;
+}
+std::string Authorization::get_nonce()
+{
+	return m_str_nonce;
+}
+
+std::string Authorization::get_algorithm()
+{
+	return m_str_algorithm;
+}
+std::string Authorization::get_qop()
+{
+	return m_str_qop;
+}
+
+bool Authorization::set_user_name(const std::string strUserName)
+{
+	return false;
+}
+
+bool Authorization::set_realm(const std::string strRealm)
+{
+	return false;
+}
+
+bool Authorization::set_nonce(const std::string strNonce)
+{
+	return false;
+}
+
+bool Authorization::set_uri(const std::string strUri)
+{
+	return false;
+}
+
+bool Authorization::set_response(const std::string strResponse)
+{
+	return false;
+}
+
+bool Authorization::set_cnonce(const std::string strCnonce)
+{
+	return false;
+}
+
+bool Authorization::set_nc(const std::string strNc)
+{
+	return false;
+}
+
+bool Authorization::set_qop(const std::string strQop)
+{
+	return false;
+}
+
+bool Authorization::set_algorithm(const std::string strAlgorithm)
+{
+	return false;
+}
