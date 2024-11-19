@@ -22,9 +22,12 @@ namespace DtSipMessageCpp
         //int get_sip_server_port() const;
     protected:
         void parse_register_header();
+        void parse_register_header_with_transport();
+        void parse_register_header_without_transport();
     public:
         std::string m_strMsgType;
         std::string m_strVia;
+        std::string m_strRoute;
         std::string m_strMaxForwards;
         std::string m_strContact;
         std::string m_strFrom;

@@ -39,6 +39,7 @@ namespace DtSipMessageCpp
     const std::string SIP_RSP_HEADER = "SIP/2.0";
 
     const std::string VIA_HEADER = "Via:";
+    const std::string ROUTE_HEADER = "Route:";
     const std::string MAX_FORWARDS_HEADER = "Max-Forwards:";
     const std::string CONTACT_HEADER = "Contact:";
     const std::string FROM_HEADER = "From:";

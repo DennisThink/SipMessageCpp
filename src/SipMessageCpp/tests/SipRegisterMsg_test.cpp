@@ -1,6 +1,7 @@
 #include <doctest/doctest.h>
 #include "SipRegisterMsg.hpp"
-
+#include "SipMessageUtil.h"
+#include <iostream>
 TEST_CASE("SipRegisterMsg_Case1"){
     DtSipMessageCpp::CSipRegisterMsg baseMsg;
     std::string strSipRegister =
@@ -84,5 +85,39 @@ Content-Length: 0)";
             CHECK_EQ(baseMsg.m_strContentLength, strContentLength);
         }
     }
-    CHECK(strSipRegister ==baseMsg.dump());
+    std::string strSipRegDump = baseMsg.dump();
+    CHECK(strSipRegister == strSipRegDump);
+    if (strSipRegister != strSipRegDump)
+    {
+        std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strSipRegister, strSipRegDump);
+        std::cout << "COMMON BEGIN" << std::endl << strCommon << std::endl << "COMMEND END" << std::endl;
+    }
+}
+
+TEST_CASE("TEST2") {
+    std::string strSipReg = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
+Via: SIP/2.0/UDP 192.168.31.109:64565;rport;branch=z9hG4bKPj9c79bce7877f493a949a0442ef6a78c3
+Route: <sip:192.168.31.109:5060;lr>
+Max-Forwards: 70
+From: "1009" <sip:1009@192.168.31.109>;tag=b1a5cb34bf4443ee9d2aba31f7414e78
+To: "1009" <sip:1009@192.168.31.109>
+Call-ID: da72dbf2beb54974a12db2a38ad2aa3e
+CSeq: 39245 REGISTER
+User-Agent: MicroSIP/3.21.4
+Contact: "1009" <sip:1009@192.168.31.109:64565;ob>
+Expires: 300
+Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
+Content-Length:  0)";
+    DtSipMessageCpp::CSipRegisterMsg baseMsg;
+    CHECK(baseMsg.parse(strSipReg));
+    std::string strSipRegDump = baseMsg.dump();
+    DtSipMessageCpp::CSipRegisterMsg baseMsgDump;
+    CHECK(baseMsgDump.parse(strSipRegDump));
+    std::string strSipDump2 = baseMsgDump.dump();
+    CHECK_EQ(strSipRegDump, strSipDump2);
+    if (strSipRegDump != strSipDump2)
+    {
+        std::string strCommon = DtSipMessageCpp::CProtoUtil::GetCommonPartOfTwoString(strSipRegDump, strSipDump2);
+        std::cout << "COMMON BEGIN" << std::endl<< strCommon<<std::endl<<"COMMEND END"<<std::endl;
+    }
 }
