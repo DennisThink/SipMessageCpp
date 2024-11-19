@@ -38,10 +38,16 @@ public:
 	std::string to_string();
 	bool from_string(const std::string strContent);
 public:
+	std::string get_user_name();
 	std::string get_realm();
 	std::string get_nonce();
-	std::string get_algorithm();
+	std::string get_uri();
+	std::string get_response();
+	std::string get_cnonce();
+	std::string get_nc();
 	std::string get_qop();
+	std::string get_algorithm();
+
 
 	bool set_user_name(const std::string strUserName);
 	bool set_realm(const std::string strRealm);

@@ -109,6 +109,14 @@ Content-Length: 0)";
                 }
             }
             std::cout << "Response: " << strResponse << std::endl;
+
+            //Re-Register
+            {
+                Authorization auth;
+                auth.set_user_name("1002");
+                auth.set_response(strResponse);
+                auth.set_nc("");
+            }
         }
     }
 

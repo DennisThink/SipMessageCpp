@@ -17,7 +17,7 @@ namespace DtSipMessageCpp
         void set_sip_local_ip_port(const std::string strIp, const int nPort);
         void set_username_password(const std::string strUserName, const std::string strPassword);
         void set_net_type(const std::string strType);
-
+        void set_authorization(const std::string strAuthorization);
         //std::string get_sip_server_ip() const;
         //int get_sip_server_port() const;
     protected:

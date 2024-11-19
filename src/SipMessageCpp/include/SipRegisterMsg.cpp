@@ -193,7 +193,10 @@ namespace DtSipMessageCpp
     {
         m_strNetType = strType;
     }
-
+    void CSipRegisterMsg::set_authorization(const std::string strAuthorization)
+    {
+        m_strAuthorization = strAuthorization;
+    }
     void CSipRegisterMsg::parse_register_header()
     {
         std::size_t nFirstPos = 0;
