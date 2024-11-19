@@ -23,6 +23,7 @@ namespace DtSipMessageCpp
         static std::time_t Now();
         static std::string TimeToString(const std::time_t t); 
         static std::string GetUserNameFromEmailAddr(std::string strEmailAddr);
+        static std::string get_nonce(const std::size_t length);
     };
 }
 #endif

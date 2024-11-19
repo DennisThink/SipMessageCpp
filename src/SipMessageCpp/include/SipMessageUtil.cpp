@@ -4,6 +4,10 @@
 #include <iostream>
 #include <iterator>
 #include <locale>
+#include <iostream>
+#include <random>
+#include <iomanip>
+#include <sstream>
 namespace DtSipMessageCpp
 {
   std::string CProtoUtil::GetSmtpDomainFromMainDomain(const std::string strMainDomain)
@@ -41,6 +45,20 @@ namespace DtSipMessageCpp
       }
       return strDomainName;
     }
+  }
+
+
+  std::string CProtoUtil::get_nonce(const std::size_t length)
+  {
+      std::random_device rd;  // 获取硬件随机数
+      std::mt19937 gen(rd()); // 使用Mersenne Twister作为随机数生成器
+      std::uniform_int_distribution<int> dis(0, 255); // 随机生成字节
+
+      std::stringstream ss;
+      for (size_t i = 0; i < length; ++i) {
+          ss << std::setw(2) << std::setfill('0') << std::hex << dis(gen);
+      }
+      return ss.str();
   }
   std::string CProtoUtil::GetImapDomainFromMainDomain(const std::string strMainDomain)
   {

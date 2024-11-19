@@ -1,4 +1,5 @@
 #include <iostream>
+#include "sip_client.h"
 #include "simple_cpp_sockets.h"
 
 #include "CSipMsgCpp.hpp"
@@ -6,8 +7,16 @@
 #include "md5/md5.h"
 int main(int argc,char * argv[])
 {
-    UDPClient client(5060, "192.168.31.109");
-    //UDPClient client(7080, "192.168.31.106");
+    SipClient sipPhone;
+    std::string strUserName = "1002";
+    std::string strPassword = "1234";
+    std::string strServerIp = "192.168.31.109";
+    int nServerPort = 5060;
+    sipPhone.set_user_name(strUserName);
+    sipPhone.set_pass_word(strPassword);
+    sipPhone.set_sip_server_addr(strServerIp,nServerPort);
+    sipPhone.send_sms("1009", "Hello From 1002");
+    UDPClient client(7080, "192.168.31.106");
     //TCPClient client(7080, "192.168.31.109");
     //if (client.make_connection())
     {
