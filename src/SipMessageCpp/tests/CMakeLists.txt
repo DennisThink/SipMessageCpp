@@ -2,7 +2,8 @@ project(SipMessageCpp)
 include_directories(../thirdparty/)
 include_directories(../include/)
 SET(SIP_BASE_MSG_FILE ../include/SipMessageBase.cpp 
-../include/SipRegisterMsg.cpp   
+../include/SipRegisterMsg.cpp
+../include/SipReRegisterMsg.cpp
 ../include/SipInviteMsg.cpp
 ../include/SipAckMsg.cpp
 ../include/SipByeMsg.cpp
@@ -17,6 +18,7 @@ SET(SIP_BASE_MSG_FILE ../include/SipMessageBase.cpp
 SET(SIP_MSG_TEST_FILE 
 ./SipMessageBase_test.cpp 
 ./SipRegisterMsg_test.cpp
+./SipReRegisterMsg_test.cpp
 ./SipInviteMsg_test.cpp
 ./SipAckMsg_test.cpp
 ./SipByeMsg_test.cpp

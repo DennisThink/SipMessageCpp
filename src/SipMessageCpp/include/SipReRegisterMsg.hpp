@@ -1,19 +1,18 @@
-#ifndef _DT_SIP_REGISTER_MSG_H_
-#define _DT_SIP_REGISTER_MSG_H_
+#ifndef _DT_SIP_RE_REGISTER_MSG_H_
+#define _DT_SIP_RE_REGISTER_MSG_H_
 #include "SipMessageBase.hpp"
 
 namespace DtSipMessageCpp
 {
-    class CSipRegisterMsg:public CSipMessageBase
+    class CSipReRegisterMsg:public CSipMessageBase
     {
     public:
-        CSipRegisterMsg();
-        virtual ~CSipRegisterMsg();
+        CSipReRegisterMsg();
+        virtual ~CSipReRegisterMsg();
 
         virtual bool parse(const std::string& strMsg) override;
         virtual std::string dump() const override; 
 
-        //set function list
         void set_sip_server_ip_port(const std::string strIp, const int nPort);
         void set_sip_local_ip_port(const std::string strIp, const int nPort);
         void set_username_password(const std::string strUserName, const std::string strPassword);
@@ -22,42 +21,19 @@ namespace DtSipMessageCpp
         void set_authorization(const std::string strAuthorization);
         //std::string get_sip_server_ip() const;
         //int get_sip_server_port() const;
-
-        //get function list
-        std::string get_header_line();
-        std::string get_via_line();
-        std::string get_route_line();
-        std::string get_to_line();
-        std::string get_from_line();
-        std::string get_call_id_line();
-        std::string get_c_seq_line();
-        std::string get_expires_line();
-        std::string get_allow_line();
-        std::string get_supported_line();
-        std::string get_user_agent_line();
-        std::string get_content_length_line();
-        std::string get_max_forwards_line();
     protected:
         void parse_register_header();
         void parse_register_header_with_transport();
         void parse_register_header_without_transport();
-
-        void parse_via_line();
-        void create_via_line();
     public:
-
-        
-    protected:
         std::string m_strMsgType;
-        std::string m_strTo;
-        std::string m_strFrom;
         std::string m_strVia;
         std::string m_strBranch;
         std::string m_strRoute;
         std::string m_strMaxForwards;
         std::string m_strContact;
-
-
+        std::string m_strFrom;
+        std::string m_strTo;
         std::string m_strCallId;
         std::string m_strCSeq;
         std::string m_strExpires;

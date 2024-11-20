@@ -42,20 +42,21 @@ void SipClient::register_to_server()
     DtSipMessageCpp::CSipRegisterMsg regMsg;
     {
         std::string strSipReg = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
-Via: SIP/2.0/UDP 192.168.31.109:64565;rport;branch=z9hG4bKPj9c79bce7877f493a949a0442ef6a78c3
+Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69
 Route: <sip:192.168.31.109:5060;lr>
 Max-Forwards: 70
-From: "1002" <sip:1009@192.168.31.109>;tag=b1a5cb34bf4443ee9d2aba31f7414e78
+From: "1002" <sip:1009@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
 To: "1002" <sip:1009@192.168.31.109>
-Call-ID: da72dbf2beb54974a12db2a38ad2aa3e
-CSeq: 39245 REGISTER
-User-Agent: MicroSIP/3.21.4
-Contact: "1002" <sip:1009@192.168.31.109:64565;ob>
+Call-ID: 7dacdb3605c94e659e588faa5e70af86
+CSeq: 28959 REGISTER
+User-Agent: DtSipClient/3.21.4
+Contact: "1002" <sip:1009@192.168.31.109:64998;ob>
 Expires: 300
 Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
 Content-Length:  0)";
         regMsg.parse(strSipReg);
         regMsg.set_sip_server_ip_port("192.168.31.109", 5060);
+        //regMsg.set_username_password(strUser)
         regMsg.set_net_type("UDP");
     }
 
@@ -76,21 +77,20 @@ Content-Length:  0)";
 
     DtSipMessageCpp::CSipRegisterMsg secondRegMsg;
     {
-        std::string strDump = R"(REGISTER sip:192.168.31.109:5060;transport=UDP SIP/2.0
-Via: SIP/2.0/UDP 192.168.31.142:55747;branch=z9hG4bK-524287-1---86aa6dd38424cee1;rport
+        std::string strDump = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
+Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPja4bf5bc9a06b4a9f9413f9c143242321
+Route: <sip:192.168.31.109:5060;lr>
 Max-Forwards: 70
-Contact: <sip:1002@192.168.31.142:55747;rinstance=59defe5c8b2788ae;transport=UDP>
-To: "1002"<sip:1002@192.168.31.109:5060;transport=UDP>
-From: "1002"<sip:1002@192.168.31.109:5060;transport=UDP>;tag=88741f1c
-Call-ID: gzK0vdfGjqqhSuekwhNwmg
-CSeq: 3 REGISTER
-Expires: 60
-Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
-Supported: replaces, norefersub, extended-refer, timer, sec-agree, outbound, path, X-cisco-serviceuri
-User-Agent: Zoiper v2.10.20.4_1
-Authorization: Digest username="1002",realm="192.168.31.109",nonce="fffe2121-d01f-4c89-ab62-12a030a1c10d",uri="sip:192.168.31.109:5060;transport=UDP",response="b4418b2b96e05ec2a0beb3c522edbcc9",cnonce="b3468b9ac6827d7c51e85ef96618190f",nc=00000002,qop=auth,algorithm=MD5
-Allow-Events: presence, kpml, talk, as-feature-event
-Content-Length: 0)";
+From: "1002" <sip:1002@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
+To: "1002" <sip:1002@192.168.31.109>
+Call-ID: 7dacdb3605c94e659e588faa5e70af86
+CSeq: 28960 REGISTER
+User-Agent: DtSipClient/3.21.4
+Contact: "1002" <sip:1009@192.168.31.109:64998;ob>
+Expires: 300
+Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
+Authorization: Digest username="1002", realm="192.168.31.109", nonce="36fb7893-0612-4527-8d25-af2c14afeaec", uri="sip:192.168.31.109:5060", response="eb9d64a7b947554c160f9b5393cf2697", algorithm=MD5, cnonce="fc2d3c0e12fd4932873b5011bace6897", qop=auth, nc=00000001
+Content-Length:  0)";
         secondRegMsg.parse(strDump);
 
         secondRegMsg.set_sip_server_ip_port("192.168.31.109", 5060);
@@ -164,10 +164,10 @@ Content-Length: 0)";
                             auth.set_user_name(m_str_user_name);
                             auth.set_realm(wwwAuth.get_realm());
                             auth.set_nonce(wwwAuth.get_nonce());
-                            auth.set_uri("sip:192.168.31.109:5060;transport=udp");//SipDigest?
+                            auth.set_uri("sip:192.168.31.109:5060");//SipDigest?
                             auth.set_response(strResponse);
                             auth.set_cnonce("c3606b3f70544096a7e17fcdb4670795");
-                            auth.set_nc("00000002");
+                            auth.set_nc("00000001");
                             auth.set_algorithm(wwwAuth.get_algorithm());
                             auth.set_qop(wwwAuth.get_qop());
                         }
