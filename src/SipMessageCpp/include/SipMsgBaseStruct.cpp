@@ -195,7 +195,9 @@ std::string Authorization::to_string()
 	}
 	{
 		strResult += str_qop_Tag;
+		strResult += "\"";
 		strResult += m_str_qop;
+		strResult += "\"";
 		strResult += ",";
 	}
 	{

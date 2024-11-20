@@ -164,13 +164,13 @@ namespace DtSipMessageCpp
             strResult += strLineEnd;
         }
 
-
+        if(!m_strAuthorization.empty())
         {
             strResult += m_strAuthorization;
             strResult += strLineEnd;
         }
 
-
+        if(!m_strAllowEvents.empty())
         {
             strResult += m_strAllowEvents;
             strResult += strLineEnd;
