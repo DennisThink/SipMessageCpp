@@ -19,5 +19,6 @@ protected:
 	int m_sip_server_port;
 protected:
 	void register_to_server();
+	std::string get_c_seq_string();
 };
 #endif

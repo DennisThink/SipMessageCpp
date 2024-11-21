@@ -3,7 +3,7 @@
 #include "SipMessageUtil.h"
 #include <iostream>
 TEST_CASE("SipRegisterMsg_Case1"){
-    DtSipMessageCpp::CSipRegisterMsg baseMsg;
+  
     std::string strSipRegister =
         R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
 Via: SIP/2.0/UDP 192.168.31.109:64565;rport;branch=z9hG4bKPj9c79bce7877f493a949a0442ef6a78c3
@@ -20,6 +20,7 @@ Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, 
 Content-Length:  0)";
     //CHECK_PARSE
     {
+        DtSipMessageCpp::CSipRegisterMsg baseMsg;
         CHECK(baseMsg.parse(strSipRegister));
         {
             {
@@ -60,10 +61,6 @@ Content-Length:  0)";
                 std::string strAllow = R"(Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS)";
                 CHECK_EQ(baseMsg.get_allow_line(), strAllow);
             }
-            /* {
-                std::string strSupported = R"(Supported: replaces, norefersub, extended-refer, timer, sec-agree, outbound, path, X-cisco-serviceuri)";
-                CHECK_EQ(baseMsg.get_supported_line(), strSupported);
-            }*/
             {
                 std::string strUserAgent = R"(User-Agent: MicroSIP/3.21.4)";
                 CHECK_EQ(baseMsg.get_user_agent_line(), strUserAgent);
@@ -83,7 +80,13 @@ Content-Length:  0)";
     }
     //CHECK_CREATE
     {
-
+        DtSipMessageCpp::CSipRegisterMsg baseMsg;
+        CHECK(baseMsg.parse(strSipRegister));
+        {
+            DtSipMessageCpp::CSipRegisterMsg newRegMsg;
+            newRegMsg.set_net_type("UDP");
+            newRegMsg.set_sip_local_ip_port("192.168.31.109", 5060);
+        }
     }
     
 

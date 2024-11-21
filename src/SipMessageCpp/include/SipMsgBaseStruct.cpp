@@ -22,7 +22,9 @@ std::string WWW_AUTH::to_string()
 	
 	{
 		strResult += str_nonce_Tag;
+		strResult += "\"";
 		strResult += m_str_nonce;
+		strResult += "\"";
 		strResult += ", ";
 	}
 
@@ -73,7 +75,7 @@ bool WWW_AUTH::from_string(const std::string strContent)
 				if (start_index != std::string::npos)
 				{
 					std::size_t subIndex = start_index + str_nonce_Tag.length();
-					m_str_nonce = item.substr(subIndex, item.length() - subIndex);
+					m_str_nonce = item.substr(subIndex+1, item.length() - subIndex-2);
 				}
 			}
 			else if (item.find(str_stale_Tag) != std::string::npos)

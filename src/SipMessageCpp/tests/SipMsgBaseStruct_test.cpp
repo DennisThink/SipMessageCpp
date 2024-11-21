@@ -8,7 +8,7 @@ TEST_CASE("WWW_AUTH"){
     CHECK(authMsg.from_string(strSipMessageBase));
     {
         CHECK("192.168.31.109" == authMsg.get_realm());
-        CHECK(R"("8120b595-5981-4216-bfa2-70b17f64d255")" == authMsg.get_nonce());
+        CHECK("8120b595-5981-4216-bfa2-70b17f64d255" == authMsg.get_nonce());
         CHECK("true" == authMsg.get_stale());
         CHECK("MD5" == authMsg.get_algorithm());
         CHECK("auth" == authMsg.get_qop());

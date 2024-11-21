@@ -15,7 +15,9 @@ public:
 	std::string get_stale();
 	std::string get_algorithm();
 	std::string get_qop();
+	//std::string get_uri();
 protected:
+	//std::string m_str_uri;
 	std::string m_str_realm;
 	std::string m_str_nonce;
 	std::string m_str_stale;
@@ -27,6 +29,7 @@ protected:
 	const std::string str_stale_Tag = "stale=";
 	const std::string str_algorithm_Tag = "algorithm=";
 	const std::string str_qop_Tag = "qop=";
+	const std::string str_uri_Tag = "uri=";
 };
 
 class Authorization
