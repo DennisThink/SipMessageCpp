@@ -91,7 +91,7 @@ TEST_CASE("CalcuAuthorization2") {
                 + strQop + ":"
                 + strHA2;
             strResponse = MD5(strResponseSource).toStr();
-            std::cout << "ResponseSource:" << strResponseSource << std::endl;
+           
             std::string strStdResponse = "eb9d64a7b947554c160f9b5393cf2697";
             CHECK(strResponse == strStdResponse);
         }
@@ -141,7 +141,7 @@ static std::string get_authorization_from_www_auth(const std::string& strWwwAuth
                 + strCnonce + ":"
                 + strQop + ":"
                 + strHA2;
-            std::cout << "ResponseSource:" << strResponseSource << std::endl;
+           
             strResponse = MD5(strResponseSource).toStr();
             //std::string strStdResponse = "eb9d64a7b947554c160f9b5393cf2697";
             //CHECK(strResponse == strStdResponse);
