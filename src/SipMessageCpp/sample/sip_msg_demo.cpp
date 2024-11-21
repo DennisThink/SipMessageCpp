@@ -10,7 +10,9 @@ int main(int argc,char * argv[])
     sipPhone.set_user_name(strUserName);
     sipPhone.set_pass_word(strPassword);
     sipPhone.set_sip_server_addr(strServerIp,nServerPort);
-    sipPhone.send_sms("1009", "Hello From 1002");
+    sipPhone.init_protocal();
+    sipPhone.do_register();
+    //sipPhone.send_sms("1009", "Hello From 1002");
     std::cout<<"sip_msg_demo"<<std::endl;
     return 0;
 }

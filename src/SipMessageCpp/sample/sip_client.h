@@ -10,6 +10,8 @@ public:
 	void set_user_name(const std::string str_user_name);
 	void set_pass_word(const std::string str_pass_word);
 	void set_sip_server_addr(const std::string serverIp, const int port);
+	void init_protocal();
+	void do_register();
 	void send_sms(const std::string strReciver,const std::string strSms);
 	std::string recv_sms();
 protected:
