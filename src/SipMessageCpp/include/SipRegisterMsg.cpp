@@ -153,6 +153,7 @@ namespace DtSipMessageCpp
             strResult += m_strCSeq;
             strResult += strLineEnd;
         }
+        if(!m_strExpires.empty())
         {
             strResult += m_strExpires;
             strResult += strLineEnd;
@@ -168,7 +169,7 @@ namespace DtSipMessageCpp
             strResult += strLineEnd;
         }
 
-
+        if(!m_strUserAgent.empty())
         {
             strResult += m_strUserAgent;
             strResult += strLineEnd;

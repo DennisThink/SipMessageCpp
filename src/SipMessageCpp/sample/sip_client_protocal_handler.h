@@ -11,6 +11,7 @@ public:
 	bool set_sip_server_ip_port(const std::string strIp,const int nPort);
 	bool set_sip_client_ip_port(const std::string strIp, const int nPort);
 	bool set_client_type(const std::string strClientType);
+	bool set_net_type(const std::string strNetType);
 	bool init_protocal();
 	void do_register();
 	std::string get_next_message();
@@ -30,5 +31,6 @@ protected:
 	std::string m_str_sip_client_ip;
 	int m_n_sip_client_port;
 	std::string m_str_client_type;
+	std::string m_str_net_type;
 };
 #endif

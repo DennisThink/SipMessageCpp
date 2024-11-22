@@ -26,6 +26,7 @@ namespace DtSipMessageCpp
         void set_max_forwards(const std::string strMaxForwards);
         void set_from_tag(const std::string strFromTag);
         void set_c_seq(const std::string strSeq);
+        void set_expires(const std::string strExpires);
         //std::string get_sip_server_ip() const;
         //int get_sip_server_port() const;
 
@@ -34,6 +35,7 @@ namespace DtSipMessageCpp
         void create_via_line();
         void create_from_line();
         void create_to_line();
+        void create_contact_line();
         //get function list
         std::string get_header_line();
         std::string get_via_line();

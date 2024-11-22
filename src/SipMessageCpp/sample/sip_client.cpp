@@ -53,7 +53,7 @@ void SipClient::init_protocal()
     m_handler.set_sip_client_ip_port(m_socket->get_local_ip(), m_socket->get_local_port());
     m_handler.set_sip_server_ip_port(m_str_sip_server_ip, m_sip_server_port);
     m_handler.set_user_name_pass_word(m_str_user_name, m_str_pass_word);
-    m_handler.set_client_type(m_str_client_type);
+    m_handler.set_net_type("UDP");
     m_handler.init_protocal();
 }
 

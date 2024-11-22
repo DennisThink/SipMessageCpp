@@ -140,10 +140,20 @@ bool sip_client_protocal_handler::handle_first_register_rsp(const std::string st
 {
     DtSipMessageCpp::CSipRegisterServerRsp rspMsg;
     rspMsg.parse(strRsp);
-
-    DtSipMessageCpp::CSipRegisterMsg secondRegMsg;
+    std::string strNC = "00000001";
+    DtSipMessageCpp::CSipReRegisterMsg secondRegMsg;
+    std::string strNetType = "UDP";
+    std::string strAllowOptions = "Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS";
+    //std::string strCallId = "Call-ID: 7dacdb3605c94e659e588faa5e70af86";
+    std::string strCallId = "Call-ID: " + m_str_call_id;
+    std::string strContentLength = "Content-Length:  0";
+    std::string strBranch = "z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69";
+    std::string strMaxForwards = "Max-Forwards: 70";
+    std::string strFromTag = "a2c95cb6bbf84183a634b0244b09dcd9";
+    std::string strCSeq = "CSeq: 28960 REGISTER";
+    std::string strExpries = "Expires: 120";
     {
-        std::string strDump = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
+       /*std::string strDump = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
 Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPja4bf5bc9a06b4a9f9413f9c143242321
 Route: <sip:192.168.31.109:5060;lr>
 Max-Forwards: 70
@@ -153,35 +163,68 @@ Call-ID: 7dacdb3605c94e659e588faa5e70af86
 CSeq: 28960 REGISTER
 User-Agent: DtSipClient/3.21.4
 Contact: "1002" <sip:1002@192.168.31.109:64998;ob>
-Expires: 300
+Expires: 30
 Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
 Authorization: Digest username="1002", realm="192.168.31.109", nonce="36fb7893-0612-4527-8d25-af2c14afeaec", uri="sip:192.168.31.109:5060", response="eb9d64a7b947554c160f9b5393cf2697", algorithm=MD5, cnonce="fc2d3c0e12fd4932873b5011bace6897", qop=auth, nc=00000001
-Content-Length:  0)";
-        secondRegMsg.parse(strDump);
+Content-Length:  0)";*/
+        //secondRegMsg.parse(strDump);
+        {
+            {
+                secondRegMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
+                secondRegMsg.set_sip_local_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
+                secondRegMsg.set_net_type(strNetType);
+                secondRegMsg.set_allow_options(strAllowOptions);
+                secondRegMsg.set_call_id(strCallId);
+                secondRegMsg.set_content_length(strContentLength);
+                secondRegMsg.set_branch(strBranch);
+                secondRegMsg.set_max_forwards(strMaxForwards);
+                secondRegMsg.set_from_tag(strFromTag);
+                secondRegMsg.set_username_password(m_str_user_name, m_str_pass_word);
+                secondRegMsg.set_c_seq(strCSeq);
+                secondRegMsg.set_net_type(m_str_net_type);
+                secondRegMsg.set_expires(strExpries);
+            }
 
-        secondRegMsg.set_sip_server_ip_port("192.168.31.109", 5060);
-        secondRegMsg.set_net_type("UDP");
+            {
+                secondRegMsg.create_header_line();
+                secondRegMsg.create_via_line();
+                secondRegMsg.create_from_line();
+                secondRegMsg.create_to_line();
+                secondRegMsg.create_contact_line();
+            }
+        }
+        //secondRegMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
+        //secondRegMsg.set_sip_server_ip_port("192.168.31.109", 5060);
+        //secondRegMsg.set_net_type("UDP");
+
     }
 
     {
+
         WWW_AUTH wwwAuth;
         wwwAuth.from_string(rspMsg.get_www_auth());
-        std::string strCnonce = "c3606b3f70544096a7e17fcdb4670795";
+        std::string strCnonce = DtSipMessageCpp::CProtoUtil::get_nonce(32);// "c3606b3f70544096a7e17fcdb4670795";
         Authorization auth;
         {
             auth.set_user_name(m_str_user_name);
             auth.set_realm(wwwAuth.get_realm());
             auth.set_nonce(wwwAuth.get_nonce());
-            auth.set_uri("sip:192.168.31.109:5060");//SipDigest?
+            std::string strURI = "sip:";
+            {
+                strURI += m_str_sip_server_ip;
+                strURI += ":";
+                strURI += std::to_string(m_n_sip_server_port);
+            }
+            auth.set_uri(strURI);//SipDigest?
             std::string strResponse = get_authorization_from_www_auth_for_client(
                 rspMsg.get_www_auth(),
                 m_str_user_name,
                 m_str_pass_word,
                 strCnonce,
-                "sip:192.168.31.109:5060");
+                strURI);
             auth.set_response(strResponse);
             auth.set_cnonce(strCnonce);
-            auth.set_nc("00000001");
+            auth.set_nc(strNC);
             auth.set_algorithm(wwwAuth.get_algorithm());
             auth.set_qop(wwwAuth.get_qop());
         }
@@ -215,11 +258,17 @@ bool sip_client_protocal_handler::set_client_type(const std::string strClientTyp
     m_str_client_type = strClientType;
     return true;
 }
+
+bool sip_client_protocal_handler::set_net_type(const std::string strNetType)
+{
+    m_str_net_type = strNetType;
+    return true;
+}
 bool sip_client_protocal_handler::init_protocal()
 {
     if (m_str_call_id.empty())
     {
-        m_str_call_id = DtSipMessageCpp::CProtoUtil::get_nonce(32);
+        m_str_call_id = DtSipMessageCpp::CProtoUtil::get_nonce(16);
     }
     return true;
 }
@@ -245,27 +294,6 @@ void sip_client_protocal_handler::init_first_register()
 	{
 		g_sip_client_state = SIP_CLIENT_STATE::DOING_REGISTER;
 		{
-			/*DtSipMessageCpp::CSipRegisterMsg regMsg;
-			{
-				std::string strSipReg = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
-Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69
-Route: <sip:192.168.31.109:5060;lr>
-Max-Forwards: 70
-From: "1002" <sip:1002@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
-To: "1002" <sip:1002@192.168.31.109>
-Call-ID: 7dacdb3605c94e659e588faa5e70af86
-CSeq: 28959 REGISTER
-User-Agent: DtSipClient/3.21.4
-Contact: "1002" <sip:1002@192.168.31.109:64998;ob>
-Expires: 300
-Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
-Content-Length:  0)";
-				regMsg.parse(strSipReg);
-				regMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
-				regMsg.set_sip_local_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
-				regMsg.set_net_type("UDP");
-			}
-			m_strWaitForSend = regMsg.dump();*/
             m_strWaitForSend = get_first_register_message();
 		}
 	}

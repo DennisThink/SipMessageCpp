@@ -133,6 +133,7 @@ namespace DtSipMessageCpp
             strResult += m_strMaxForwards;
             strResult += strLineEnd;
         }
+        if(!m_strContact.empty())
         {
             strResult += m_strContact;
             strResult += strLineEnd;
@@ -171,7 +172,7 @@ namespace DtSipMessageCpp
             strResult += strLineEnd;
         }
 
-
+        if(!m_strUserAgent.empty())
         {
             strResult += m_strUserAgent;
             strResult += strLineEnd;
@@ -335,6 +336,7 @@ namespace DtSipMessageCpp
     void CSipReRegisterMsg::create_from_line()
     {
         //From: "1009" <sip:1009@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
+        m_strFrom.clear();
         if (m_strFrom.empty())
         {
             std::string strResult = "From: \"";
@@ -352,6 +354,7 @@ namespace DtSipMessageCpp
     void CSipReRegisterMsg::create_to_line()
     {
         //To: "1009" <sip:1009@192.168.31.109>
+        m_strTo.clear();
         if (m_strTo.empty())
         {
             std::string strResult = "To: \"";
@@ -362,6 +365,25 @@ namespace DtSipMessageCpp
             strResult += m_strSipServerIp;
             strResult += ">";
             m_strTo = strResult;
+        }
+    }
+
+    void CSipReRegisterMsg::create_contact_line()
+    {
+        m_strContact.clear();
+        if (m_strContact.empty())
+        {
+            //Contact: "1002" <sip:1002@192.168.31.109:64998;ob>
+            std::string strResult = "Contact: \"";
+            strResult += m_strUserName;
+            strResult += "\" <sip:";
+            strResult += m_strUserName;
+            strResult += "@";
+            strResult += m_strSipServerIp;
+            strResult += ":";
+            strResult += std::to_string(m_nSipLocalPort);
+            strResult += ";ob>";//OB mean what?
+            m_strContact = strResult;
         }
     }
     void CSipReRegisterMsg::set_allow_options(const std::string strAllowOptions)
@@ -388,7 +410,10 @@ namespace DtSipMessageCpp
     {
         m_strCSeq = strSeq;
     }
-
+    void CSipReRegisterMsg::set_expires(const std::string strExpires)
+    {
+        m_strExpires = strExpires;
+    }
     void CSipReRegisterMsg::set_max_forwards(const std::string strMaxForwards)
     {
         m_strMaxForwards = strMaxForwards;
