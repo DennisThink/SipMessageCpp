@@ -85,7 +85,14 @@ namespace DtSipMessageCpp
         }
         return true;
     }
-
+    std::string CSipRegisterServerRsp::get_rsp_code()
+    {
+        return "";
+    }
+    std::string CSipRegisterServerRsp::get_rsp_message()
+    {
+        return "";
+    }
     std::string CSipRegisterServerRsp::get_www_auth() const
     {
         return m_strWwwAuthentite;

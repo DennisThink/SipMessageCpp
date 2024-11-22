@@ -109,10 +109,7 @@ static std::string get_authorization_from_www_auth(const std::string& strWwwAuth
         //HA1
         std::string strHA1;
         {
-            //std::string strUser = "1009";
-            //std::string strPass = "1234";
             std::string strRealm = wwwAuth.get_realm();
-
             std::string strHA1Source = strUser + ":" + strRealm + ":" + strPass;
             strHA1 = MD5(strHA1Source).toStr();
         }
@@ -120,18 +117,14 @@ static std::string get_authorization_from_www_auth(const std::string& strWwwAuth
         //HA2
         std::string strHA2;
         {
-
             std::string strDigest = strUri;
             std::string strHA2Source = strMethod + ":" + strDigest;
             strHA2 = MD5(strHA2Source).toStr();
         }
 
         //Response
-
         {
-
-            //std::string strCnonce = wwwAuth.get_nonce();;// "fc2d3c0e12fd4932873b5011bace6897";
-            std::string strNonce = wwwAuth.get_nonce();// "36fb7893-0612-4527-8d25-af2c14afeaec";
+            std::string strNonce = wwwAuth.get_nonce();
             //HA1:nonce:nonceCount:cnonce:qop:HA2
        
             std::string strQop = wwwAuth.get_qop();
@@ -143,8 +136,6 @@ static std::string get_authorization_from_www_auth(const std::string& strWwwAuth
                 + strHA2;
            
             strResponse = MD5(strResponseSource).toStr();
-            //std::string strStdResponse = "eb9d64a7b947554c160f9b5393cf2697";
-            //CHECK(strResponse == strStdResponse);
         }
     }
     return strResponse;

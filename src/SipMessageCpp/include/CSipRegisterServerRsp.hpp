@@ -13,6 +13,8 @@ namespace DtSipMessageCpp
         virtual std::string dump() const override;
 
     public:
+        std::string get_rsp_code();
+        std::string get_rsp_message();
         std::string get_www_auth() const;
     protected:
         std::string m_strMsgType;

@@ -1,8 +1,11 @@
 #include "sip_client_protocal_handler.h"
 #include "CSipMsgCpp.hpp"
+#include "SipReRegisterMsg.hpp"
 #include "SipMsgBaseStruct.hpp"
+#include "SipMessageUtil.h"
 #include "md5/md5.h"
 #include <iostream>
+std::string get_authorization_from_www_auth_for_client(const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri);
 enum class SIP_CLIENT_STATE
 {
 	UNKNOWN,
@@ -32,7 +35,58 @@ bool sip_client_protocal_handler::handle_current_message(const std::string strMs
 	}
 	return false;
 }
+std::string sip_client_protocal_handler::get_first_register_message()
+{
+    DtSipMessageCpp::CSipRegisterMsg regCreateMsg;
+    {
+        std::string strNetType = "UDP";
+        std::string strAllowOptions = "Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS";
+        //std::string strCallId = "Call-ID: 7dacdb3605c94e659e588faa5e70af86";
+        std::string strCallId = "Call-ID: " + m_str_call_id;
+        std::string strContentLength = "Content-Length:  0";
+        std::string strBranch = "z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69";
+        std::string strMaxForwards = "Max-Forwards: 70";
+        std::string strFromTag = "a2c95cb6bbf84183a634b0244b09dcd9";
+        std::string strCSeq = "CSeq: 28959 REGISTER";
+        {
+            regCreateMsg.set_sip_server_ip_port(m_str_sip_server_ip,m_n_sip_server_port);
+            regCreateMsg.set_sip_local_ip_port(m_str_sip_client_ip,m_n_sip_client_port);
+            regCreateMsg.set_net_type(strNetType);
+            regCreateMsg.set_allow_options(strAllowOptions);
+            regCreateMsg.set_call_id(strCallId);
+            regCreateMsg.set_content_length(strContentLength);
+            regCreateMsg.set_branch(strBranch);
+            regCreateMsg.set_max_forwards(strMaxForwards);
+            regCreateMsg.set_from_tag(strFromTag);
+            regCreateMsg.set_username_password(m_str_user_name,m_str_pass_word);
+            regCreateMsg.set_c_seq(strCSeq);
+        }
 
+        {
+            regCreateMsg.create_header_line();
+            regCreateMsg.create_via_line();
+            regCreateMsg.create_from_line();
+            regCreateMsg.create_to_line();
+        }
+    }
+    std::string strResult = regCreateMsg.dump();
+    return strResult;
+}
+
+
+std::string sip_client_protocal_handler::get_second_register_message(const std::string& strRsp)
+{
+    std::string strResult;
+    {
+        DtSipMessageCpp::CSipReRegisterMsg reqMsg;
+        {
+            DtSipMessageCpp::CSipRegisterServerRsp rspMsg;
+            rspMsg.parse(strRsp);
+        }
+        strResult = reqMsg.dump();
+    }
+    return strResult;
+}
 static std::string get_authorization_from_www_auth_for_client(const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
 {
     WWW_AUTH wwwAuth;
@@ -156,6 +210,19 @@ bool sip_client_protocal_handler::set_sip_client_ip_port(const std::string strIp
 	return true;
 }
 
+bool sip_client_protocal_handler::set_client_type(const std::string strClientType)
+{
+    m_str_client_type = strClientType;
+    return true;
+}
+bool sip_client_protocal_handler::init_protocal()
+{
+    if (m_str_call_id.empty())
+    {
+        m_str_call_id = DtSipMessageCpp::CProtoUtil::get_nonce(32);
+    }
+    return true;
+}
 
 void sip_client_protocal_handler::do_register()
 {
@@ -178,7 +245,7 @@ void sip_client_protocal_handler::init_first_register()
 	{
 		g_sip_client_state = SIP_CLIENT_STATE::DOING_REGISTER;
 		{
-			DtSipMessageCpp::CSipRegisterMsg regMsg;
+			/*DtSipMessageCpp::CSipRegisterMsg regMsg;
 			{
 				std::string strSipReg = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
 Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69
@@ -198,7 +265,8 @@ Content-Length:  0)";
 				regMsg.set_sip_local_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
 				regMsg.set_net_type("UDP");
 			}
-			m_strWaitForSend = regMsg.dump();
+			m_strWaitForSend = regMsg.dump();*/
+            m_strWaitForSend = get_first_register_message();
 		}
 	}
 }

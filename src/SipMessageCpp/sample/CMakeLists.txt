@@ -3,6 +3,7 @@ include_directories(../include/)
 include_directories(../thirdparty/)
 SET(SIP_BASE_MSG_FILE ../include/SipMessageBase.cpp 
 ../include/SipRegisterMsg.cpp   
+../include/SipReRegisterMsg.cpp   
 ../include/SipInviteMsg.cpp
 ../include/SipAckMsg.cpp
 ../include/SipByeMsg.cpp

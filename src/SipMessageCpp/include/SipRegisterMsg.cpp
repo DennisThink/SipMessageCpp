@@ -129,6 +129,7 @@ namespace DtSipMessageCpp
             strResult += m_strMaxForwards;
             strResult += strLineEnd;
         }
+        if(!m_strContact.empty())
         {
             strResult += m_strContact;
             strResult += strLineEnd;

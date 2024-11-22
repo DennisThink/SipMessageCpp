@@ -1,3 +1,6 @@
+#ifndef _SIP_CPP_SOCKETS_H_
+#define _SIP_CPP_SOCKETS_H_
+
 #include <string>
 #include <iostream>
 
@@ -33,10 +36,9 @@ public:
         TYPE_STREAM = SOCK_STREAM,
         TYPE_DGRAM = SOCK_DGRAM
     };
-
-protected:
     explicit Socket(SocketType socket_type);
-    ~Socket();
+    virtual ~Socket();
+protected:
     SOCKET m_socket;
     sockaddr_in m_addr;
     void set_port(u_short port);
@@ -58,6 +60,7 @@ class UDPClient : public Socket
 {
 public:
     UDPClient(u_short port = 8000, const std::string& ip_address = "127.0.0.1");
+    virtual ~UDPClient() {};
     ssize_t send_message(const std::string& message);
     ssize_t recv_message(std::string& strMsg);
     std::string get_local_ip();
@@ -350,3 +353,6 @@ int TCPServer::socket_bind()
 #endif
     return 0;
 }
+
+
+#endif
