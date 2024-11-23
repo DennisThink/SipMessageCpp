@@ -151,7 +151,7 @@ UDPClient::UDPClient(u_short port, const std::string& ip_address) : Socket(Socke
     set_port(port);
     std::cout << "UDP Client created." << std::endl;
     {
-        //Á¬½Ó²Ù×÷¡£
+        //ï¿½ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½
         if (connect(m_socket, (struct sockaddr*)(&m_addr), sizeof(m_addr)) < 0)
         {
             perror("connect: ");
@@ -181,7 +181,7 @@ ssize_t UDPClient::recv_message(std::string& strMsg)
     char buff[1024] = { 0 };
     memset(buff, 0, 1024);
     struct sockaddr recvAddr;
-    int nAddrLen = sizeof(recvAddr);
+    unsigned int nAddrLen = sizeof(recvAddr);
     int nRecvLen = recvfrom(m_socket, buff, 1024, 0, reinterpret_cast<sockaddr*>(&recvAddr), &nAddrLen);
     if (nRecvLen > 0)
     {

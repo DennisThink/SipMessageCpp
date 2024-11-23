@@ -87,7 +87,7 @@ std::string sip_client_protocal_handler::get_second_register_message(const std::
     }
     return strResult;
 }
-static std::string get_authorization_from_www_auth_for_client(const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
+std::string get_authorization_from_www_auth_for_client(const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
 {
     WWW_AUTH wwwAuth;
     std::string strMethod = "REGISTER";

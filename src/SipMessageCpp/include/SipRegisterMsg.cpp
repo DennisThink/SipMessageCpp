@@ -2,6 +2,7 @@
 #include "SipMessageUtil.h"
 #include "SipMsgConstValue.hpp"
 #include <iostream>
+#include <cstring>
 namespace DtSipMessageCpp
 {
     CSipRegisterMsg::CSipRegisterMsg(){
