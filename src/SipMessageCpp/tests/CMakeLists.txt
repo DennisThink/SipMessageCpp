@@ -14,7 +14,8 @@ SET(SIP_BASE_MSG_FILE ../include/SipMessageBase.cpp
 ../include/SipMessageUtil.cpp
 ../include/SipSessionProgressMsg.cpp
 ../include/CSipRegisterServerRsp.cpp
-../include/SipMsgBaseStruct.cpp)
+../include/SipMsgBaseStruct.cpp
+../include/SipSmsMessage.cpp)
 SET(SIP_MSG_TEST_FILE 
 ./SipMessageBase_test.cpp 
 ./SipRegisterMsg_test.cpp
@@ -29,6 +30,7 @@ SET(SIP_MSG_TEST_FILE
 ./CSipRegisterServerRsp_test.cpp
 ./SipOkMsg_test.cpp
 ./SipMsgBaseStruct_test.cpp
+./SipSmsMessage_test.cpp
 ./md5_test.cpp
 )
 

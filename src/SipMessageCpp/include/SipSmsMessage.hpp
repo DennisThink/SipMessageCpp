@@ -1,40 +1,18 @@
-#ifndef _DT_SIP_REGISTER_MSG_H_
-#define _DT_SIP_REGISTER_MSG_H_
-#include "SipMessageBase.hpp"
-
+#ifndef _DT_SIP_SMS_MESSAGE_H_
+#define _DT_SIP_SMS_MESSAGE_H_
+#include <string>
 namespace DtSipMessageCpp
 {
-    class CSipRegisterMsg:public CSipMessageBase
+    class CSipSmsMessage
     {
     public:
-        CSipRegisterMsg();
-        virtual ~CSipRegisterMsg();
+        CSipSmsMessage();
+        virtual ~CSipSmsMessage();
 
-        virtual bool parse(const std::string& strMsg) override;
-        virtual std::string dump() const override; 
+        virtual bool parse(const std::string& strMsg);
+        virtual std::string dump() const;
 
-        //set function list
-        void set_sip_server_ip_port(const std::string strIp, const int nPort);
-        void set_sip_local_ip_port(const std::string strIp, const int nPort);
-        void set_username_password(const std::string strUserName, const std::string strPassword);
-        void set_net_type(const std::string strType);
-        void set_branch(const std::string strBranch);
-        void set_authorization(const std::string strAuthorization);
-        void set_allow_options(const std::string strAllowOptions);
-        void set_call_id(const std::string strCallId);
-        void set_content_length(const std::string strContentLength);
-        void set_max_forwards(const std::string strMaxForwards);
-        void set_from_tag(const std::string strFromTag);
-        void set_c_seq(const std::string strSeq);
-        //std::string get_sip_server_ip() const;
-        //int get_sip_server_port() const;
-
-        //create function list
-        void create_header_line();
-        void create_via_line();
-        void create_from_line();
-        void create_to_line();
-        //get function list
+    public:
         std::string get_header_line();
         std::string get_via_line();
         std::string get_route_line();
@@ -44,21 +22,18 @@ namespace DtSipMessageCpp
         std::string get_c_seq_line();
         std::string get_expires_line();
         std::string get_allow_line();
+        std::string get_allow_events_line();
         std::string get_supported_line();
         std::string get_user_agent_line();
         std::string get_content_length_line();
         std::string get_max_forwards_line();
+        void create_via_line();
     protected:
         void parse_register_header();
         void parse_register_header_with_transport();
         void parse_register_header_without_transport();
         void parse_via_line();
-
-    public:
-
-        
     protected:
-        //std::string m_strMsgType;
         std::string m_str_header_line;
         std::string m_strTo;
         std::string m_strFrom;
@@ -80,6 +55,7 @@ namespace DtSipMessageCpp
         std::string m_strContentLength;
 
         std::string m_str_from_tag;
+
     private:
         std::string m_strSipServerIp;
         int m_nSipServerPort;

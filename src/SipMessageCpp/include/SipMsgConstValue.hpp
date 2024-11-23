@@ -25,6 +25,7 @@ namespace DtSipMessageCpp
     const std::string INVITE_TYPE_HEADER = "INVITE";
     const std::string BYE_TYPE_HEADER = "BYE";
     const std::string ACK_TYPE_HEADER = "ACK";
+    const std::string MESSAGE_TYPE_HEADER = "MESSAGE";
     //TYPE one End
 
 
