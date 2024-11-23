@@ -181,7 +181,11 @@ ssize_t UDPClient::recv_message(std::string& strMsg)
     char buff[1024] = { 0 };
     memset(buff, 0, 1024);
     struct sockaddr recvAddr;
+#ifdef WIN32
+    int nAddrLen = sizeof(recvAddr);
+#else
     unsigned int nAddrLen = sizeof(recvAddr);
+#endif
     int nRecvLen = recvfrom(m_socket, buff, 1024, 0, reinterpret_cast<sockaddr*>(&recvAddr), &nAddrLen);
     if (nRecvLen > 0)
     {
