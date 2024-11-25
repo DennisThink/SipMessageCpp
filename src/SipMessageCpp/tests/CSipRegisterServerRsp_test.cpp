@@ -16,6 +16,8 @@ Supported: timer, path, replaces
 WWW-Authenticate: Digest realm="192.168.31.109", nonce="12e57fcc-cde4-4626-8d17-b7c104153d1c", stale=true, algorithm=MD5, qop="auth"
 Content-Length: 0)";
     CHECK(baseMsg.parse(strSipMessageBase));
+    CHECK(401 == baseMsg.get_rsp_code());
+    CHECK("Unauthorized" == baseMsg.get_rsp_code_msg());
     std::string strResult = baseMsg.dump();
     CHECK(strResult == strSipMessageBase);
     if(strResult != strSipMessageBase)

@@ -20,6 +20,7 @@ namespace DtSipMessageCpp
             if (item.find(SIP_RSP_HEADER) == 0)
             {
                 m_strSipRspHeader = item;
+                parse_rsp_code_and_msg(m_strSipRspHeader);
             }
             //std::cout << "ITEM: " << item << std::endl;
             else if (item.find(BYE_TYPE_HEADER) == 0)
@@ -90,14 +91,6 @@ namespace DtSipMessageCpp
             }
         }
         return true;
-    }
-    std::string CSipRegisterServerRsp::get_rsp_code()
-    {
-        return "";
-    }
-    std::string CSipRegisterServerRsp::get_rsp_message()
-    {
-        return "";
     }
     std::string CSipRegisterServerRsp::get_www_auth() const
     {

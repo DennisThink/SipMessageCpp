@@ -1,9 +1,9 @@
 #ifndef _C_SIP_REGISTER_SERVER_RSP_H_
 #define _C_SIP_REGISTER_SERVER_RSP_H_
-#include "SipMessageBase.hpp"
+#include "SipServerRspBase.hpp"
 namespace DtSipMessageCpp
 {
-    class CSipRegisterServerRsp:public CSipMessageBase
+    class CSipRegisterServerRsp:public CSipServerRspBase
     {
     public:
         CSipRegisterServerRsp();
@@ -13,8 +13,6 @@ namespace DtSipMessageCpp
         virtual std::string dump() const override;
 
     public:
-        std::string get_rsp_code();
-        std::string get_rsp_message();
         std::string get_www_auth() const;
         std::string get_auth_type_header() const;
     protected:

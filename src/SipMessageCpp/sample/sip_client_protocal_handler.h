@@ -17,6 +17,9 @@ public:
 	void do_send_sms(const std::string strReciver, const std::string strContent);
 	std::string get_next_message();
 	bool handle_current_message(const std::string strMsg);
+
+public:
+	bool is_registered() const;
 protected:
 	std::string get_first_register_message();
 	std::string get_second_register_message(const std::string& strRsp);
@@ -25,7 +28,10 @@ protected:
 	bool handle_first_send_sms(const std::string strRsp);
 	void init_first_register();
 	void init_send_sms();
+private:
 	std::string create_c_seq();
+	std::string create_branch();
+	std::string create_from_tag();
 protected:
 	std::string m_str_call_id;
 	std::string m_strWaitForSend;
@@ -42,5 +48,12 @@ protected:
 	//send_sms
 	std::string m_strReciver;
 	std::string m_strContent;
+
+
+	bool m_b_registered;
+
+private:
+	std::string m_str_branch;
+	std::string m_str_from_tag;
 };
 #endif
