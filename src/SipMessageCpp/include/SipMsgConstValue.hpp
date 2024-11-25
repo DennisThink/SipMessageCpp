@@ -61,7 +61,6 @@ namespace DtSipMessageCpp
     const std::string PROXY_AUTHENTICATE_HEADER = "Proxy-Authenticate:";
     const std::string ACCEPT_HEADER = "Accept:";
     const std::string WWW_AUTHENTICATE_HEADER = "WWW-Authenticate:";
-
     //SDP header
 
     /*

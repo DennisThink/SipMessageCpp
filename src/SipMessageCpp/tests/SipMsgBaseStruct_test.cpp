@@ -29,7 +29,7 @@ TEST_CASE("Authorization") {
         CHECK(authMsg.from_string(strSipMessageBase));
         {
             CHECK("192.168.31.109" == authMsg.get_realm());
-            CHECK(R"("fffe2121-d01f-4c89-ab62-12a030a1c10d")" == authMsg.get_nonce());
+            CHECK(R"(fffe2121-d01f-4c89-ab62-12a030a1c10d)" == authMsg.get_nonce());
             CHECK("MD5" == authMsg.get_algorithm());
             CHECK("auth" == authMsg.get_qop());
         }
@@ -49,7 +49,7 @@ TEST_CASE("Authorization") {
         {
             CHECK("1002" == authMsg.get_user_name());
             CHECK("192.168.31.109" == authMsg.get_realm());
-            CHECK(R"("fffe2121-d01f-4c89-ab62-12a030a1c10d")" == authMsg.get_nonce());
+            CHECK(R"(fffe2121-d01f-4c89-ab62-12a030a1c10d)" == authMsg.get_nonce());
             CHECK("sip:192.168.31.109:5060;transport=UDP" == authMsg.get_uri());
             CHECK("b4418b2b96e05ec2a0beb3c522edbcc9" == authMsg.get_response());
             CHECK("b3468b9ac6827d7c51e85ef96618190f" == authMsg.get_cnonce());

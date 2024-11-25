@@ -86,6 +86,8 @@ namespace DtSipMessageCpp
 
         std::string m_str_content;
 
+        std::string m_str_auth;
+
     private:
         std::string m_strSipServerIp;
         int m_nSipServerPort;

@@ -16,6 +16,7 @@ namespace DtSipMessageCpp
         std::string get_rsp_code();
         std::string get_rsp_message();
         std::string get_www_auth() const;
+        std::string get_auth_type_header() const;
     protected:
         std::string m_strMsgType;
         std::string m_strSipRspHeader;
@@ -34,6 +35,7 @@ namespace DtSipMessageCpp
         std::string m_strAllowEvents;
         std::string m_strContentLength;
         std::string m_strWwwAuthentite;
+        std::string m_strAuthType;
         //std::string AppendNotEmptyString(const std::string& strOrg, const std::string& item);
     };
 }

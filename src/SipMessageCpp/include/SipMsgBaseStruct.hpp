@@ -15,6 +15,7 @@ public:
 	std::string get_stale();
 	std::string get_algorithm();
 	std::string get_qop();
+	std::string get_auth_type();
 	//std::string get_uri();
 protected:
 	//std::string m_str_uri;
@@ -23,6 +24,8 @@ protected:
 	std::string m_str_stale;
 	std::string m_str_algorithm;
 	std::string m_str_qop;
+
+	std::string m_str_auth_type;
 protected:
 	const std::string str_realm_Tag = "realm=";
 	const std::string str_nonce_Tag = "nonce=";
@@ -61,6 +64,7 @@ public:
 	bool set_nc(const std::string strNc);
 	bool set_qop(const std::string strQop);
 	bool set_algorithm(const std::string strAlgorithm);
+	bool set_auth_type(const std::string strAuthType);
 protected:
 	std::string m_str_user_name;
 	std::string m_str_realm;
@@ -71,6 +75,7 @@ protected:
 	std::string m_str_nc;
 	std::string m_str_qop;
 	std::string m_str_algorithm;
+	std::string m_str_auth_type;
 protected:
 	/*
 	* "Authorization: Digest 

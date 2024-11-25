@@ -14,8 +14,9 @@ int main(int argc,char * argv[])
         sipPhone.init_protocal();
         sipPhone.set_client_type("DtSipClient/0.0.1");
         sipPhone.do_register();
+        sipPhone.send_sms("1009", "Hello from 1002");
     }
-    {
+    /* {
         {
             SipClient sipPhone;
             std::string strUserName = "1003";
@@ -29,7 +30,7 @@ int main(int argc,char * argv[])
             sipPhone.set_client_type("AsYouWish/1.0.0");
             sipPhone.do_register();
         }
-    }
+    }*/
     //sipPhone.send_sms("1009", "Hello From 1002");
     std::cout<<"sip_msg_demo"<<std::endl;
     return 0;

@@ -1,22 +1,27 @@
 #include "sip_client_protocal_handler.h"
 #include "CSipMsgCpp.hpp"
 #include "SipReRegisterMsg.hpp"
+#include "SipSmsMessage.hpp"
 #include "SipMsgBaseStruct.hpp"
 #include "SipMessageUtil.h"
 #include "md5/md5.h"
 #include <iostream>
-std::string get_authorization_from_www_auth_for_client(const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri);
+std::string get_authorization_from_www_auth_for_client(const std::string strMethod,const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri);
 enum class SIP_CLIENT_STATE
 {
-	UNKNOWN,
-	NOT_REGISTER,
-	DOING_REGISTER,
-	REGISTER_FINISHED,
+    UNKNOWN,
+    START_STATE,
+    NOT_REGISTER,
+    DOING_REGISTER,
+    REGISTER_FINISHED,
+    SENDING_SMS,
+    END_END_STATE,
 };
 SIP_CLIENT_STATE g_sip_client_state = SIP_CLIENT_STATE::UNKNOWN;
 sip_client_protocal_handler::sip_client_protocal_handler()
 {
-
+    srand(time(0));
+    m_n_c_seq = rand() % 1000;
 }
 
 sip_client_protocal_handler::~sip_client_protocal_handler()
@@ -33,6 +38,11 @@ bool sip_client_protocal_handler::handle_current_message(const std::string strMs
         handle_first_register_rsp(strMsg);
         g_sip_client_state = SIP_CLIENT_STATE::REGISTER_FINISHED;
 	}
+    if (g_sip_client_state == SIP_CLIENT_STATE::SENDING_SMS)
+    {
+        handle_first_send_sms(strMsg);
+        g_sip_client_state = SIP_CLIENT_STATE::REGISTER_FINISHED;
+    }
 	return false;
 }
 std::string sip_client_protocal_handler::get_first_register_message()
@@ -47,7 +57,7 @@ std::string sip_client_protocal_handler::get_first_register_message()
         std::string strBranch = "z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69";
         std::string strMaxForwards = "Max-Forwards: 70";
         std::string strFromTag = "a2c95cb6bbf84183a634b0244b09dcd9";
-        std::string strCSeq = "CSeq: 28959 REGISTER";
+        std::string strCSeq = "CSeq: "+create_c_seq() + " REGISTER";
         {
             regCreateMsg.set_sip_server_ip_port(m_str_sip_server_ip,m_n_sip_server_port);
             regCreateMsg.set_sip_local_ip_port(m_str_sip_client_ip,m_n_sip_client_port);
@@ -87,10 +97,76 @@ std::string sip_client_protocal_handler::get_second_register_message(const std::
     }
     return strResult;
 }
-std::string get_authorization_from_www_auth_for_client(const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
+
+std::string sip_client_protocal_handler::get_send_sms_message(const std::string strReciver, const std::string strContent)
+{
+    DtSipMessageCpp::CSipSmsMessage createSmsMsg;
+    {
+        //SET 
+        {
+            //std::string strSender = "1003";
+            //std::string strReciver = "1009";
+            //std::string strPassword = "1234";
+            //std::string strServerIp = "192.168.31.109";
+            //int serverPort = 5060;
+            //std::string strLocalIp = "192.168.31.109";
+            //int localPort = 64998;
+
+            std::string strViaIp = "192.168.31.109";
+            int viaPort = 50757;
+
+            std::string strNetType = "UDP";
+            std::string strAllowOptions = "Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE";
+            std::string strAllowEvents = "Allow-Events: presence, kpml, talk, as-feature-event";
+            std::string strCallId = "Call-ID: EVT_xLB_dIPYDUi2URkpgQ";
+            std::string strBranch = "z9hG4bK-524287-1---924a4031843731a9";
+            std::string strMaxForwards = "Max-Forwards: 70";
+            std::string strFromTag = "f39ef304";
+            std::string strCSeq = "CSeq: "+create_c_seq() + " MESSAGE";
+            //std::string strUserAgent = "User-Agent: Zoiper v2.10.20.4_1";
+            //std::string strContent = "1234";
+
+            std::string strContentLength = "Content-Length: " + std::to_string(strContent.length());
+            std::string strContentType = "Content-Type: text/plain";
+            //SET variable
+            {
+                createSmsMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
+                createSmsMsg.set_sip_local_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
+                createSmsMsg.add_via_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
+                createSmsMsg.set_net_type(strNetType);
+                createSmsMsg.set_allow_options(strAllowOptions);
+                createSmsMsg.set_call_id(strCallId);
+                createSmsMsg.set_content_length(strContentLength);
+                createSmsMsg.set_branch(strBranch);
+                createSmsMsg.set_max_forwards(strMaxForwards);
+                createSmsMsg.set_from_tag(strFromTag);
+                createSmsMsg.set_sender(m_str_user_name);
+                createSmsMsg.set_reciver(strReciver);
+                createSmsMsg.set_c_seq(strCSeq);
+                createSmsMsg.set_user_agent(m_str_client_type);
+                createSmsMsg.set_allow_events(strAllowEvents);
+                createSmsMsg.set_content(strContent);
+                createSmsMsg.set_content_type(strContentType);
+                //createSmsMsg.set_con
+                createSmsMsg.set_content_length(strContentLength);
+                createSmsMsg.set_user_agent(this->m_str_client_type);
+            }
+
+            //create
+            {
+                createSmsMsg.create_header_line();
+                createSmsMsg.create_via_line();
+                createSmsMsg.create_from_line();
+                createSmsMsg.create_to_line();
+            }
+        }
+    }
+    return createSmsMsg.dump();
+}
+std::string get_authorization_from_www_auth_for_client(const std::string strMethod,const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
 {
     WWW_AUTH wwwAuth;
-    std::string strMethod = "REGISTER";
+    //std::string strMethod = "REGISTER";
     std::string strNonceCount = "00000001";
     std::string strResponse;
     if (wwwAuth.from_string(strWwwAuth))
@@ -150,7 +226,7 @@ bool sip_client_protocal_handler::handle_first_register_rsp(const std::string st
     std::string strBranch = "z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69";
     std::string strMaxForwards = "Max-Forwards: 70";
     std::string strFromTag = "a2c95cb6bbf84183a634b0244b09dcd9";
-    std::string strCSeq = "CSeq: 28960 REGISTER";
+    std::string strCSeq = "CSeq: "+create_c_seq() + " REGISTER";
     std::string strExpries = "Expires: 120";
     {
        /*std::string strDump = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
@@ -216,7 +292,7 @@ Content-Length:  0)";*/
                 strURI += std::to_string(m_n_sip_server_port);
             }
             auth.set_uri(strURI);//SipDigest?
-            std::string strResponse = get_authorization_from_www_auth_for_client(
+            std::string strResponse = get_authorization_from_www_auth_for_client("REGISTER",
                 rspMsg.get_www_auth(),
                 m_str_user_name,
                 m_str_pass_word,
@@ -232,6 +308,117 @@ Content-Length:  0)";*/
     }
 
     m_strWaitForSend = secondRegMsg.dump();
+    return true;
+}
+
+bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp)
+{
+    DtSipMessageCpp::CSipRegisterServerRsp rspMsg;
+    std::string strAuth;
+    {
+        rspMsg.parse(strRsp);
+        std::string strNC = "00000001";
+        {
+
+            WWW_AUTH wwwAuth;
+            wwwAuth.from_string(rspMsg.get_www_auth());
+            std::string strCnonce = DtSipMessageCpp::CProtoUtil::get_nonce(32);// "c3606b3f70544096a7e17fcdb4670795";
+            Authorization auth;
+            {
+                auth.set_user_name(m_str_user_name);
+                auth.set_realm(wwwAuth.get_realm());
+                auth.set_nonce(wwwAuth.get_nonce());
+                std::string strURI = "sip:";
+                {
+                    strURI += m_str_sip_server_ip;
+                    strURI += ":";
+                    strURI += std::to_string(m_n_sip_server_port);
+                }
+                auth.set_uri(strURI);//SipDigest?
+                std::string strResponse = get_authorization_from_www_auth_for_client("MESSAGE",
+                    rspMsg.get_www_auth(),
+                    m_str_user_name,
+                    m_str_pass_word,
+                    strCnonce,
+                    strURI);
+                auth.set_response(strResponse);
+                auth.set_cnonce(strCnonce);
+                auth.set_nc(strNC);
+                auth.set_algorithm(wwwAuth.get_algorithm());
+                auth.set_qop(wwwAuth.get_qop());
+                auth.set_auth_type(wwwAuth.get_auth_type());
+            }
+            strAuth=auth.to_string();
+        }
+    }
+
+    {
+        DtSipMessageCpp::CSipSmsMessage createSmsMsg;
+        {
+            //SET 
+            {
+                //std::string strSender = "1003";
+                //std::string strReciver = "1009";
+                //std::string strPassword = "1234";
+                //std::string strServerIp = "192.168.31.109";
+                //int serverPort = 5060;
+                //std::string strLocalIp = "192.168.31.109";
+                //int localPort = 64998;
+
+                std::string strViaIp = "192.168.31.109";
+                int viaPort = 50757;
+
+                std::string strNetType = "UDP";
+                std::string strAllowOptions = "Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE";
+                std::string strAllowEvents = "Allow-Events: presence, kpml, talk, as-feature-event";
+                std::string strCallId = "Call-ID: EVT_xLB_dIPYDUi2URkpgQ";
+                std::string strBranch = "z9hG4bK-524287-1---924a4031843731a9";
+                std::string strMaxForwards = "Max-Forwards: 70";
+                std::string strFromTag = "f39ef304";
+                std::string strCSeq = "CSeq: " + create_c_seq() + " MESSAGE";
+                //std::string strUserAgent = "User-Agent: Zoiper v2.10.20.4_1";
+                //std::string strContent = "1234";
+
+                std::string strContentLength = "Content-Length: " + std::to_string(m_strContent.length());
+                std::string strContentType = "Content-Type: text/plain";
+                //SET variable
+                {
+                    createSmsMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
+                    createSmsMsg.set_sip_local_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
+                    createSmsMsg.add_via_ip_port(strViaIp, viaPort);
+                    createSmsMsg.set_net_type(strNetType);
+                    createSmsMsg.set_allow_options(strAllowOptions);
+                    createSmsMsg.set_call_id(strCallId);
+                    createSmsMsg.set_content_length(strContentLength);
+                    createSmsMsg.set_branch(strBranch);
+                    createSmsMsg.set_max_forwards(strMaxForwards);
+                    createSmsMsg.set_from_tag(strFromTag);
+                    createSmsMsg.set_sender(m_str_user_name);
+                    createSmsMsg.set_reciver(m_strReciver);
+                    createSmsMsg.set_c_seq(strCSeq);
+                    createSmsMsg.set_user_agent(m_str_client_type);
+                    createSmsMsg.set_allow_events(strAllowEvents);
+                    createSmsMsg.set_content(m_strContent);
+                    createSmsMsg.set_content_type(strContentType);
+                    //createSmsMsg.set_con
+                    createSmsMsg.set_content_length(strContentLength);
+                    createSmsMsg.set_authorization(strAuth);
+                }
+
+                //create
+                {
+                    createSmsMsg.create_header_line();
+                    createSmsMsg.create_via_line();
+                    createSmsMsg.create_from_line();
+                    createSmsMsg.create_to_line();
+                }
+            }
+        }
+        //return createSmsMsg.dump();
+        m_strWaitForSend = createSmsMsg.dump();
+    }
+
+  
     return true;
 }
 bool sip_client_protocal_handler::set_user_name_pass_word(const std::string strUserName, const std::string strPassWord)
@@ -279,6 +466,15 @@ void sip_client_protocal_handler::do_register()
 	init_first_register();
 }
 
+void sip_client_protocal_handler::do_send_sms(const std::string strReciver, const std::string strContent)
+{
+    m_strReciver = strReciver;
+    m_strContent = strContent;
+    g_sip_client_state = SIP_CLIENT_STATE::SENDING_SMS;
+    m_strWaitForSend = get_send_sms_message(strReciver, strContent);
+    //init_first_register();
+}
+
 std::string sip_client_protocal_handler::get_next_message()
 {
 	std::string strResult= m_strWaitForSend;
@@ -297,4 +493,15 @@ void sip_client_protocal_handler::init_first_register()
             m_strWaitForSend = get_first_register_message();
 		}
 	}
+}
+void sip_client_protocal_handler::init_send_sms()
+{
+    //m_strWaitForSend = get_send_sms_message();
+}
+
+std::string sip_client_protocal_handler::create_c_seq()
+{
+    std::string strResult = std::to_string(m_n_c_seq);
+    m_n_c_seq++;
+    return strResult;
 }

@@ -416,10 +416,10 @@ namespace DtSipMessageCpp
             strResult += m_str_reciver;
             strResult += "@";
             strResult += m_strSipServerIp;
-            strResult += ":";
-            strResult += std::to_string(m_nSipServerPort);
-            strResult += ";transport=";
-            strResult += m_strNetType;
+            //strResult += ":";
+            //strResult += std::to_string(m_nSipServerPort);
+            //strResult += ";transport=";
+            //strResult += m_strNetType;
             strResult += ">";
             m_strTo = strResult;
         }

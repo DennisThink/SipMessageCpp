@@ -81,6 +81,12 @@ namespace DtSipMessageCpp
             else if (item.find(WWW_AUTHENTICATE_HEADER) != std::string::npos)
             {
                 m_strWwwAuthentite = item;
+                m_strAuthType = WWW_AUTHENTICATE_HEADER;
+            }
+            else if (item.find(PROXY_AUTHENTICATE_HEADER) != std::string::npos)
+            {
+                m_strWwwAuthentite = item;
+                m_strAuthType = m_strAuthType;
             }
         }
         return true;
@@ -97,7 +103,10 @@ namespace DtSipMessageCpp
     {
         return m_strWwwAuthentite;
     }
-
+    std::string CSipRegisterServerRsp::get_auth_type_header() const
+    {
+        return m_strAuthType;
+    }
     std::string CSipRegisterServerRsp::dump() const
     {
         std::string strResult;

@@ -14,13 +14,18 @@ public:
 	bool set_net_type(const std::string strNetType);
 	bool init_protocal();
 	void do_register();
+	void do_send_sms(const std::string strReciver, const std::string strContent);
 	std::string get_next_message();
 	bool handle_current_message(const std::string strMsg);
 protected:
 	std::string get_first_register_message();
 	std::string get_second_register_message(const std::string& strRsp);
+	std::string get_send_sms_message(const std::string strReciver, const std::string strContent);
 	bool handle_first_register_rsp(const std::string strRsp);
+	bool handle_first_send_sms(const std::string strRsp);
 	void init_first_register();
+	void init_send_sms();
+	std::string create_c_seq();
 protected:
 	std::string m_str_call_id;
 	std::string m_strWaitForSend;
@@ -32,5 +37,10 @@ protected:
 	int m_n_sip_client_port;
 	std::string m_str_client_type;
 	std::string m_str_net_type;
+
+	int m_n_c_seq;
+	//send_sms
+	std::string m_strReciver;
+	std::string m_strContent;
 };
 #endif

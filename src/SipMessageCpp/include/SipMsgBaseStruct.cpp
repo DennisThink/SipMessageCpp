@@ -1,5 +1,6 @@
 #include "SipMsgBaseStruct.hpp"
 #include "SipMessageUtil.h"
+#include "SipMsgConstValue.hpp"
 WWW_AUTH::WWW_AUTH()
 {
 
@@ -11,7 +12,8 @@ WWW_AUTH::~WWW_AUTH()
 
 std::string WWW_AUTH::to_string()
 {
-	std::string strResult= " WWW-Authenticate: Digest ";
+	std::string strResult;
+	strResult = " "+m_str_auth_type + " Digest ";
 	{
 		strResult += str_realm_Tag;
 		strResult += "\"";
@@ -49,6 +51,14 @@ std::string WWW_AUTH::to_string()
 }
 bool WWW_AUTH::from_string(const std::string strContent)
 {
+	if (strContent.find(DtSipMessageCpp::WWW_AUTHENTICATE_HEADER) != std::string::npos)
+	{
+		m_str_auth_type = DtSipMessageCpp::WWW_AUTHENTICATE_HEADER;
+	}
+	if (strContent.find(DtSipMessageCpp::PROXY_AUTHENTICATE_HEADER) != std::string::npos)
+	{
+		m_str_auth_type = DtSipMessageCpp::PROXY_AUTHENTICATE_HEADER;
+	}
 	std::vector<std::string> allLine = DtSipMessageCpp::CProtoUtil::SplitStringByLine(strContent, ",");
 	//realm
 	{
@@ -135,7 +145,10 @@ std::string WWW_AUTH::get_qop()
 	return m_str_qop;
 }
 
-
+std::string WWW_AUTH::get_auth_type()
+{
+	return m_str_auth_type;
+}
 Authorization::Authorization()
 {
 
@@ -147,7 +160,16 @@ Authorization::~Authorization()
 
 std::string Authorization::to_string()
 {
-	std::string strResult = "Authorization: Digest ";
+	std::string strResult;
+	if(m_str_auth_type.empty())
+	{
+		strResult = "Authorization: Digest ";
+	}
+	else
+	{
+		strResult = "Proxy-Authorization: Digest ";
+	}
+
 
 	{
 		strResult += str_user_name_Tag;
@@ -166,7 +188,9 @@ std::string Authorization::to_string()
 
 	{
 		strResult += str_nonce_Tag;
+		strResult += "\"";
 		strResult += m_str_nonce;
+		strResult += "\"";
 		strResult += ",";
 	}
 	{
@@ -247,7 +271,8 @@ bool Authorization::from_string(const std::string strContent)
 				if (start_index != std::string::npos)
 				{
 					std::size_t subIndex = start_index + str_nonce_Tag.length();
-					m_str_nonce = item.substr(subIndex, item.length() - subIndex);
+					//romove the begin and end " of nonce
+					m_str_nonce = item.substr(subIndex+1, item.length() - subIndex-2);
 				}
 			}
 			else if (item.find(str_uri_Tag) == 0)
@@ -403,5 +428,11 @@ bool Authorization::set_qop(const std::string strQop)
 bool Authorization::set_algorithm(const std::string strAlgorithm)
 {
 	m_str_algorithm = strAlgorithm;
+	return true;
+}
+
+bool Authorization::set_auth_type(const std::string strAuthType)
+{
+	m_str_auth_type = strAuthType;
 	return true;
 }
