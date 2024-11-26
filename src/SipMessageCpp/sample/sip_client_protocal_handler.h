@@ -31,6 +31,7 @@ protected:
 	void init_send_sms();
 private:
 	std::string create_c_seq();
+	int get_c_seq();
 	std::string create_branch();
 	std::string create_from_tag();
 protected:

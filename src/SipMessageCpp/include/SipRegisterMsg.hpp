@@ -1,10 +1,9 @@
 #ifndef _DT_SIP_REGISTER_MSG_H_
 #define _DT_SIP_REGISTER_MSG_H_
-#include "SipMessageBase.hpp"
-
+#include "SipMsgClientReqBase.hpp"
 namespace DtSipMessageCpp
 {
-    class CSipRegisterMsg:public CSipMessageBase
+    class CSipRegisterMsg:public CSipMsgClientReqBase
     {
         //Common Function from base class
     public:
@@ -13,6 +12,9 @@ namespace DtSipMessageCpp
 
         virtual bool parse(const std::string& strMsg) override;
         virtual std::string dump() const override; 
+
+    public:
+
     public:
         //get function list for parse test
         std::string get_header_line();
@@ -21,7 +23,7 @@ namespace DtSipMessageCpp
         std::string get_to_line();
         std::string get_from_line();
         std::string get_call_id_line();
-        std::string get_c_seq_line();
+
         std::string get_expires_line();
         std::string get_allow_line();
         std::string get_supported_line();
@@ -41,14 +43,14 @@ namespace DtSipMessageCpp
         void set_content_length(const std::string strContentLength);
         void set_max_forwards(const std::string strMaxForwards);
         void set_from_tag(const std::string strFromTag);
-        void set_c_seq(const std::string strSeq);
+        //void set_c_seq(const std::string strSeq);
 
         //create function list
         void create_header_line();
         void create_via_line();
         void create_from_line();
         void create_to_line();
-
+        bool create_c_seq_line();
     protected:
         //parse function
         void parse_register_header();
@@ -72,7 +74,7 @@ namespace DtSipMessageCpp
 
 
         std::string m_strCallId;
-        std::string m_strCSeq;
+        //std::string m_strCSeq;
         std::string m_strExpires;
         std::string m_strAllow;
         std::string m_strSupported;

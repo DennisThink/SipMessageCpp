@@ -51,6 +51,8 @@ Content-Length:  0)";
 
             {
                 std::string strCSeq = R"(CSeq: 39245 REGISTER)";
+                baseMsg.set_c_seq(39245);
+                baseMsg.create_all_lines();
                 CHECK_EQ(baseMsg.get_c_seq_line(), strCSeq);
             }
             {
@@ -187,7 +189,8 @@ TEST_CASE("RegisterCreate") {
             regCreateMsg.set_max_forwards(strMaxForwards);
             regCreateMsg.set_from_tag(strFromTag);
             regCreateMsg.set_username_password(strUser,strPassword);
-            regCreateMsg.set_c_seq(strCSeq);
+            regCreateMsg.set_c_seq(28959);
+            //regCreateMsg.set_c_seq(strCSeq);
         }
 
         {
@@ -195,6 +198,7 @@ TEST_CASE("RegisterCreate") {
             regCreateMsg.create_via_line();
             regCreateMsg.create_from_line();
             regCreateMsg.create_to_line();
+            regCreateMsg.create_all_lines();
         }
     }
     DtSipMessageCpp::CSipRegisterMsg regParseMsg;

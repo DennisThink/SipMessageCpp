@@ -424,6 +424,14 @@ namespace DtSipMessageCpp
             m_strTo = strResult;
         }
     }
+
+    void CSipSmsMessage::create_c_seq_line()
+    {
+        if (m_strCSeq.empty())
+        {
+            m_strCSeq = "CSeq: " + std::to_string(m_n_c_seq) + " MESSAGE";
+        }
+    }
     void CSipSmsMessage::set_sip_server_ip_port(const std::string strIp, const int nPort)
     {
         m_strSipServerIp = strIp;
@@ -485,6 +493,11 @@ namespace DtSipMessageCpp
     void CSipSmsMessage::set_c_seq(const std::string strSeq)
     {
         m_strCSeq = strSeq;
+    }
+
+    void CSipSmsMessage::set_c_seq(const int nSeq) 
+    {
+        m_n_c_seq = nSeq;
     }
     void CSipSmsMessage::set_user_agent(const std::string strAgent)
     {

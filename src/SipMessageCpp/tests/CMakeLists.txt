@@ -16,7 +16,8 @@ SET(SIP_BASE_MSG_FILE ../include/SipMessageBase.cpp
 ../include/CSipRegisterServerRsp.cpp
 ../include/SipMsgBaseStruct.cpp
 ../include/SipSmsMessage.cpp
-../include/SipServerRspBase.cpp)
+../include/SipServerRspBase.cpp
+../include/SipMsgClientReqBase.cpp)
 SET(SIP_MSG_TEST_FILE 
 ./SipMessageBase_test.cpp 
 ./SipRegisterMsg_test.cpp

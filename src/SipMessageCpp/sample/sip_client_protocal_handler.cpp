@@ -56,7 +56,7 @@ std::string sip_client_protocal_handler::get_first_register_message()
         std::string strBranch = create_branch();
         std::string strMaxForwards = "Max-Forwards: "+std::to_string(m_n_max_forwards);
         std::string strFromTag = create_from_tag();
-        std::string strCSeq = "CSeq: "+create_c_seq() + " REGISTER";
+        //std::string strCSeq = "CSeq: "+create_c_seq() + " REGISTER";
         {
             regCreateMsg.set_sip_server_ip_port(m_str_sip_server_ip,m_n_sip_server_port);
             regCreateMsg.set_sip_local_ip_port(m_str_sip_client_ip,m_n_sip_client_port);
@@ -68,7 +68,7 @@ std::string sip_client_protocal_handler::get_first_register_message()
             regCreateMsg.set_max_forwards(strMaxForwards);
             regCreateMsg.set_from_tag(strFromTag);
             regCreateMsg.set_username_password(m_str_user_name,m_str_pass_word);
-            regCreateMsg.set_c_seq(strCSeq);
+            regCreateMsg.set_c_seq(get_c_seq());
         }
 
         {
@@ -76,6 +76,7 @@ std::string sip_client_protocal_handler::get_first_register_message()
             regCreateMsg.create_via_line();
             regCreateMsg.create_from_line();
             regCreateMsg.create_to_line();
+            regCreateMsg.create_all_lines();
         }
     }
     std::string strResult = regCreateMsg.dump();
@@ -325,18 +326,12 @@ bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp
         {
             //SET 
             {
-               
-
-                std::string strNetType = "UDP";
                 std::string strAllowOptions = "Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE";
                 std::string strAllowEvents = "Allow-Events: presence, kpml, talk, as-feature-event";
                 std::string strCallId = "Call-ID: EVT_xLB_dIPYDUi2URkpgQ";
                 std::string strBranch = create_branch();
                 std::string strMaxForwards = "Max-Forwards: "+std::to_string(m_n_max_forwards);
                 std::string strFromTag = create_from_tag();
-                std::string strCSeq = "CSeq: " + create_c_seq() + " MESSAGE";
-                //std::string strUserAgent = "User-Agent: Zoiper v2.10.20.4_1";
-                //std::string strContent = "1234";
 
                 std::string strContentLength = "Content-Length: " + std::to_string(m_strContent.length());
                 std::string strContentType = "Content-Type: text/plain";
@@ -345,7 +340,7 @@ bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp
                     createSmsMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
                     createSmsMsg.set_sip_local_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
                     createSmsMsg.add_via_ip_port(m_str_sip_client_ip, m_n_sip_client_port);
-                    createSmsMsg.set_net_type(strNetType);
+                    createSmsMsg.set_net_type(m_str_net_type);
                     createSmsMsg.set_allow_options(strAllowOptions);
                     createSmsMsg.set_call_id(strCallId);
                     createSmsMsg.set_content_length(strContentLength);
@@ -354,12 +349,11 @@ bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp
                     createSmsMsg.set_from_tag(strFromTag);
                     createSmsMsg.set_sender(m_str_user_name);
                     createSmsMsg.set_reciver(m_strReciver);
-                    createSmsMsg.set_c_seq(strCSeq);
+                    createSmsMsg.set_c_seq(get_c_seq());
                     createSmsMsg.set_user_agent(m_str_client_type);
                     createSmsMsg.set_allow_events(strAllowEvents);
                     createSmsMsg.set_content(m_strContent);
                     createSmsMsg.set_content_type(strContentType);
-                    //createSmsMsg.set_con
                     createSmsMsg.set_content_length(strContentLength);
                     createSmsMsg.set_authorization(strAuth);
                 }
@@ -370,10 +364,10 @@ bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp
                     createSmsMsg.create_via_line();
                     createSmsMsg.create_from_line();
                     createSmsMsg.create_to_line();
+                    createSmsMsg.create_c_seq_line();
                 }
             }
         }
-        //return createSmsMsg.dump();
         m_strWaitForSend = createSmsMsg.dump();
     }
 
@@ -470,7 +464,12 @@ std::string sip_client_protocal_handler::create_c_seq()
     m_n_c_seq++;
     return strResult;
 }
-
+int sip_client_protocal_handler::get_c_seq()
+{
+    int result = m_n_c_seq;
+    m_n_c_seq++;
+    return result;
+}
 std::string sip_client_protocal_handler::create_branch()
 {
     if (m_str_branch.empty())

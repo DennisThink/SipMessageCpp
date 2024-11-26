@@ -33,6 +33,7 @@ namespace DtSipMessageCpp
         void set_allow_events(const std::string strAllowEvents);
         void set_content(const std::string strContent);
         void set_content_type(const std::string strType);
+        void set_c_seq(const int nSeq);
     public:
         std::string get_header_line();
         std::string get_via_line();
@@ -54,6 +55,7 @@ namespace DtSipMessageCpp
         void create_header_line();
         void create_from_line();
         void create_to_line();
+        void create_c_seq_line();
 
     protected:
         void parse_register_header();
@@ -106,6 +108,7 @@ namespace DtSipMessageCpp
         
         std::string m_str_sender;
         std::string m_str_reciver;
+        int m_n_c_seq;
     };
 }
 #endif

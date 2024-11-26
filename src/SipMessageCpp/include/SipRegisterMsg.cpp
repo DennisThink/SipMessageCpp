@@ -49,7 +49,7 @@ namespace DtSipMessageCpp
             }
             else if (item.find(CSEQ_HEADER) == 0)
             {
-                m_strCSeq = item;
+                m_str_c_seq_line = item;
             }
             else if (item.find(EXPIRES_HEADER) == 0)
             {
@@ -151,7 +151,7 @@ namespace DtSipMessageCpp
             strResult += strLineEnd;
         }
         {
-            strResult += m_strCSeq;
+            strResult += m_str_c_seq_line;
             strResult += strLineEnd;
         }
         if(!m_strExpires.empty())
@@ -250,10 +250,7 @@ namespace DtSipMessageCpp
     {
         m_str_from_tag = strFromTag;
     }
-    void CSipRegisterMsg::set_c_seq(const std::string strSeq)
-    {
-        m_strCSeq = strSeq;
-    }
+
     std::string CSipRegisterMsg::get_header_line()
     {
         return m_str_header_line;
@@ -302,11 +299,6 @@ namespace DtSipMessageCpp
     std::string CSipRegisterMsg::get_call_id_line()
     {
         return m_strCallId;
-    }
-
-    std::string CSipRegisterMsg::get_c_seq_line()
-    {
-        return m_strCSeq;
     }
 
     std::string CSipRegisterMsg::get_expires_line()
@@ -459,6 +451,14 @@ namespace DtSipMessageCpp
         }
     }
 
+    bool CSipRegisterMsg::create_c_seq_line()
+    {
+        if (m_str_c_seq_line.empty())
+        {
+            m_str_c_seq_line = "CSeq: " +std::to_string(m_n_c_seq) + " REGISTER";
+        }
+        return true;
+    }
     void CSipRegisterMsg::parse_via_line()
     {
         //Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69
