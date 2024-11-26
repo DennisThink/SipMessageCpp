@@ -1,10 +1,9 @@
 #ifndef _DT_SIP_RE_REGISTER_MSG_H_
 #define _DT_SIP_RE_REGISTER_MSG_H_
-#include "SipMessageBase.hpp"
-
+#include "SipMsgClientReqBase.hpp"
 namespace DtSipMessageCpp
 {
-    class CSipReRegisterMsg:public CSipMessageBase
+    class CSipReRegisterMsg:public CSipMsgClientReqBase
     {
     public:
         CSipReRegisterMsg();
@@ -25,7 +24,7 @@ namespace DtSipMessageCpp
         void set_content_length(const std::string strContentLength);
         void set_max_forwards(const std::string strMaxForwards);
         void set_from_tag(const std::string strFromTag);
-        void set_c_seq(const std::string strSeq);
+        //void set_c_seq(const std::string strSeq);
         void set_expires(const std::string strExpires);
         //std::string get_sip_server_ip() const;
         //int get_sip_server_port() const;
@@ -36,6 +35,7 @@ namespace DtSipMessageCpp
         void create_from_line();
         void create_to_line();
         void create_contact_line();
+        virtual bool create_c_seq_line() override;
         //get function list
         std::string get_header_line();
         std::string get_via_line();
@@ -70,7 +70,7 @@ namespace DtSipMessageCpp
         std::string m_strFrom;
         std::string m_strTo;
         std::string m_strCallId;
-        std::string m_strCSeq;
+        //std::string m_strCSeq;
         std::string m_strExpires;
         std::string m_strAllow;
         std::string m_strSupported;

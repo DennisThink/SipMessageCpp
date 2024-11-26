@@ -48,7 +48,7 @@ namespace DtSipMessageCpp
             }
             else if (item.find(CSEQ_HEADER) == 0)
             {
-                m_strCSeq = item;
+                m_str_c_seq_line = item;
             }
             else if (item.find(EXPIRES_HEADER) == 0)
             {
@@ -155,7 +155,7 @@ namespace DtSipMessageCpp
             strResult += strLineEnd;
         }
         {
-            strResult += m_strCSeq;
+            strResult += m_str_c_seq_line;
             strResult += strLineEnd;
         }
         {
@@ -250,7 +250,7 @@ namespace DtSipMessageCpp
 
     std::string CSipReRegisterMsg::get_c_seq_line()
     {
-        return m_strCSeq;
+        return m_str_c_seq_line;
     }
 
     std::string CSipReRegisterMsg::get_expires_line()
@@ -368,7 +368,15 @@ namespace DtSipMessageCpp
             m_strTo = strResult;
         }
     }
-
+    
+    bool CSipReRegisterMsg::create_c_seq_line()
+    {
+        if (m_str_c_seq_line.empty())
+        {
+            m_str_c_seq_line = "CSeq: " + std::to_string(m_n_c_seq) + " REGISTER";
+        }
+        return true;
+    }
     void CSipReRegisterMsg::create_contact_line()
     {
         m_strContact.clear();
@@ -407,10 +415,6 @@ namespace DtSipMessageCpp
         m_str_from_tag = strFromTag;
     }
 
-    void CSipReRegisterMsg::set_c_seq(const std::string strSeq)
-    {
-        m_strCSeq = strSeq;
-    }
     void CSipReRegisterMsg::set_expires(const std::string strExpires)
     {
         m_strExpires = strExpires;

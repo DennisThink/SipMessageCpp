@@ -229,7 +229,7 @@ bool sip_client_protocal_handler::handle_first_register_rsp(const std::string st
                 secondRegMsg.set_max_forwards(strMaxForwards);
                 secondRegMsg.set_from_tag(strFromTag);
                 secondRegMsg.set_username_password(m_str_user_name, m_str_pass_word);
-                secondRegMsg.set_c_seq(strCSeq);
+                secondRegMsg.set_c_seq(get_c_seq());
                 secondRegMsg.set_net_type(m_str_net_type);
                 secondRegMsg.set_expires(strExpries);
             }

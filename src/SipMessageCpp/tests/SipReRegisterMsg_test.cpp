@@ -169,7 +169,7 @@ TEST_CASE("RegisterCreate") {
         std::string strBranch = "z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69";
         std::string strMaxForwards = "Max-Forwards: 70";
         std::string strFromTag = "a2c95cb6bbf84183a634b0244b09dcd9";
-        std::string strCSeq = "CSeq: 28959 REGISTER";
+        //std::string strCSeq = "CSeq: 28959 REGISTER";
         {
             regCreateMsg.set_sip_server_ip_port(strServerIp, serverPort);
             regCreateMsg.set_sip_local_ip_port(strLocalIp, localPort);
@@ -181,7 +181,7 @@ TEST_CASE("RegisterCreate") {
             regCreateMsg.set_max_forwards(strMaxForwards);
             regCreateMsg.set_from_tag(strFromTag);
             regCreateMsg.set_username_password(strUser, strPassword);
-            regCreateMsg.set_c_seq(strCSeq);
+            regCreateMsg.set_c_seq(28959);
         }
 
         {
@@ -210,7 +210,7 @@ Content-Length:  0
         regParseMsg.parse(strSipReg);
     }
 
-
+    regCreateMsg.create_all_lines();
     //CHECKS
     {
 
