@@ -110,7 +110,7 @@ std::string sip_client_protocal_handler::get_send_sms_message(const std::string 
             std::string strNetType = "UDP";
             std::string strAllowOptions = "Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE";
             std::string strAllowEvents = "Allow-Events: presence, kpml, talk, as-feature-event";
-            std::string strCallId = "Call-ID: EVT_xLB_dIPYDUi2URkpgQ";
+            std::string strCallId = "Call-ID: "+ m_str_call_id;
             std::string strBranch = create_branch();
             std::string strMaxForwards = "Max-Forwards: "+ std::to_string(m_n_max_forwards);
             std::string strFromTag = create_from_tag();
@@ -328,7 +328,7 @@ bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp
             {
                 std::string strAllowOptions = "Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE";
                 std::string strAllowEvents = "Allow-Events: presence, kpml, talk, as-feature-event";
-                std::string strCallId = "Call-ID: EVT_xLB_dIPYDUi2URkpgQ";
+                std::string strCallId = "Call-ID: "+create_call_id();
                 std::string strBranch = create_branch();
                 std::string strMaxForwards = "Max-Forwards: "+std::to_string(m_n_max_forwards);
                 std::string strFromTag = create_from_tag();
@@ -486,6 +486,12 @@ std::string sip_client_protocal_handler::create_from_tag()
         m_str_from_tag = DtSipMessageCpp::CProtoUtil::get_nonce(16);
     }
     return m_str_from_tag;
+}
+
+std::string sip_client_protocal_handler::create_call_id()
+{
+    std::string strResult = DtSipMessageCpp::CProtoUtil::get_nonce(16);
+    return strResult;
 }
 
 bool  sip_client_protocal_handler::is_registered() const

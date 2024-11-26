@@ -18,7 +18,7 @@ public:
 	void do_send_sms(const std::string strReciver, const std::string strContent);
 	std::string get_next_message();
 	bool handle_current_message(const std::string strMsg);
-
+	std::string create_call_id();
 public:
 	bool is_registered() const;
 protected:
