@@ -37,22 +37,9 @@ namespace DtSipMessageCpp
         void create_contact_line();
         virtual bool create_c_seq_line() override;
         //get function list
-        std::string get_header_line();
-        std::string get_via_line();
-        std::string get_route_line();
-        std::string get_to_line();
-        std::string get_from_line();
-        std::string get_call_id_line();
-        std::string get_c_seq_line();
-        std::string get_expires_line();
-        std::string get_allow_line();
-        std::string get_allow_events();
-        std::string get_supported_line();
-        std::string get_user_agent_line();
-        std::string get_content_length_line();
-        std::string get_max_forwards_line();
     public:
         std::string get_authorization_line();
+        std::string get_allow_events();
     protected:
         void parse_register_header();
         void parse_register_header_with_transport();
@@ -60,7 +47,7 @@ namespace DtSipMessageCpp
 
         void parse_via_line();
     protected:
-        std::string m_str_header_line;
+        /*std::string m_str_header_line;
         //std::string m_strMsgType;
         std::string m_strVia;
         std::string m_strBranch;
@@ -78,7 +65,7 @@ namespace DtSipMessageCpp
         std::string m_strAuthorization;
         std::string m_strAllowEvents;
         std::string m_strContentLength;
-        std::string m_str_allow_events;
+        std::string m_str_allow_events;*/
         std::string m_str_from_tag;
     private:
         std::string m_strSipServerIp;
@@ -89,6 +76,7 @@ namespace DtSipMessageCpp
         std::string m_strSipLocalIp;
         int m_nSipLocalPort;
 
+        std::string m_strBranch;
         std::string m_strNetType;//TCP/UDP/SSL
     };
 }
