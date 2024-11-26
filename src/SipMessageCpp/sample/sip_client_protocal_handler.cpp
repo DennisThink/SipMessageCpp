@@ -22,6 +22,7 @@ sip_client_protocal_handler::sip_client_protocal_handler()
 {
     srand(time(0));
     m_n_c_seq = rand() % 1000;
+    m_n_max_forwards = 70;
 }
 
 sip_client_protocal_handler::~sip_client_protocal_handler()
@@ -49,13 +50,11 @@ std::string sip_client_protocal_handler::get_first_register_message()
 {
     DtSipMessageCpp::CSipRegisterMsg regCreateMsg;
     {
-        //std::string strNetType = "UDP";
         std::string strAllowOptions = "Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS";
-        //std::string strCallId = "Call-ID: 7dacdb3605c94e659e588faa5e70af86";
         std::string strCallId = "Call-ID: " + m_str_call_id;
         std::string strContentLength = "Content-Length:  0";
         std::string strBranch = create_branch();
-        std::string strMaxForwards = "Max-Forwards: 70";
+        std::string strMaxForwards = "Max-Forwards: "+std::to_string(m_n_max_forwards);
         std::string strFromTag = create_from_tag();
         std::string strCSeq = "CSeq: "+create_c_seq() + " REGISTER";
         {
@@ -112,7 +111,7 @@ std::string sip_client_protocal_handler::get_send_sms_message(const std::string 
             std::string strAllowEvents = "Allow-Events: presence, kpml, talk, as-feature-event";
             std::string strCallId = "Call-ID: EVT_xLB_dIPYDUi2URkpgQ";
             std::string strBranch = create_branch();
-            std::string strMaxForwards = "Max-Forwards: 70";
+            std::string strMaxForwards = "Max-Forwards: "+ std::to_string(m_n_max_forwards);
             std::string strFromTag = create_from_tag();
             std::string strCSeq = "CSeq: "+create_c_seq() + " MESSAGE";
             //std::string strUserAgent = "User-Agent: Zoiper v2.10.20.4_1";
@@ -195,10 +194,7 @@ std::string get_authorization_from_www_auth_for_client(const std::string strMeth
                 + strCnonce + ":"
                 + strQop + ":"
                 + strHA2;
-            std::cout << "ResponseSource:" << strResponseSource << std::endl;
             strResponse = MD5(strResponseSource).toStr();
-            //std::string strStdResponse = "eb9d64a7b947554c160f9b5393cf2697";
-            //CHECK(strResponse == strStdResponse);
         }
     }
     return strResponse;
@@ -216,26 +212,11 @@ bool sip_client_protocal_handler::handle_first_register_rsp(const std::string st
     std::string strCallId = "Call-ID: " + m_str_call_id;
     std::string strContentLength = "Content-Length:  0";
     std::string strBranch = create_branch();
-    std::string strMaxForwards = "Max-Forwards: 70";
+    std::string strMaxForwards = "Max-Forwards: "+ std::to_string(m_n_max_forwards);
     std::string strFromTag = create_from_tag();
     std::string strCSeq = "CSeq: "+create_c_seq() + " REGISTER";
     std::string strExpries = "Expires: 120";
     {
-       /*std::string strDump = R"(REGISTER sip:192.168.31.109:5060 SIP/2.0
-Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPja4bf5bc9a06b4a9f9413f9c143242321
-Route: <sip:192.168.31.109:5060;lr>
-Max-Forwards: 70
-From: "1002" <sip:1002@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
-To: "1002" <sip:1002@192.168.31.109>
-Call-ID: 7dacdb3605c94e659e588faa5e70af86
-CSeq: 28960 REGISTER
-User-Agent: DtSipClient/3.21.4
-Contact: "1002" <sip:1002@192.168.31.109:64998;ob>
-Expires: 30
-Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS
-Authorization: Digest username="1002", realm="192.168.31.109", nonce="36fb7893-0612-4527-8d25-af2c14afeaec", uri="sip:192.168.31.109:5060", response="eb9d64a7b947554c160f9b5393cf2697", algorithm=MD5, cnonce="fc2d3c0e12fd4932873b5011bace6897", qop=auth, nc=00000001
-Content-Length:  0)";*/
-        //secondRegMsg.parse(strDump);
         {
             {
                 secondRegMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
@@ -260,17 +241,13 @@ Content-Length:  0)";*/
                 secondRegMsg.create_contact_line();
             }
         }
-        //secondRegMsg.set_sip_server_ip_port(m_str_sip_server_ip, m_n_sip_server_port);
-        //secondRegMsg.set_sip_server_ip_port("192.168.31.109", 5060);
-        //secondRegMsg.set_net_type("UDP");
-
     }
 
     {
 
         WWW_AUTH wwwAuth;
         wwwAuth.from_string(rspMsg.get_www_auth());
-        std::string strCnonce = DtSipMessageCpp::CProtoUtil::get_nonce(32);// "c3606b3f70544096a7e17fcdb4670795";
+        std::string strCnonce = DtSipMessageCpp::CProtoUtil::get_nonce(32);
         Authorization auth;
         {
             auth.set_user_name(m_str_user_name);
@@ -348,23 +325,14 @@ bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp
         {
             //SET 
             {
-                //std::string strSender = "1003";
-                //std::string strReciver = "1009";
-                //std::string strPassword = "1234";
-                //std::string strServerIp = "192.168.31.109";
-                //int serverPort = 5060;
-                //std::string strLocalIp = "192.168.31.109";
-                //int localPort = 64998;
-
-                //std::string strViaIp = "192.168.31.109";
-                //int viaPort = 50757;
+               
 
                 std::string strNetType = "UDP";
                 std::string strAllowOptions = "Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE";
                 std::string strAllowEvents = "Allow-Events: presence, kpml, talk, as-feature-event";
                 std::string strCallId = "Call-ID: EVT_xLB_dIPYDUi2URkpgQ";
                 std::string strBranch = create_branch();
-                std::string strMaxForwards = "Max-Forwards: 70";
+                std::string strMaxForwards = "Max-Forwards: "+std::to_string(m_n_max_forwards);
                 std::string strFromTag = create_from_tag();
                 std::string strCSeq = "CSeq: " + create_c_seq() + " MESSAGE";
                 //std::string strUserAgent = "User-Agent: Zoiper v2.10.20.4_1";
@@ -440,6 +408,12 @@ bool sip_client_protocal_handler::set_client_type(const std::string strClientTyp
 bool sip_client_protocal_handler::set_net_type(const std::string strNetType)
 {
     m_str_net_type = strNetType;
+    return true;
+}
+
+bool sip_client_protocal_handler::set_max_forwards(int nMaxForwards)
+{
+    m_n_max_forwards = nMaxForwards;
     return true;
 }
 bool sip_client_protocal_handler::init_protocal()

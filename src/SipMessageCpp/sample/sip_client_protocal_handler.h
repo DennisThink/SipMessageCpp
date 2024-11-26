@@ -12,6 +12,7 @@ public:
 	bool set_sip_client_ip_port(const std::string strIp, const int nPort);
 	bool set_client_type(const std::string strClientType);
 	bool set_net_type(const std::string strNetType);
+	bool set_max_forwards(int nMaxForwards);
 	bool init_protocal();
 	void do_register();
 	void do_send_sms(const std::string strReciver, const std::string strContent);
@@ -55,5 +56,6 @@ protected:
 private:
 	std::string m_str_branch;
 	std::string m_str_from_tag;
+	int m_n_max_forwards;
 };
 #endif
