@@ -184,8 +184,6 @@ namespace DtSipMessageCpp
                 strMsgType += std::to_string(m_nSipServerPort);
                 strMsgType += " SIP/2.0";
 
-
-                //strResult += m_str_header_line;
                 m_str_header_line = strMsgType;
             }
         }
