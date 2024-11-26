@@ -17,19 +17,7 @@ namespace DtSipMessageCpp
 
     public:
         //get function list for parse test
-        std::string get_header_line();
-        std::string get_via_line();
-        std::string get_route_line();
-        std::string get_to_line();
-        std::string get_from_line();
-        std::string get_call_id_line();
 
-        std::string get_expires_line();
-        std::string get_allow_line();
-        std::string get_supported_line();
-        std::string get_user_agent_line();
-        std::string get_content_length_line();
-        std::string get_max_forwards_line();
 
         //set function list for dump function test
         void set_sip_server_ip_port(const std::string strIp, const int nPort);
@@ -63,8 +51,8 @@ namespace DtSipMessageCpp
         
     protected:
         //std::string m_strMsgType;
-        std::string m_str_header_line;
-        std::string m_strTo;
+
+        /*std::string m_strTo;
         std::string m_strFrom;
         std::string m_strVia;
         std::string m_strBranch;
@@ -81,7 +69,7 @@ namespace DtSipMessageCpp
         std::string m_strUserAgent;
         std::string m_strAuthorization;
         std::string m_strAllowEvents;
-        std::string m_strContentLength;
+        std::string m_strContentLength;*/
 
         std::string m_str_from_tag;
     private:
@@ -92,7 +80,7 @@ namespace DtSipMessageCpp
 
         std::string m_strSipLocalIp;
         int m_nSipLocalPort;
-
+        std::string m_strBranch;
         std::string m_strNetType;//TCP/UDP/SSL
     };
 }

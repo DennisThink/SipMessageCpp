@@ -20,32 +20,32 @@ namespace DtSipMessageCpp
             }
             else if (item.find(VIA_HEADER) == 0)
             {
-                m_strVia = item;
+                m_str_via_line = item;
                 parse_via_line();
             }
             else if (item.find(ROUTE_HEADER) == 0)
             {
-                m_strRoute = item;
+                m_str_route_line = item;
             }
             else if (item.find(MAX_FORWARDS_HEADER) == 0)
             {
-                m_strMaxForwards = item;
+                m_str_max_forwards_line = item;
             }
             else if(item.find(CONTACT_HEADER) == 0)
             {
-                m_strContact = item;
+                m_str_contact_line = item;
             }
             else if(item.find(TO_HEADER) == 0)
             {
-                m_strTo = item;
+                m_str_to_line = item;
             }
             else if (item.find(FROM_HEADER) == 0)
             {
-                m_strFrom = item;
+                m_str_from_line = item;
             }
             else if (item.find(CALL_ID_HEADER) == 0)
             {
-                m_strCallId = item;
+                m_str_call_id_line = item;
             }
             else if (item.find(CSEQ_HEADER) == 0)
             {
@@ -53,31 +53,31 @@ namespace DtSipMessageCpp
             }
             else if (item.find(EXPIRES_HEADER) == 0)
             {
-                m_strExpires = item;
+                m_str_expires_line = item;
             }
             else if (item.find(ALLOW_HEADER) == 0)
             {
-                m_strAllow = item;
+                m_str_allow_line = item;
             }
             else if (item.find(ALLOW_EVENTS_HEADER) == 0)
             {
-                m_strAllowEvents = item;
+                m_str_allow_events_line = item;
             }
             else if (item.find(USER_AGENT_HEADER) == 0)
             {
-                m_strUserAgent = item;
+                m_str_user_agent_line = item;
             }
             else if (item.find(AUTHORIZATION_HEADER) == 0)
             {
-                m_strAuthorization = item;
+                m_str_authorization_line = item;
             }
             else if (item.find(CONTENT_LENGTH_HEADER) != std::string::npos)
             {
-                m_strContentLength = item;
+                m_str_content_length_line = item;
             }
             else if (item.find(SUPPORTED_HEADER) != std::string::npos)
             {
-                m_strSupported = item;
+                m_str_content_length_line = item;
             }
         }
         parse_register_header();
@@ -87,109 +87,85 @@ namespace DtSipMessageCpp
     std::string CSipRegisterMsg::dump() const{
         std::string strResult;
         std::string strLineEnd = "\n";
+        if(!m_str_header_line.empty())
         {
-
-        }
-        {
-            std::string strMsgType = "REGISTER";
-            strMsgType += " ";
-            strMsgType += "sip:";
-            strMsgType += m_strSipServerIp;
-            strMsgType += ":";
-            strMsgType += std::to_string(m_nSipServerPort);
-            strMsgType += " SIP/2.0";
-
-
-            //strResult += m_str_header_line;
-            strResult += strMsgType;
+            strResult += m_str_header_line;
             strResult += strLineEnd;
         }
-        //Via
+        if (!m_str_via_line.empty())
         {
-            //strResult += m_strVia;
-            //Via: SIP/2.0/UDP 192.168.31.109:64998;rport;branch=z9hG4bKPj69ad7fa3a38d41159b63dcb5f8b38a69
-            {
-                strResult += VIA_HEADER;
-                strResult += " SIP/2.0/";
-                strResult += m_strNetType;
-                strResult += " ";
-                strResult += m_strSipLocalIp;
-                strResult += ":";
-                strResult += std::to_string(m_nSipLocalPort);
-                strResult += ";rport;branch=";
-                strResult += m_strBranch;
-            }
+            strResult += m_str_via_line;
             strResult += strLineEnd;
         }
-        if (!m_strRoute.empty())
+        if (!m_str_route_line.empty())
         {
-            strResult += m_strRoute;
+            strResult += m_str_route_line;
             strResult += strLineEnd;
         }
         {
-            strResult += m_strMaxForwards;
+            strResult += m_str_max_forwards_line;
             strResult += strLineEnd;
         }
-        if(!m_strContact.empty())
+        if(!m_str_contact_line.empty())
         {
-            strResult += m_strContact;
+            strResult += m_str_contact_line;
             strResult += strLineEnd;
         }
         
         {
-            strResult += m_strTo;
+            strResult += m_str_to_line;
             strResult += strLineEnd;
         }
 
         {
-            strResult += m_strFrom;
+            strResult += m_str_from_line;
             strResult += strLineEnd;
         }
 
         {
-            strResult += m_strCallId;
+            strResult += m_str_call_id_line;
             strResult += strLineEnd;
         }
         {
             strResult += m_str_c_seq_line;
             strResult += strLineEnd;
         }
-        if(!m_strExpires.empty())
+        if(!m_str_expires_line.empty())
         {
-            strResult += m_strExpires;
+            strResult += m_str_expires_line;
             strResult += strLineEnd;
         }
 
         {
-            strResult += m_strAllow;
+            strResult += m_str_allow_line;
             strResult += strLineEnd;
         }
-        if(!m_strSupported.empty())
+        if(!m_str_supported_line.empty())
         {
-            strResult += m_strSupported;
-            strResult += strLineEnd;
-        }
-
-        if(!m_strUserAgent.empty())
-        {
-            strResult += m_strUserAgent;
+            strResult += m_str_supported_line;
             strResult += strLineEnd;
         }
 
-        if(!m_strAuthorization.empty())
+        if(!m_str_user_agent_line.empty())
         {
-            strResult += m_strAuthorization;
+            strResult += m_str_user_agent_line;
             strResult += strLineEnd;
         }
 
-        if(!m_strAllowEvents.empty())
+        if(!m_str_authorization_line.empty())
         {
-            strResult += m_strAllowEvents;
+            strResult += m_str_authorization_line;
+            strResult += strLineEnd;
+        }
+
+        if(!m_str_allow_events_line.empty())
+        {
+            strResult += m_str_allow_events_line;
             strResult += strLineEnd;
         }
 
         {
-            strResult += m_strContentLength;
+            strResult += m_str_content_length_line;
         }
 
         return strResult;
@@ -225,25 +201,25 @@ namespace DtSipMessageCpp
 
     void CSipRegisterMsg::set_authorization(const std::string strAuthorization)
     {
-        m_strAuthorization = strAuthorization;
+        m_str_authorization_line = strAuthorization;
     }
 
     void CSipRegisterMsg::set_allow_options(const std::string strAllowOptions)
     {
-        m_strAllow = strAllowOptions;
+        m_str_allow_line = strAllowOptions;
     }
     void CSipRegisterMsg::set_call_id(const std::string strCallId)
     {
-        m_strCallId = strCallId;
+        m_str_call_id_line = strCallId;
     }
     void CSipRegisterMsg::set_content_length(const std::string strContentLength)
     {
-        m_strContentLength = strContentLength;
+        m_str_content_length_line = strContentLength;
     }
 
     void CSipRegisterMsg::set_max_forwards(const std::string strMaxForwards)
     {
-        m_strMaxForwards = strMaxForwards;
+        m_str_max_forwards_line = strMaxForwards;
     }
 
     void CSipRegisterMsg::set_from_tag(const std::string strFromTag)
@@ -251,10 +227,7 @@ namespace DtSipMessageCpp
         m_str_from_tag = strFromTag;
     }
 
-    std::string CSipRegisterMsg::get_header_line()
-    {
-        return m_str_header_line;
-    }
+
 
     void CSipRegisterMsg::create_header_line()
     {
@@ -274,61 +247,6 @@ namespace DtSipMessageCpp
                 m_str_header_line = strMsgType;
             }
         }
-    }
-
-    std::string CSipRegisterMsg::get_via_line()
-    {
-        return m_strVia;
-    }
-
-    std::string CSipRegisterMsg::get_route_line()
-    {
-        return "";
-    }
-
-    std::string CSipRegisterMsg::get_to_line()
-    {
-        return m_strTo;
-    }
-
-    std::string CSipRegisterMsg::get_from_line()
-    {
-        return m_strFrom;
-    }
-
-    std::string CSipRegisterMsg::get_call_id_line()
-    {
-        return m_strCallId;
-    }
-
-    std::string CSipRegisterMsg::get_expires_line()
-    {
-        return m_strExpires;
-    }
-
-    std::string CSipRegisterMsg::get_allow_line()
-    {
-        return m_strAllow;
-    }
-
-    std::string CSipRegisterMsg::get_supported_line()
-    {
-        return m_strSupported;
-    }
-
-    std::string CSipRegisterMsg::get_user_agent_line()
-    {
-        return m_strUserAgent;
-    }
-
-    std::string CSipRegisterMsg::get_content_length_line()
-    {
-        return m_strContentLength;
-    }
-    //std::string 
-    std::string CSipRegisterMsg::get_max_forwards_line()
-    {
-        return m_strMaxForwards;
     }
 
     void CSipRegisterMsg::parse_register_header()
@@ -415,14 +333,14 @@ namespace DtSipMessageCpp
             strResult += std::to_string(m_nSipLocalPort);
             strResult += ";rport;branch=";
             strResult += m_strBranch;
-            m_strVia = strResult;
+            m_str_via_line = strResult;
         }
     }
 
     void CSipRegisterMsg::create_from_line()
     {
         //From: "1009" <sip:1009@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
-        if (m_strFrom.empty())
+        if (m_str_from_line.empty())
         {
             std::string strResult = "From: \"";
             strResult += m_strUserName;
@@ -432,13 +350,13 @@ namespace DtSipMessageCpp
             strResult += m_strSipServerIp;
             strResult += ">;tag=";
             strResult += m_str_from_tag;
-            m_strFrom = strResult;
+            m_str_from_line = strResult;
         }
     }
     void CSipRegisterMsg::create_to_line()
     {
         //To: "1009" <sip:1009@192.168.31.109>
-        if (m_strTo.empty())
+        if (m_str_to_line.empty())
         {
             std::string strResult = "To: \"";
             strResult += m_strUserName;
@@ -447,7 +365,7 @@ namespace DtSipMessageCpp
             strResult += "@";
             strResult += m_strSipServerIp;
             strResult += ">";
-            m_strTo = strResult;
+            m_str_to_line = strResult;
         }
     }
 
@@ -465,34 +383,34 @@ namespace DtSipMessageCpp
         std::size_t firstIndex = 0;
         std::size_t secondIndex = 0;
         {
-            secondIndex = m_strVia.find("SIP/2.0/");
+            secondIndex = m_str_via_line.find("SIP/2.0/");
             if (secondIndex != std::string::npos)
             {
                 std::size_t startIndex = secondIndex + std::strlen("SIP/2.0/");
-                firstIndex = m_strVia.find(" ", startIndex);
-                m_strNetType = m_strVia.substr(startIndex, firstIndex - startIndex);
+                firstIndex = m_str_via_line.find(" ", startIndex);
+                m_strNetType = m_str_via_line.substr(startIndex, firstIndex - startIndex);
             }
             
             secondIndex = firstIndex;
-            firstIndex = m_strVia.find(":", secondIndex);
+            firstIndex = m_str_via_line.find(":", secondIndex);
             if (firstIndex != std::string::npos)
             {
-                m_strSipLocalIp = m_strVia.substr(secondIndex+1, firstIndex - secondIndex-1);
+                m_strSipLocalIp = m_str_via_line.substr(secondIndex+1, firstIndex - secondIndex-1);
             }
 
             secondIndex = firstIndex;
-            firstIndex = m_strVia.find(";", secondIndex);
+            firstIndex = m_str_via_line.find(";", secondIndex);
             if (firstIndex != std::string::npos)
             {
-                std::string strPort = m_strVia.substr(secondIndex+1, firstIndex - secondIndex);
+                std::string strPort = m_str_via_line.substr(secondIndex+1, firstIndex - secondIndex);
                 m_nSipLocalPort = std::atoi(strPort.c_str());
             }
 
-            secondIndex = m_strVia.find("branch=", firstIndex);
-            firstIndex = m_strVia.length();
+            secondIndex = m_str_via_line.find("branch=", firstIndex);
+            firstIndex = m_str_via_line.length();
             if (firstIndex != std::string::npos)
             {
-                m_strBranch = m_strVia.substr(secondIndex + std::strlen("branch="), firstIndex - secondIndex);
+                m_strBranch = m_str_via_line.substr(secondIndex + std::strlen("branch="), firstIndex - secondIndex);
             }
 
         }

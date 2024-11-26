@@ -6,7 +6,6 @@
 #include "SipMessageUtil.h"
 #include "md5/md5.h"
 #include <iostream>
-std::string get_authorization_from_www_auth_for_client(const std::string strMethod,const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri);
 enum class SIP_CLIENT_STATE
 {
     UNKNOWN,
@@ -155,7 +154,7 @@ std::string sip_client_protocal_handler::get_send_sms_message(const std::string 
     }
     return createSmsMsg.dump();
 }
-std::string get_authorization_from_www_auth_for_client(const std::string strMethod,const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
+std::string sip_client_protocal_handler::get_authorization_from_www_auth_for_client(const std::string strMethod,const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
 {
     WWW_AUTH wwwAuth;
     //std::string strMethod = "REGISTER";

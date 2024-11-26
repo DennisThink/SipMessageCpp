@@ -34,6 +34,9 @@ private:
 	int get_c_seq();
 	std::string create_branch();
 	std::string create_from_tag();
+
+private:
+	std::string get_authorization_from_www_auth_for_client(const std::string strMethod, const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri);
 protected:
 	std::string m_str_call_id;
 	std::string m_strWaitForSend;

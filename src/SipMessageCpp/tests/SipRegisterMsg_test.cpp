@@ -190,6 +190,7 @@ TEST_CASE("RegisterCreate") {
             regCreateMsg.set_from_tag(strFromTag);
             regCreateMsg.set_username_password(strUser,strPassword);
             regCreateMsg.set_c_seq(28959);
+            regCreateMsg.set_branch(strBranch);
             //regCreateMsg.set_c_seq(strCSeq);
         }
 
