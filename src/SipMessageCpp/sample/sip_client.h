@@ -17,6 +17,7 @@ public:
 	void init_protocal();
 	void do_register();
 	void send_sms(const std::string strReciver,const std::string strSms);
+	void call(const std::string strCalled);
 	std::string recv_sms();
 protected:
 	std::string m_str_client_type;

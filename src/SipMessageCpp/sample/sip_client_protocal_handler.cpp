@@ -2,6 +2,7 @@
 #include "CSipMsgCpp.hpp"
 #include "SipReRegisterMsg.hpp"
 #include "SipSmsMessage.hpp"
+#include "SipInviteMsg.hpp"
 #include "SipMsgBaseStruct.hpp"
 #include "SipMessageUtil.h"
 #include "md5/md5.h"
@@ -14,7 +15,11 @@ enum class SIP_CLIENT_STATE
     DOING_REGISTER,
     REGISTER_FINISHED,
     SENDING_SMS,
+    START_CALL,
+    CALLING,
+    END_CALL,
     END_END_STATE,
+
 };
 SIP_CLIENT_STATE g_sip_client_state = SIP_CLIENT_STATE::UNKNOWN;
 sip_client_protocal_handler::sip_client_protocal_handler()
@@ -154,9 +159,15 @@ std::string sip_client_protocal_handler::get_send_sms_message(const std::string 
     }
     return createSmsMsg.dump();
 }
+
+
+std::string sip_client_protocal_handler::get_call_message(const std::string strCalled)
+{
+    return "";
+}
 std::string sip_client_protocal_handler::get_authorization_from_www_auth_for_client(const std::string strMethod,const std::string& strWwwAuth, const std::string strUser, const std::string strPass, const std::string strCnonce, const std::string strUri)
 {
-    WWW_AUTH wwwAuth;
+    DtSipMessageCpp::WWW_AUTH wwwAuth;
     //std::string strMethod = "REGISTER";
     std::string strNonceCount = "00000001";
     std::string strResponse;
@@ -245,10 +256,10 @@ bool sip_client_protocal_handler::handle_first_register_rsp(const std::string st
 
     {
 
-        WWW_AUTH wwwAuth;
+        DtSipMessageCpp::WWW_AUTH wwwAuth;
         wwwAuth.from_string(rspMsg.get_www_auth());
         std::string strCnonce = DtSipMessageCpp::CProtoUtil::get_nonce(32);
-        Authorization auth;
+        DtSipMessageCpp::Authorization auth;
         {
             auth.set_user_name(m_str_user_name);
             auth.set_realm(wwwAuth.get_realm());
@@ -288,10 +299,10 @@ bool sip_client_protocal_handler::handle_first_send_sms(const std::string strRsp
         std::string strNC = "00000001";
         {
 
-            WWW_AUTH wwwAuth;
+            DtSipMessageCpp::WWW_AUTH wwwAuth;
             wwwAuth.from_string(rspMsg.get_www_auth());
             std::string strCnonce = DtSipMessageCpp::CProtoUtil::get_nonce(32);// "c3606b3f70544096a7e17fcdb4670795";
-            Authorization auth;
+            DtSipMessageCpp::Authorization auth;
             {
                 auth.set_user_name(m_str_user_name);
                 auth.set_realm(wwwAuth.get_realm());
@@ -431,6 +442,13 @@ void sip_client_protocal_handler::do_send_sms(const std::string strReciver, cons
     g_sip_client_state = SIP_CLIENT_STATE::SENDING_SMS;
     m_strWaitForSend = get_send_sms_message(strReciver, strContent);
     //init_first_register();
+}
+
+void sip_client_protocal_handler::do_call(const std::string strCalled)
+{
+    m_strCalled = strCalled;
+    g_sip_client_state = SIP_CLIENT_STATE::SENDING_SMS;
+    m_strWaitForSend = "";
 }
 
 std::string sip_client_protocal_handler::get_next_message()

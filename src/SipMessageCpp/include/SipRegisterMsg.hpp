@@ -20,7 +20,7 @@ namespace DtSipMessageCpp
 
 
         //set function list for dump function test
-        void set_sip_server_ip_port(const std::string strIp, const int nPort);
+        /*void set_sip_server_ip_port(const std::string strIp, const int nPort);
         void set_sip_local_ip_port(const std::string strIp, const int nPort);
         void set_username_password(const std::string strUserName, const std::string strPassword);
         void set_net_type(const std::string strType);
@@ -31,8 +31,9 @@ namespace DtSipMessageCpp
         void set_content_length(const std::string strContentLength);
         void set_max_forwards(const std::string strMaxForwards);
         void set_from_tag(const std::string strFromTag);
+        void set_route(const std::string strRoute);*/
         //void set_c_seq(const std::string strSeq);
-
+        void set_from_tag(const std::string strFromTag);
         //create function list
         void create_header_line();
         void create_via_line();
@@ -73,7 +74,7 @@ namespace DtSipMessageCpp
 
         std::string m_str_from_tag;
     private:
-        std::string m_strSipServerIp;
+        /*std::string m_strSipServerIp;
         int m_nSipServerPort;
         std::string m_strUserName;
         std::string m_strUserPassword;
@@ -81,7 +82,7 @@ namespace DtSipMessageCpp
         std::string m_strSipLocalIp;
         int m_nSipLocalPort;
         std::string m_strBranch;
-        std::string m_strNetType;//TCP/UDP/SSL
+        std::string m_strNetType;//TCP/UDP/SSL*/
     };
 }
 #endif

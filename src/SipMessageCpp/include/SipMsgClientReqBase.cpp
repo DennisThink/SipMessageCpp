@@ -43,7 +43,7 @@ namespace DtSipMessageCpp
 
     std::string CSipMsgClientReqBase::get_route_line()
     {
-        return "";
+        return m_str_route_line;
     }
 
     std::string CSipMsgClientReqBase::get_to_line()
@@ -93,5 +93,61 @@ namespace DtSipMessageCpp
     std::string CSipMsgClientReqBase::get_via_line()
     {
         return m_str_via_line;
+    }
+
+    void CSipMsgClientReqBase::set_sip_server_ip_port(const std::string strIp, const int nPort)
+    {
+        m_strSipServerIp = strIp;
+        m_nSipServerPort = nPort;
+    }
+
+    void CSipMsgClientReqBase::set_sip_local_ip_port(const std::string strIp, const int nPort)
+    {
+        this->m_strSipLocalIp = strIp;
+        this->m_nSipLocalPort = nPort;
+    }
+    void CSipMsgClientReqBase::set_username_password(const std::string strUserName, const std::string strPassword)
+    {
+        this->m_strUserName = strUserName;
+        this->m_strUserPassword = strPassword;
+    }
+
+    void CSipMsgClientReqBase::set_net_type(const std::string strType)
+    {
+        m_strNetType = strType;
+    }
+
+    void CSipMsgClientReqBase::set_branch(const std::string strBranch)
+    {
+        m_strBranch = strBranch;
+    }
+
+    void CSipMsgClientReqBase::set_authorization(const std::string strAuthorization)
+    {
+        m_str_authorization_line = strAuthorization;
+    }
+
+    void CSipMsgClientReqBase::set_allow_options(const std::string strAllowOptions)
+    {
+        m_str_allow_line = strAllowOptions;
+    }
+    void CSipMsgClientReqBase::set_call_id(const std::string strCallId)
+    {
+        m_str_call_id_line = strCallId;
+    }
+    void CSipMsgClientReqBase::set_content_length(const std::string strContentLength)
+    {
+        m_str_content_length_line = strContentLength;
+    }
+
+    void CSipMsgClientReqBase::set_max_forwards(const std::string strMaxForwards)
+    {
+        m_str_max_forwards_line = strMaxForwards;
+    }
+
+
+    void CSipMsgClientReqBase::set_route(const std::string strRoute)
+    {
+        m_str_route_line = strRoute;
     }
 }

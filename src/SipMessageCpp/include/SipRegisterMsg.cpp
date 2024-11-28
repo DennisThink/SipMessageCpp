@@ -171,7 +171,7 @@ namespace DtSipMessageCpp
         return strResult;
     }
 
-
+    /*
     void CSipRegisterMsg::set_sip_server_ip_port(const std::string strIp, const int nPort)
     {
         m_strSipServerIp = strIp;
@@ -227,7 +227,14 @@ namespace DtSipMessageCpp
         m_str_from_tag = strFromTag;
     }
 
-
+    void CSipRegisterMsg::set_route(const std::string strRoute)
+    {
+        m_str_route_line = strRoute;
+    }*/
+    void CSipRegisterMsg::set_from_tag(const std::string strFromTag)
+    {
+        m_str_from_tag = strFromTag;
+    }
 
     void CSipRegisterMsg::create_header_line()
     {

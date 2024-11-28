@@ -182,6 +182,7 @@ TEST_CASE("RegisterCreate") {
             regCreateMsg.set_from_tag(strFromTag);
             regCreateMsg.set_username_password(strUser, strPassword);
             regCreateMsg.set_c_seq(28959);
+            regCreateMsg.set_route("Route: <sip:192.168.31.109:5060;lr>");
         }
 
         {

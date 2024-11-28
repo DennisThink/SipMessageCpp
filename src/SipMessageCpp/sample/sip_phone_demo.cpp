@@ -15,6 +15,7 @@ int main(int argc,char * argv[])
         sipPhone.set_client_type("DtSipClient/0.0.1");
         sipPhone.do_register();
         sipPhone.send_sms("1009", "Hello from 1002");
+        sipPhone.call("1009");
     }
     /* {
         {

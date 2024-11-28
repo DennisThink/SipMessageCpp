@@ -16,6 +16,7 @@ public:
 	bool init_protocal();
 	void do_register();
 	void do_send_sms(const std::string strReciver, const std::string strContent);
+	void do_call(const std::string strCalled);
 	std::string get_next_message();
 	bool handle_current_message(const std::string strMsg);
 	std::string create_call_id();
@@ -25,6 +26,7 @@ protected:
 	std::string get_first_register_message();
 	std::string get_second_register_message(const std::string& strRsp);
 	std::string get_send_sms_message(const std::string strReciver, const std::string strContent);
+	std::string get_call_message(const std::string strCalled);
 	bool handle_first_register_rsp(const std::string strRsp);
 	bool handle_first_send_sms(const std::string strRsp);
 	void init_first_register();
@@ -53,7 +55,8 @@ protected:
 	//send_sms
 	std::string m_strReciver;
 	std::string m_strContent;
-
+	//do_call
+	std::string m_strCalled;
 
 	bool m_b_registered;
 

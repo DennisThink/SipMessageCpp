@@ -110,9 +110,35 @@ void SipClient::send_sms(const std::string strReciver, const std::string strSms)
         strSendMsg = m_handler.get_next_message();
     } while (!strSendMsg.empty());
 }
+
+void SipClient::call(const std::string strCalled)
+{
+    m_handler.do_call(strCalled);
+    std::string strSendMsg = m_handler.get_next_message();
+    do {
+        m_socket->send_message(strSendMsg);
+        if (g_debug)
+        {
+            std::cout << "=====================================" << std::endl;
+            std::cout << "Client SEND:" << std::endl;
+            std::cout << strSendMsg << std::endl;
+            std::cout << "=====================================" << std::endl;
+        }
+        std::string strRecvMsg;
+        m_socket->recv_message(strRecvMsg);
+        if (g_debug)
+        {
+            std::cout << "=====================================" << std::endl;
+            std::cout << "Client RECV:" << std::endl;
+            std::cout << strRecvMsg << std::endl;
+            std::cout << "=====================================" << std::endl;
+        }
+        m_handler.handle_current_message(strRecvMsg);
+        strSendMsg = m_handler.get_next_message();
+    } while (!strSendMsg.empty());
+}
 std::string SipClient::recv_sms()
 {
-   
     std::string strSendMsg = m_handler.get_next_message();
     do {
         m_socket->send_message(strSendMsg);

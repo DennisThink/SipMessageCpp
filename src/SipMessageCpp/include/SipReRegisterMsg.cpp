@@ -197,7 +197,7 @@ namespace DtSipMessageCpp
         return m_str_allow_events_line;
     }
 
-    void CSipReRegisterMsg::set_sip_server_ip_port(const std::string strIp, const int nPort)
+    /*void CSipReRegisterMsg::set_sip_server_ip_port(const std::string strIp, const int nPort)
     {
         m_strSipServerIp = strIp;
         m_nSipServerPort = nPort;
@@ -212,17 +212,17 @@ namespace DtSipMessageCpp
     {
         this->m_strUserName = strUserName;
         this->m_strUserPassword = strPassword;
-    }
+    }*/
 
-    void CSipReRegisterMsg::set_net_type(const std::string strType)
+    /*void CSipReRegisterMsg::set_net_type(const std::string strType)
     {
         m_strNetType = strType;
-    }
+    }*/
 
-    void CSipReRegisterMsg::set_branch(const std::string strBranch)
+    /*void CSipReRegisterMsg::set_branch(const std::string strBranch)
     {
         m_strBranch = strBranch;
-    }
+    }*/
 
     void CSipReRegisterMsg::set_authorization(const std::string strAuthorization)
     {
@@ -301,7 +301,7 @@ namespace DtSipMessageCpp
             m_str_contact_line = strResult;
         }
     }
-    void CSipReRegisterMsg::set_allow_options(const std::string strAllowOptions)
+    /*void CSipReRegisterMsg::set_allow_options(const std::string strAllowOptions)
     {
         m_str_allow_line = strAllowOptions;
     }
@@ -314,7 +314,7 @@ namespace DtSipMessageCpp
     void CSipReRegisterMsg::set_content_length(const std::string strContentLength)
     {
         m_str_content_length_line = strContentLength;
-    }
+    }*/
     
     void CSipReRegisterMsg::set_from_tag(const std::string strFromTag)
     {
@@ -325,10 +325,10 @@ namespace DtSipMessageCpp
     {
         m_str_expires_line = strExpires;
     }
-    void CSipReRegisterMsg::set_max_forwards(const std::string strMaxForwards)
+    /*void CSipReRegisterMsg::set_max_forwards(const std::string strMaxForwards)
     {
         m_str_max_forwards_line = strMaxForwards;
-    }
+    }*/
 
     void CSipReRegisterMsg::create_via_line()
     {

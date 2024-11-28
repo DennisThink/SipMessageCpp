@@ -100,7 +100,7 @@ TEST_CASE("CalcuAuthorization2") {
 
 static std::string get_authorization_from_www_auth(const std::string& strWwwAuth,const std::string strUser,const std::string strPass, const std::string strCnonce,const std::string strUri)
 {
-    WWW_AUTH wwwAuth;
+    DtSipMessageCpp::WWW_AUTH wwwAuth;
     std::string strMethod = "REGISTER";
     std::string strNonceCount = "00000001";
     std::string strResponse;

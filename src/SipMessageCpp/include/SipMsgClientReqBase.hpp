@@ -13,6 +13,19 @@ namespace DtSipMessageCpp
         virtual bool parse(const std::string& strMsg);
         virtual std::string dump() const;
     public:
+        void set_sip_server_ip_port(const std::string strIp, const int nPort);
+        void set_sip_local_ip_port(const std::string strIp, const int nPort);
+        void set_username_password(const std::string strUserName, const std::string strPassword);
+        void set_net_type(const std::string strType);
+        void set_branch(const std::string strBranch);
+        void set_authorization(const std::string strAuthorization);
+        void set_allow_options(const std::string strAllowOptions);
+        void set_call_id(const std::string strCallId);
+        void set_content_length(const std::string strContentLength);
+        void set_max_forwards(const std::string strMaxForwards);
+        void set_from_tag(const std::string strFromTag);
+        void set_route(const std::string strRoute);
+    public:
         std::string get_header_line();
         std::string get_c_seq_line();
         std::string get_via_line();
@@ -55,6 +68,17 @@ namespace DtSipMessageCpp
         std::string m_str_authorization_line;
         std::string m_str_allow_events_line;
         std::string m_str_content_length_line;
+
+    protected:
+        std::string m_strSipServerIp;
+        int m_nSipServerPort;
+        std::string m_strUserName;
+        std::string m_strUserPassword;
+
+        std::string m_strSipLocalIp;
+        int m_nSipLocalPort;
+        std::string m_strBranch;
+        std::string m_strNetType;//TCP/UDP/SSL
     };
 }
 #endif
