@@ -171,7 +171,7 @@ namespace DtSipMessageCpp
         return strResult;
     }
 
-    void CSipReRegisterMsg::create_header_line()
+    bool CSipReRegisterMsg::create_header_line()
     {
         if (m_str_header_line.empty())
         {
@@ -187,6 +187,7 @@ namespace DtSipMessageCpp
                 m_str_header_line = strMsgType;
             }
         }
+        return true;
     }
     std::string CSipReRegisterMsg::get_authorization_line()
     {
@@ -240,7 +241,7 @@ namespace DtSipMessageCpp
         }
     }
 
-    void CSipReRegisterMsg::create_from_line()
+    bool CSipReRegisterMsg::create_from_line()
     {
         //From: "1009" <sip:1009@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
         m_str_from_line.clear();
@@ -256,9 +257,10 @@ namespace DtSipMessageCpp
             strResult += m_str_from_tag;
             m_str_from_line = strResult;
         }
+        return true;
     }
 
-    void CSipReRegisterMsg::create_to_line()
+    bool CSipReRegisterMsg::create_to_line()
     {
         //To: "1009" <sip:1009@192.168.31.109>
         m_str_to_line.clear();
@@ -273,6 +275,7 @@ namespace DtSipMessageCpp
             strResult += ">";
             m_str_to_line = strResult;
         }
+        return true;
     }
     
     bool CSipReRegisterMsg::create_c_seq_line()
@@ -283,7 +286,7 @@ namespace DtSipMessageCpp
         }
         return true;
     }
-    void CSipReRegisterMsg::create_contact_line()
+    bool CSipReRegisterMsg::create_contact_line()
     {
         m_str_contact_line.clear();
         if (m_str_contact_line.empty())
@@ -300,6 +303,7 @@ namespace DtSipMessageCpp
             strResult += ";ob>";//OB mean what?
             m_str_contact_line = strResult;
         }
+        return true;
     }
     /*void CSipReRegisterMsg::set_allow_options(const std::string strAllowOptions)
     {
@@ -330,7 +334,7 @@ namespace DtSipMessageCpp
         m_str_max_forwards_line = strMaxForwards;
     }*/
 
-    void CSipReRegisterMsg::create_via_line()
+    bool CSipReRegisterMsg::create_via_line()
     {
         {
             std::string strResult;
@@ -345,6 +349,7 @@ namespace DtSipMessageCpp
             strResult += m_strBranch;
             m_str_via_line = strResult;
         }
+        return true;
     }
 
     void CSipReRegisterMsg::parse_register_header_with_transport()

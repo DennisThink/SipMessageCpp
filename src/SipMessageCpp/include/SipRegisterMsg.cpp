@@ -236,7 +236,7 @@ namespace DtSipMessageCpp
         m_str_from_tag = strFromTag;
     }
 
-    void CSipRegisterMsg::create_header_line()
+    bool CSipRegisterMsg::create_header_line()
     {
         if (m_str_header_line.empty())
         {
@@ -254,6 +254,7 @@ namespace DtSipMessageCpp
                 m_str_header_line = strMsgType;
             }
         }
+        return true;
     }
 
     void CSipRegisterMsg::parse_register_header()
@@ -327,7 +328,7 @@ namespace DtSipMessageCpp
         }
     }
 
-    void CSipRegisterMsg::create_via_line()
+    bool CSipRegisterMsg::create_via_line()
     {
         {
             std::string strResult;
@@ -342,9 +343,10 @@ namespace DtSipMessageCpp
             strResult += m_strBranch;
             m_str_via_line = strResult;
         }
+        return true;
     }
 
-    void CSipRegisterMsg::create_from_line()
+    bool CSipRegisterMsg::create_from_line()
     {
         //From: "1009" <sip:1009@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
         if (m_str_from_line.empty())
@@ -359,8 +361,9 @@ namespace DtSipMessageCpp
             strResult += m_str_from_tag;
             m_str_from_line = strResult;
         }
+        return true;
     }
-    void CSipRegisterMsg::create_to_line()
+    bool CSipRegisterMsg::create_to_line()
     {
         //To: "1009" <sip:1009@192.168.31.109>
         if (m_str_to_line.empty())
@@ -374,6 +377,7 @@ namespace DtSipMessageCpp
             strResult += ">";
             m_str_to_line = strResult;
         }
+        return true;
     }
 
     bool CSipRegisterMsg::create_c_seq_line()

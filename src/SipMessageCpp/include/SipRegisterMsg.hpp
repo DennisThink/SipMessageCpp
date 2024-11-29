@@ -17,29 +17,14 @@ namespace DtSipMessageCpp
 
     public:
         //get function list for parse test
-
-
-        //set function list for dump function test
-        /*void set_sip_server_ip_port(const std::string strIp, const int nPort);
-        void set_sip_local_ip_port(const std::string strIp, const int nPort);
-        void set_username_password(const std::string strUserName, const std::string strPassword);
-        void set_net_type(const std::string strType);
-        void set_branch(const std::string strBranch);
-        void set_authorization(const std::string strAuthorization);
-        void set_allow_options(const std::string strAllowOptions);
-        void set_call_id(const std::string strCallId);
-        void set_content_length(const std::string strContentLength);
-        void set_max_forwards(const std::string strMaxForwards);
-        void set_from_tag(const std::string strFromTag);
-        void set_route(const std::string strRoute);*/
-        //void set_c_seq(const std::string strSeq);
         void set_from_tag(const std::string strFromTag);
         //create function list
-        void create_header_line();
-        void create_via_line();
-        void create_from_line();
-        void create_to_line();
-        bool create_c_seq_line();
+    protected:
+        virtual bool create_header_line() override;
+        virtual bool create_via_line() override;
+        virtual bool create_from_line() override;
+        virtual bool create_to_line() override;
+        virtual bool create_c_seq_line() override;
     protected:
         //parse function
         void parse_register_header();

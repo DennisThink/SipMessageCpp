@@ -211,4 +211,172 @@ namespace DtSipMessageCpp
     {
         return m_str_min_se_line;
     }
+
+    void CSipInviteMsg::set_called_number(const std::string strCalled)
+    {
+        m_str_called = strCalled;
+    }
+
+    void CSipInviteMsg::set_user_agent(const std::string strUserAgent)
+    {
+        m_strUserAgent = strUserAgent;
+    }
+
+    void CSipInviteMsg::set_content_type(const std::string strType)
+    {
+        m_strContentType = strType;
+    }
+
+    void CSipInviteMsg::set_content_length(const int nContentLength)
+    {
+        m_n_content_length = nContentLength;
+    }
+
+    void CSipInviteMsg::set_supported_line(const std::string strSupported)
+    {
+        m_str_supported_line = strSupported;
+    }
+
+    void CSipInviteMsg::set_session_expires(const int nSeconds)
+    {
+        m_n_session_expires = nSeconds;
+    }
+
+    void CSipInviteMsg::set_min_se(const int nSeconds) 
+    {
+        m_n_min_se = nSeconds;
+    }
+
+    bool CSipInviteMsg::create_via_line()
+    {
+        {
+            std::string strResult;
+            strResult += VIA_HEADER;
+            strResult += " SIP/2.0/";
+            strResult += m_strNetType;
+            strResult += " ";
+            strResult += m_strSipLocalIp;
+            strResult += ":";
+            strResult += std::to_string(m_nSipLocalPort);
+            strResult += ";rport;branch=";
+            strResult += m_strBranch;
+            m_str_via_line = strResult;
+        }
+        return true;
+    }
+
+    bool CSipInviteMsg::create_from_line()
+    {
+        //From: "1009" <sip:1009@192.168.31.109>;tag=a2c95cb6bbf84183a634b0244b09dcd9
+        if (m_str_from_line.empty())
+        {
+            std::string strResult = "From: \"";
+            strResult += m_strUserName;
+            strResult += "\" <sip:";
+            strResult += m_strUserName;
+            strResult += "@";
+            strResult += m_strSipServerIp;
+            strResult += ">;tag=";
+            strResult += m_str_from_tag;
+            m_str_from_line = strResult;
+        }
+        return true;
+    }
+    bool CSipInviteMsg::create_to_line()
+    {
+        //To: "1009" <sip:1009@192.168.31.109>
+        if (m_str_to_line.empty())
+        {
+            std::string strResult = "To: ";
+            strResult += "<sip:";
+            strResult += m_str_called;
+            strResult += "@";
+            strResult += m_strSipServerIp;
+            strResult += ">";
+            m_str_to_line = strResult;
+        }
+        return true;
+    }
+
+    bool CSipInviteMsg::create_session_expires_line()
+    {
+        m_str_session_expires_line.clear();
+        //"Session-Expires: 1800";
+        if (m_str_session_expires_line.empty())
+        {
+            m_str_session_expires_line = "Session-Expires: " + std::to_string(m_n_session_expires);
+        }
+        return true;
+    }
+
+    bool CSipInviteMsg::create_min_se_line()
+    {
+        m_str_min_se_line.clear();
+        if (m_str_min_se_line.empty())
+        {
+            m_str_min_se_line = "Min-SE: " + std::to_string(m_n_min_se);
+        }
+        return true;
+    }
+
+    bool CSipInviteMsg::create_user_agent_line()
+    {
+        m_str_user_agent_line.clear();
+        if (m_str_user_agent_line.empty())
+        {
+            m_str_user_agent_line = "User-Agent: "+m_strUserAgent;
+        }
+        return true;
+    }
+
+    bool CSipInviteMsg::create_content_type_line()
+    {
+        m_str_content_type_line.clear();
+        if (m_str_content_type_line.empty())
+        {
+            m_str_content_type_line = "Content-Type: " + m_strContentType;
+        }
+        return true;
+    }
+
+    bool CSipInviteMsg::create_content_length_line()
+    {
+        m_str_content_length_line.clear();
+        if (m_str_content_length_line.empty())
+        {
+            m_str_content_length_line = "Content-Length:   " + std::to_string(m_n_content_length);
+        }
+        return true;
+    }
+    bool CSipInviteMsg::create_c_seq_line()
+    {
+        if (m_str_c_seq_line.empty())
+        {
+            m_str_c_seq_line = "CSeq: " + std::to_string(m_n_c_seq) + " INVITE";
+        }
+        return true;
+    }
+
+    bool CSipInviteMsg::create_header_line()
+    {
+        if (m_str_header_line.empty())
+        {
+            {
+                std::string strMsgType = "INVITE";
+                strMsgType += " ";
+                strMsgType += "sip:";
+                strMsgType += m_str_called;
+                strMsgType += "@";
+                strMsgType += m_strSipServerIp;
+                strMsgType += ":";
+                strMsgType += std::to_string(m_nSipServerPort);
+                strMsgType += " SIP/2.0";
+
+
+                //strResult += m_str_header_line;
+                m_str_header_line = strMsgType;
+            }
+        }
+        return true;
+    }
 }

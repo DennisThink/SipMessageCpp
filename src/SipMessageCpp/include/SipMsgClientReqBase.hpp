@@ -39,12 +39,25 @@ namespace DtSipMessageCpp
         std::string get_user_agent_line();
         std::string get_content_length_line();
         std::string get_max_forwards_line();
+    protected:
+        virtual bool create_header_line();
+        virtual bool create_c_seq_line();
+        virtual bool create_via_line();
+        virtual bool create_route_line();
+        virtual bool create_to_line();
+        virtual bool create_from_line();
+        virtual bool create_call_id_line();
+        virtual bool create_expires_line();
+        virtual bool create_allow_line();
+        virtual bool create_supported_line();
+        virtual bool create_user_agent_line();
+        virtual bool create_content_length_line();
+        virtual bool create_max_forwards_line();
     public:
         bool create_all_lines();
         bool set_c_seq(const int nCSeq);
 
     protected:
-        virtual bool create_c_seq_line();
     protected:
         int m_n_c_seq;
         std::string m_str_header_line;

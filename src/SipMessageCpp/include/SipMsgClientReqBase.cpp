@@ -1,16 +1,16 @@
 #include "SipMsgClientReqBase.hpp"
 namespace DtSipMessageCpp
 {
-    CSipMsgClientReqBase::CSipMsgClientReqBase(){
+    CSipMsgClientReqBase::CSipMsgClientReqBase() {
     }
 
-    CSipMsgClientReqBase::~CSipMsgClientReqBase(){}
+    CSipMsgClientReqBase::~CSipMsgClientReqBase() {}
 
-    bool CSipMsgClientReqBase::parse(const std::string& strMsg){
+    bool CSipMsgClientReqBase::parse(const std::string& strMsg) {
         return false;
     }
 
-    std::string CSipMsgClientReqBase::dump() const{
+    std::string CSipMsgClientReqBase::dump() const {
         return "";
     }
 
@@ -23,12 +23,19 @@ namespace DtSipMessageCpp
         return false;
     }
     bool CSipMsgClientReqBase::create_all_lines() {
-        bool bResult = false;
-        bResult = create_c_seq_line();
-        if (!bResult)
-        {
-            return bResult;
-        }
+        create_header_line();
+        create_c_seq_line();
+        create_via_line();
+        create_route_line();
+        create_to_line();
+        create_from_line();
+        create_call_id_line();
+        create_expires_line();
+        create_allow_line();
+        create_supported_line();
+        create_user_agent_line();
+        create_content_length_line();
+        create_max_forwards_line();
         return true;
     }
 
@@ -149,5 +156,56 @@ namespace DtSipMessageCpp
     void CSipMsgClientReqBase::set_route(const std::string strRoute)
     {
         m_str_route_line = strRoute;
+    }
+
+
+    bool CSipMsgClientReqBase::create_header_line()
+    {
+        return false;
+    }
+
+    bool CSipMsgClientReqBase::create_via_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_route_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_to_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_from_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_call_id_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_expires_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_allow_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_supported_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_user_agent_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_content_length_line()
+    {
+        return false;
+    }
+    bool CSipMsgClientReqBase::create_max_forwards_line()
+    {
+        return false;
     }
 }

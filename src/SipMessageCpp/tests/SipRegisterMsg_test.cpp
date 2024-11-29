@@ -196,10 +196,6 @@ TEST_CASE("RegisterCreate") {
         }
 
         {
-            regCreateMsg.create_header_line();
-            regCreateMsg.create_via_line();
-            regCreateMsg.create_from_line();
-            regCreateMsg.create_to_line();
             regCreateMsg.create_all_lines();
         }
     }

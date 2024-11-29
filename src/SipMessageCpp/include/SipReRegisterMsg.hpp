@@ -34,11 +34,11 @@ namespace DtSipMessageCpp
         //int get_sip_server_port() const;
 
         //create function list
-        void create_header_line();
-        void create_via_line();
-        void create_from_line();
-        void create_to_line();
-        void create_contact_line();
+        virtual bool create_header_line() override;
+        virtual bool create_via_line() override;
+        virtual bool create_from_line() override;
+        virtual bool create_to_line() override;
+        bool create_contact_line();
         virtual bool create_c_seq_line() override;
         //get function list
     public:
