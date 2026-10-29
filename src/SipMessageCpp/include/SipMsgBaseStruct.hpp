@@ -113,6 +113,35 @@ namespace DtSipMessageCpp
 	public:
 		std::string to_string() const;
 		bool from_string(const std::string strInfo);
+	public:
+		void set_sdp_protocal_version(const std::string strVersion);
+		void set_owner_session_indentifier(const std::string strIndentifier);
+		void set_session_name(const std::string sessionName);
+		void set_uri(const std::string strUri);
+		void set_email_address(const std::string emailAddr);
+		void set_phone_number(const std::string phoneNumber);
+		void set_connection_info(const std::string strConnInfo);
+		void set_band_width_info(const std::string strBandWidthInfo);
+		void set_time_session_is_active(const std::string strTimeSessionActive);
+		void set_media_and_transport(const std::string strValue);
+		void set_time_zone_adjustment(const std::string strValue);
+		void set_encrpytion_key(const std::string strValue);
+		void add_session_attribute(const std::string strValue);
+
+
+		std::string get_sdp_protocal_version();
+		std::string get_owner_session_indentifier();
+		std::string get_session_name();
+		std::string get_uri();
+		std::string get_email_address();
+		std::string get_phone_number();
+		std::string get_connection_info();
+		std::string get_band_width_info();
+		std::string get_time_session_is_active();
+		std::string get_media_and_transport();
+		std::string get_time_zone_adjustment();
+		std::string get_encrpytion_key();
+		//std::string add_session_attribute(const std::string strValue);
 	protected:
 		std::string m_strsdpProtocalVersion;
 		std::string m_strsdpOwnerSessionIndentifier;

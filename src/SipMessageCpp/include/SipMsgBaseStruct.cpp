@@ -601,4 +601,108 @@ namespace DtSipMessageCpp
 
 		return true;
 	}
+
+
+	void CSdpInfo::set_sdp_protocal_version(const std::string strVersion)
+	{
+		m_strsdpProtocalVersion = strVersion;
+	}
+	void CSdpInfo::set_owner_session_indentifier(const std::string strIndentifier)
+	{
+		m_strsdpOwnerSessionIndentifier = strIndentifier;
+	}
+	void CSdpInfo::set_session_name(const std::string sessionName)
+	{
+		m_strsdpSessionName = sessionName;
+	}
+	void CSdpInfo::set_uri(const std::string strUri)
+	{
+		m_strsdpUriOfDescription = strUri;
+	}
+	void CSdpInfo::set_email_address(const std::string emailAddr)
+	{
+		m_strsdpEmailAddress = emailAddr;
+	}
+	void CSdpInfo::set_phone_number(const std::string phoneNumber)
+	{
+		m_strsdpPhoneNumber = phoneNumber;
+	}
+	void CSdpInfo::set_connection_info(const std::string strConnInfo)
+	{
+		m_strsdpConnectionInformation = strConnInfo;
+	}
+	void CSdpInfo::set_band_width_info(const std::string strBandWidthInfo)
+	{
+		m_strsdpBandwidthInformation = strBandWidthInfo;
+	}
+	void CSdpInfo::set_time_session_is_active(const std::string strTimeSessionActive)
+	{
+		m_strsdpTimeTheSessionIsActive = strTimeSessionActive;
+	}
+	void CSdpInfo::set_media_and_transport(const std::string strValue)
+	{
+		m_strsdpMediaAndTransport = strValue;
+	}
+	void CSdpInfo::set_time_zone_adjustment(const std::string strValue)
+	{
+		m_strsdpTimeZoneAdjustments = strValue;
+	}
+	void CSdpInfo::set_encrpytion_key(const std::string strValue)
+	{
+		m_strsdpEncryptionKey = strValue;
+	}
+	void CSdpInfo::add_session_attribute(const std::string strValue)
+	{
+
+	}
+
+
+	std::string CSdpInfo::get_sdp_protocal_version()
+	{
+
+	}
+	std::string CSdpInfo::get_owner_session_indentifier()
+	{
+
+	}
+	std::string CSdpInfo::get_session_name()
+	{
+
+	}
+	std::string CSdpInfo::get_uri()
+	{
+
+	}
+	std::string CSdpInfo::get_email_address()
+	{
+
+	}
+	std::string CSdpInfo::get_phone_number()
+	{
+
+	}
+	std::string CSdpInfo::get_connection_info()
+	{
+
+	}
+	std::string CSdpInfo::get_band_width_info()
+	{
+
+	}
+	std::string CSdpInfo::get_time_session_is_active()
+	{
+
+	}
+	std::string CSdpInfo::get_media_and_transport()
+	{
+
+	}
+	std::string CSdpInfo::get_time_zone_adjustment()
+	{
+
+	}
+	std::string CSdpInfo::get_encrpytion_key()
+	{
+
+	}
 }
